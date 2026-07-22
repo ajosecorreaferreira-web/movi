@@ -1,199 +1,275 @@
-# CLAUDE.md — Movi Design System
-> El archivo más importante del proyecto. Léelo antes de escribir una línea de código.
-
----
+# CLAUDE.md — Movi
 
 ## Qué es Movi
 
-PWA mobile-first que combate la soledad a través del deporte. Conecta personas para entrenar juntas — desde caminar hasta Hyrox.
+Movi es una PWA mobile-first que combate la soledad a través del deporte. Conecta personas para entrenar juntas — desde caminar hasta Hyrox. Para todos los niveles y todos los momentos de vida.
 
-**La frase:** "El deporte es la excusa. La conexión es el producto."
-**Arquetipo:** El Cuidador que Exige
-**Usuario principal:** Madre reciente (3-6 meses postparto)
-**Plataforma:** PWA mobile-first (portrait) + Panel admin desktop
+**El concepto central:** El deporte es la excusa. La conexión es el producto.
 
----
+**La personalidad:** Como un entrenador personal que no te juzga — sabe que llevas una temporada parado pero te exige para mejorar. Motivacional, cálido, directo. Sin vergüenza, sin presión, con mucha energía.
 
-## Stack
-
-```
-Framework:    React 18 + Vite + TypeScript
-Estilos:      Tailwind CSS v4 + tokens CSS en src/index.css
-Componentes:  shadcn/ui (Radix UI base — accesibles por defecto)
-Iconos:       Lucide React (strokeWidth: 1.5, currentColor)
-Motion:       Motion (Framer Motion) — solo para celebraciones y page transitions
-PWA:          vite-plugin-pwa
-Tipografía:   Plus Jakarta Sans (variable) via @fontsource-variable
-Mock datos:   mockData.ts → MSW handlers
-Tests:        Vitest + Testing Library
-Deploy:       Vercel
-```
+**La frase de marketing:** "No te vendemos un cuerpo. Te damos gente con quien conseguirlo."
 
 ---
 
-## Tokens clave
+## Stack tecnológico
 
+```
+Framework:        React + Vite + TypeScript
+Estilos:          Tailwind CSS v4 + @tailwindcss/vite
+Componentes:      shadcn/ui (Radix UI base)
+Iconos:           Lucide React (stroke: currentColor, strokeWidth: 1.5)
+Tipografía:       Plus Jakarta Sans Variable
+Motion:           Motion (Framer Motion) para animaciones mobile
+Bottom Sheet:     react-modal-sheet
+Gestos:           react-swipeable
+Estado:           Zustand + persist
+PWA:              vite-plugin-pwa
+Deploy:           Vercel (auto-deploy desde main)
+Repositorio:      github.com/ajosecorreaferreira-web/movi
+URL producción:   https://movi-neon-eight.vercel.app
+Base de datos:    Supabase (pendiente de configurar)
+```
+
+---
+
+## REGLAS CRÍTICAS — src/index.css
+
+Estas reglas son obligatorias. Aprendidas por experiencia en producción:
+
+### Regla 1 — Orden de imports (CRÍTICO)
 ```css
-/* Colores */
---color-primary:     oklch(0.70 0.19 46)   /* Amanecer — CTA, activos */
---color-secondary:   oklch(0.45 0.13 148)  /* Selva — acciones de apoyo */
---color-background:  oklch(0.98 0.01 75)   /* Crema cálida — fondo principal */
---color-text:        oklch(0.18 0.03 50)   /* Casi negro cálido — texto principal */
---color-primary-text:oklch(0.42 0.13 40)   /* Amanecer oscuro — texto sobre fondos claros */
+/* CORRECTO — este orden exacto */
+@import url('https://fonts.googleapis.com/...');  /* Google Fonts PRIMERO */
+@import "tailwindcss";                             /* Tailwind SEGUNDO */
 
-/* Forma */
---radius-md:  10px     /* Base — botones, inputs, cards pequeñas */
---radius-lg:  16px     /* Cards grandes, bottom sheets */
---radius-full: 9999px  /* Pills, badges, avatares */
+/* Comentarios y resto DESPUÉS */
+```
 
-/* Tipografía */
---font-sans:  'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif
+❌ NUNCA poner comentarios antes de `@import "tailwindcss"`
+❌ NUNCA poner Google Fonts después de `@import "tailwindcss"`
 
-/* Motion */
---mobile-spring:        cubic-bezier(0.32, 0.72, 0, 1)
---mobile-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1)
---duration-celebration: 800ms
+Si el orden es incorrecto, Lightning CSS (el optimizador de Vite) descarta las utilities y ninguna clase de padding/spacing funciona en producción.
 
-/* Mobile */
---safe-bottom: env(safe-area-inset-bottom, 0px)
---bottom-nav-height: 64px
---touch-target-min:  44px
+### Regla 2 — Sin reset manual fuera de @layer (CRÍTICO)
+```css
+/* ❌ NUNCA esto — rompe TODAS las utilities de Tailwind */
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+}
+```
+
+Tailwind v4 ya incluye ese reset en su preflight (`@layer base`). Duplicarlo fuera de `@layer` anula todas las utilities porque los estilos sin capa siempre ganan sobre `@layer utilities`.
+
+### Regla 3 — Sin wildcards en clases
+```css
+/* ❌ Nunca */
+rounded-[var(--radius-*)]
+
+/* ✅ Siempre el token específico */
+rounded-[var(--radius-full)]
 ```
 
 ---
 
-## Filosofía atómica — Reglas LLM-ready
+## Sistema de agentes — arquitectura
 
-### 1. Construir sobre el DS, nunca ad-hoc
-Antes de crear cualquier elemento de UI, buscar el componente equivalente en shadcn/ui. Si existe, usarlo. Si necesita customización, extenderlo con los tokens del DS. Si no existe, crearlo con los tokens del DS — nunca con valores hardcodeados.
+Los agentes viven en `.claude/agents/` como archivos markdown con YAML frontmatter. Requiere `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` en `.claude/settings.json`.
 
+### Los 6 agentes
+
+| Agente | Rol | Activa cuando |
+|--------|-----|---------------|
+| orchestrator | Genera specs (requirements.md + design.md + tasks.md) | "quiero construir X", "nueva feature" |
+| ds-designer | Diseña en Paper usando MCP | Bloque 5 de tasks.md |
+| builder | Implementa código React/TS | Bloques 1-4 de tasks.md |
+| auditor | Ejecuta audit:all, bloquea push si hay errores | Builder termina |
+| git-agent | Commit + push solo con OK del auditor | Auditor da OK |
+| reporter | Actualiza tasks.md, genera resumen | Fin de ciclo |
+
+### El flujo correcto (obligatorio)
+
+```
+Tú describes feature en lenguaje natural
+  ↓
+Orchestrator → genera specs/[feature]/requirements.md + design.md + tasks.md
+  ↓
+DS Designer → lee specs → diseña en Paper (get_computed_styles + write_html)
+  DS Designer → ejecuta get_screenshot de Paper → guarda imagen de referencia
+  ↓
+Builder → lee diseño de Paper (get_computed_styles + get_jsx) ANTES de escribir código
+  NUNCA construir sin leer Paper primero
+  ↓
+Auditor → npm run audit:all → 0 errores obligatorio
+  ↓
+Git Agent → commit + push → Vercel despliega
+  ↓
+Reporter → actualiza tasks.md con [x] en tareas completadas
+```
+
+### Regla crítica del Builder
+
+El Builder tiene acceso a `mcp__paper__get_computed_styles` y `mcp__paper__get_jsx`. DEBE usarlos antes de escribir una sola línea de código para una pantalla o componente. Si no hay diseño en Paper, notifica al ds-designer antes de continuar.
+
+---
+
+## Reglas de código
+
+### Mobile-first obligatorio
+- `min-h-dvh` (no `min-h-screen`) para viewport dinámico
+- Safe areas: `paddingTop: 'max(1rem, env(safe-area-inset-top))'`
+- Safe areas bottom: `paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))'`
+- Touch targets mínimo 44px en todos los elementos interactivos
+- Wrapper móvil: `max-w-[390px] mx-auto` para centrar en desktop
+
+### Tokens — nunca hardcoding
 ```tsx
-// ✓ Correcto
-import { Button } from '@/components/ui/button'
-<Button variant="default" size="lg">Unirme</Button>
+/* ❌ Nunca */
+color: '#FF6B2C'
+borderRadius: '8px'
 
-// ✗ Incorrecto
-<button style={{ backgroundColor: '#B8621A', borderRadius: '10px' }}>Unirme</button>
+/* ✅ Siempre */
+color: 'var(--color-primary)'
+borderRadius: 'var(--radius-full)'
 ```
 
-### 2. Tokens siempre, hex nunca
-```tsx
-// ✓ Correcto
-className="bg-[var(--color-primary)] text-[var(--color-primary-foreground)]"
+### Componentes — filosofía atómica
+- Usar siempre componentes de `src/components/ui/` (shadcn)
+- Componentes mobile en `src/components/mobile/`
+- Nunca `<button>` nativo sin wrapper del DS
+- Nunca `<input>` nativo sin el componente Input del DS
 
-// ✗ Incorrecto
-style={{ backgroundColor: '#B8621A' }}
-```
-
-### 3. Una pantalla, un objetivo
-Cada pantalla tiene exactamente 1 CTA primario. Si hay más de 1, hay un problema de diseño.
-
-### 4. Touch targets obligatorios
-Todo elemento interactivo: mínimo `44×44px`. Sin excepciones.
-
-### 5. Safe areas siempre
-El layout raíz siempre tiene `padding: env(safe-area-inset-*)`. El bottom nav siempre incluye `safe-area-inset-bottom`.
-
-### 6. Animaciones solo de entrada, nunca de salida compleja
-Transiciones de pantalla: slide horizontal. Bottom sheets: slide vertical. Modales: fade + scale. Celebraciones: spring con bounce. La salida siempre es más rápida que la entrada.
-
-### 7. shadcn/ui es del cliente — sin lock-in
-Los componentes de shadcn se copian al proyecto, no se importan como dependencia. Se pueden modificar libremente. No hay vendor lock-in.
+### Iconos
+- Solo Lucide React
+- `stroke: currentColor` siempre
+- `strokeWidth={1.5}` siempre
+- Tamaños permitidos: 12, 14, 16, 20, 24, 32, 48
 
 ---
 
-## Estructura de carpetas
+## Nomenclatura en Paper
 
 ```
-src/
-├── components/
-│   ├── ui/              # shadcn/ui components (copiados, modificables)
-│   ├── movi/            # Componentes específicos de Movi
-│   │   ├── SessionCard/
-│   │   ├── WorkoutScreen/
-│   │   ├── CelebrationScreen/
-│   │   ├── BottomNav/
-│   │   └── ...
-│   └── layout/          # Layout wrappers (MobileScreen, SafeArea, etc.)
-├── pages/               # Pantallas de la app (rutas)
-├── hooks/               # Custom hooks
-├── stores/              # Estado global (Zustand)
-├── services/            # API calls, geolocalización, etc.
-├── lib/                 # Utilidades (cn, formatters, etc.)
-├── mockData/            # Mock data + MSW handlers
-├── index.css            # Tokens CSS del DS — source of truth
-└── main.tsx
+F · Nombre       → Foundations
+C · Nombre       → Componentes desktop (shadcn)
+CM · Nombre      → Componentes mobile (390px)
+AppM · Nombre    → Pantallas app mobile (390px)
+App · Nombre     → Pantallas desktop (1440px)
 ```
 
 ---
 
-## Nomenclatura Paper (para cuando se use Paper MCP)
+## Producto — qué es Movi
 
-```
-F·         → Frames / Layout components
-C·         → Componentes reutilizables
-CM·        → Componentes mobile específicos
-App·       → Pantallas de la app
-AppM·      → Pantallas mobile específicas
-Landing·   → Pantallas de landing/marketing
-IA·        → Componentes generados por IA / dinámicos
-```
+### Los 5 niveles
+1. **Activo** — caminar, moverse, empezar
+2. **En marcha** — trote suave, algo de funcional
+3. **En forma** — funcional, natación, bici
+4. **Potencia** — Hyrox, pádel, funcional intenso
+5. **Élite** — crossfit, híbridos, pesas serias
+
+### Los públicos
+Adolescentes, madres recientes, divorciados, viajeros de trabajo frecuente, viudos, recién mudados, personas mayores de 40-60 que quieren reconectar.
+
+### Funcionalidades core
+- Onboarding en 2 preguntas (ubicación + nivel)
+- Plan de entrenamiento generado por IA
+- Mapa de espacios deportivos gratuitos
+- Sesiones: publicar, unirse, modo solo visible
+- Gamificación: puntos, medallas, más puntos en grupo
+- Quedadas mensuales organizadas por nivel y zona
+- Sistema de delegados/líderes con incentivos
+- Integración Google Calendar y Apple Calendar
+- Notificaciones contextuales (no saturantes)
+- Resumen semanal/mensual shareable
+- "Momento Movi" — foto de grupo para compartir en redes
+- Guía para romper el hielo
+- Guía de nutrición (opcional)
+
+### El efecto instagrameable
+La app genera momentos compartibles — foto de grupo al terminar sesión con frame de Movi, resumen semanal listo para Instagram Stories. El marketing lo hacen los propios usuarios.
+
+### B2B
+- Gimnasios Hyrox y híbridos: instalaciones + clases especiales (5€/persona)
+- Ayuntamientos: integración instalaciones municipales
 
 ---
 
 ## Estado del proyecto
 
-### Fase actual: DS configurado, listo para desarrollo
+### Completado
+- ✅ DS generado con DS Generator v2.0 — 22 archivos
+- ✅ Repo en GitHub: github.com/ajosecorreaferreira-web/movi
+- ✅ Deploy en Vercel: movi-neon-eight.vercel.app
+- ✅ PWA configurada (vite-plugin-pwa)
+- ✅ Tokens mobile (safe areas, spring, haptics, touch targets)
+- ✅ Sistema de agentes configurado (.claude/agents/ — 6 agentes)
+- ✅ Agent Teams activado (.claude/settings.json)
+- ✅ Specs del onboarding generadas (specs/onboarding/)
+- ✅ Step1Location — pantalla de ubicación funcionando en producción
+- ✅ Step2Level — selector de nivel (pendiente de verificar visualmente)
+- ✅ OnboardingComplete — pantalla de celebración
+- ✅ React Router configurado
+- ✅ Zustand store para onboarding
+- ✅ Geolocation service con timeout 8s y fallback Nominatim
+- ✅ Bug Tailwind corregido (orden @import + reset manual eliminado)
 
-- [x] Design System completo (22 archivos)
-- [x] Tokens CSS en src/index.css
-- [x] Arquitectura de carpetas definida
-- [ ] Setup inicial (npm create vite, tailwind v4, shadcn)
-- [ ] Componentes base (Button, Input, Card, BottomNav)
-- [ ] Pantallas MVP (Onboarding, Mapa, Sesión, Logro)
-- [ ] Guía de entrenamiento
-- [ ] Sistema de gamificación
-- [ ] Quedadas mensuales
-- [ ] Panel admin desktop
-- [ ] Tests
-- [ ] Deploy en Vercel
-
-### Próximos pasos
-
-1. `npm create vite@latest movi -- --template react-ts`
-2. Instalar Tailwind v4 + shadcn/ui
-3. Copiar `src/index.css` del DS
-4. Instalar `@fontsource-variable/plus-jakarta-sans`
-5. Instalar `lucide-react` + `motion`
-6. Setup de `vite-plugin-pwa`
-7. Primer componente: `BottomNav`
-8. Primera pantalla: `OnboardingScreen`
+### Pendiente
+- ⏳ Verificar Step2Level visualmente en producción
+- ⏳ Verificar OnboardingComplete visualmente
+- ⏳ Home del consultor (TravelerHome)
+- ⏳ Motor de entrenamiento con IA
+- ⏳ Mapa de espacios deportivos
+- ⏳ Sesiones sociales (publicar + unirse)
+- ⏳ Gamificación (puntos, medallas)
+- ⏳ Supabase (base de datos + auth)
+- ⏳ Auth con Google/Apple
+- ⏳ Notificaciones push
+- ⏳ Integración calendarios
+- ⏳ movi-admin (panel desktop — después del MVP)
 
 ---
 
-## Archivos del DS
+## Bugs conocidos y lecciones aprendidas
 
-Ver `/docs/` para toda la documentación:
+### Bug 1 — Tailwind utilities no aplican en producción
+**Causa:** `@import "tailwindcss"` debe ser la primera línea. Si hay comentarios antes o Google Fonts después, Lightning CSS descarta las utilities.
+**Fix:** Ver sección REGLAS CRÍTICAS arriba.
+**Estado:** ✅ Corregido en commit 772665
 
-| Archivo | Descripción |
-|---|---|
-| `brand-personality.md` | Las 9 dimensiones del DS |
-| `voice.md` | Voz y tono — Firme, Cálido, Honesto |
-| `color-system.md` | Paleta oklch completa con ratios WCAG |
-| `typography.md` | Plus Jakarta Sans, escala completa |
-| `motion.md` | Tokens, microinteracciones, celebraciones |
-| `sound.md` | Earcons, haptics, patterns de vibración |
-| `iconography.md` | Lucide React, escala, reglas |
-| `spacing-density.md` | Escala 4px, densidad media-baja |
-| `audience.md` | 4 perfiles de usuario, roles |
-| `design-decisions.md` | 12 decisiones documentadas con alternativas |
-| `dont-do.md` | 3 niveles de lo que Movi nunca hace |
-| `product.md` | Concepto completo, 7 pilares, modelo de negocio |
-| `competitors.md` | Análisis competitivo |
-| `platform.md` | PWA mobile + admin desktop |
-| `flows.md` | 7 flujos principales con pantallas |
-| `mobile-patterns.md` | Safe areas, bottom sheets, swipe, haptics |
-| `tech-stack.md` | Stack completo con versiones |
-| `methodology.md` | Metodología Dusty DS Generator |
-| `references.md` | DS de referencia por dimensión |
-| `corrections.md` | Correcciones en curso |
+### Bug 2 — Reset manual rompe utilities
+**Causa:** `*, *::before, *::after { padding: 0 }` fuera de `@layer` anula todo.
+**Fix:** Eliminado. Tailwind v4 ya lo incluye en preflight.
+**Estado:** ✅ Corregido en commit 772665
+
+### Lección — El Builder debe leer Paper antes de construir
+Si el Builder construye solo con specs sin leer el diseño de Paper, el resultado no coincide visualmente. El agente `ds-designer` debe ejecutar `get_screenshot` de Paper para tener referencia visual, y el `builder` debe usar `get_computed_styles` + `get_jsx` antes de escribir código.
+
+---
+
+## Comandos útiles
+
+```bash
+# Arrancar el proyecto
+cd ~/Desktop/movi && claude
+
+# Build + audit
+npm run build
+npm run audit:tokens
+npm run audit:all
+
+# Push
+git add . && git commit -m "tipo: descripción" && git push
+```
+
+---
+
+## Próxima sesión — por dónde empezar
+
+1. Abrir **Project "Movi"** en claude.ai
+2. Abrir Claude Code: `cd ~/Desktop/movi && claude`
+3. Verificar Step2Level y OnboardingComplete visualmente
+4. Si están bien → construir TravelerHome (la pantalla principal del consultor)
+5. Si no → pedir al sistema de agentes que los corrija leyendo Paper
+
