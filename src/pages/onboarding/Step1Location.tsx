@@ -41,111 +41,163 @@ export default function Step1Location() {
   const showManual = phase === 'manual' || phase === 'error'
 
   return (
-    <div className="min-h-dvh bg-neutral-100 flex items-start justify-center">
-      <div className="w-full max-w-[390px] min-h-dvh flex flex-col bg-[var(--color-primary)]">
-
-        {/* Header sticky */}
+    <div className="min-h-dvh flex items-start justify-center" style={{ backgroundColor: 'var(--color-background)' }}>
+      <div
+        className="w-full min-h-dvh flex flex-col"
+        style={{ backgroundColor: 'var(--color-primary)', maxWidth: '390px' }}
+      >
+        {/* Header */}
         <div
-          className="sticky top-0 z-50 px-6 bg-[var(--color-primary)]"
+          className="sticky top-0 z-50 px-6 pt-4 pb-3 bg-[var(--color-primary)]"
           style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[22px] font-extrabold tracking-[-0.03em] text-white">
+            <span style={{
+              color: '#FFFFFF',
+              fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+              fontSize: '22px',
+              fontWeight: 800,
+              letterSpacing: '-0.03em',
+              lineHeight: '28px',
+            }}>
               movi
             </span>
-            <span
-              className="text-[13px] font-medium tracking-[0.02em]"
-              style={{ color: 'var(--color-white-70)' }}
-            >
+            <span style={{
+              color: '#FFFFFFB3',
+              fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+              fontSize: '13px',
+              fontWeight: 500,
+              letterSpacing: '0.02em',
+              lineHeight: '16px',
+            }}>
               Paso 1 de 2
             </span>
           </div>
-          <div className="h-[3px] bg-[var(--color-white-25)] rounded-full mb-5">
-            <div className="h-[3px] bg-white rounded-full w-1/2" />
+          <div style={{ backgroundColor: '#FFFFFF40', borderRadius: '9999px', height: '3px', width: '100%' }}>
+            <div style={{ backgroundColor: '#FFFFFF', borderRadius: '9999px', height: '3px', width: '50%' }} />
           </div>
         </div>
 
-        {/* Content */}
-        <div
-          className="flex-1 flex flex-col justify-center px-6 gap-3"
-          style={{ marginTop: '-32px' }}
-        >
-          <h1 className="text-[42px] font-extrabold leading-[48px] tracking-[-0.03em] text-white">
-            ¿Dónde<br />entrenas?
+        {/* Contenido central */}
+        <div className="flex-1 flex flex-col justify-center px-6 py-8">
+          <h1 style={{
+            color: '#FFFFFF',
+            fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+            fontSize: '42px',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
+            lineHeight: '48px',
+            whiteSpace: 'pre-wrap',
+            marginBottom: '12px',
+          }}>
+            {'¿Dónde\nentrenas?'}
           </h1>
-          <p
-            className="text-[17px] leading-[26px] max-w-[280px]"
-            style={{ color: 'var(--color-white-75)' }}
-          >
+          <p style={{
+            color: '#FFFFFFBF',
+            fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+            fontSize: '17px',
+            lineHeight: '26px',
+            maxWidth: '280px',
+          }}>
             Te mostramos quién entrena cerca de ti hoy.
           </p>
         </div>
 
-        {/* CTA sticky bottom */}
+        {/* CTA */}
         <div
-          className="sticky bottom-0 flex flex-col gap-3 px-6 pt-5 bg-[var(--color-primary)]"
-          style={{ paddingBottom: 'max(2.5rem, env(safe-area-inset-bottom))' }}
+          className="sticky bottom-0 px-6 pb-6 bg-[var(--color-primary)]"
+          style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
         >
           {!showManual ? (
-            <>
+            <div className="flex flex-col gap-3">
               <button
                 onClick={handleUseLocation}
                 disabled={phase === 'loading'}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl h-14 text-base font-bold tracking-[-0.01em]"
-                style={{
-                  backgroundColor: 'white',
-                  color: 'var(--color-primary-text)',
-                  fontFamily: 'var(--font-sans)',
-                  boxShadow: 'var(--shadow-white-card)',
-                  border: 'none',
-                  cursor: phase === 'loading' ? 'not-allowed' : 'pointer',
-                  opacity: phase === 'loading' ? 0.8 : 1,
-                }}
                 aria-label="Usar mi ubicación actual"
+                style={{
+                  alignItems: 'center',
+                  backgroundColor: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '12px',
+                  boxShadow: '#00000026 0px 4px 20px',
+                  cursor: phase === 'loading' ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  flexShrink: 0,
+                  gap: '10px',
+                  height: '56px',
+                  justifyContent: 'center',
+                  opacity: phase === 'loading' ? 0.8 : 1,
+                  width: '100%',
+                }}
               >
                 {phase === 'loading' ? (
-                  <Loader2 size={20} strokeWidth={1.5} className="animate-spin" color="var(--color-primary)" />
+                  <Loader2 size={20} strokeWidth={1.5} className="animate-spin" style={{ color: 'var(--color-primary-text)', flexShrink: 0 }} />
                 ) : (
-                  <MapPin size={20} strokeWidth={1.5} color="var(--color-primary)" />
+                  <MapPin size={20} strokeWidth={1.5} style={{ color: 'var(--color-primary-text)', flexShrink: 0 }} />
                 )}
-                <span>{phase === 'loading' ? 'Obteniendo ubicación…' : 'Usar mi ubicación'}</span>
+                <span style={{
+                  color: 'var(--color-primary-text)',
+                  fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  letterSpacing: '-0.01em',
+                  lineHeight: '20px',
+                }}>
+                  {phase === 'loading' ? 'Obteniendo ubicación…' : 'Usar mi ubicación'}
+                </span>
               </button>
 
-              <button
-                onClick={() => setPhase('manual')}
-                className="w-full text-[14px] font-medium text-center py-2"
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
-                  color: 'var(--color-white-80)',
-                  textDecoration: 'underline',
-                  textDecorationColor: 'var(--color-white-40)',
-                  textDecorationThickness: '1px',
-                  textUnderlineOffset: '3px',
-                }}
-              >
-                Buscar manualmente
-              </button>
-            </>
+              <div style={{ paddingBlock: '4px' }}>
+                <button
+                  onClick={() => setPhase('manual')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#FFFFFFCC',
+                    cursor: 'pointer',
+                    display: 'inline-block',
+                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    lineHeight: '18px',
+                    padding: 0,
+                    textAlign: 'center',
+                    textDecoration: 'underline',
+                    textDecorationColor: '#FFFFFF66',
+                    textDecorationThickness: '1px',
+                    textUnderlineOffset: '3px',
+                    width: '100%',
+                  }}
+                >
+                  Buscar manualmente
+                </button>
+              </div>
+            </div>
           ) : (
-            <>
-              <div
-                className="flex items-center gap-3 rounded-xl px-4 h-14"
-                style={{
-                  backgroundColor: 'white',
-                  border: '1px solid var(--color-white-30)',
-                }}
-              >
-                <Search size={18} strokeWidth={1.5} color="var(--color-text-muted)" />
+            <div className="flex flex-col gap-3">
+              <div style={{
+                alignItems: 'center',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '12px',
+                display: 'flex',
+                gap: '12px',
+                height: '56px',
+                paddingInline: '16px',
+              }}>
+                <Search size={18} strokeWidth={1.5} style={{ color: 'var(--color-text-muted)', flexShrink: 0 }} />
                 <input
                   type="text"
                   placeholder="¿En qué zona estás?"
                   value={manualInput}
                   onChange={(e) => setManualInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleManualSubmit()}
-                  className="flex-1 bg-transparent text-base outline-none"
-                  style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)' }}
+                  className="flex-1 bg-transparent outline-none"
+                  style={{
+                    color: 'var(--color-text)',
+                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    fontSize: '16px',
+                  }}
                   autoFocus
                 />
               </div>
@@ -153,36 +205,53 @@ export default function Step1Location() {
               <button
                 onClick={handleManualSubmit}
                 disabled={!manualInput.trim()}
-                className="flex w-full items-center justify-center rounded-xl h-14 text-base font-bold tracking-[-0.01em]"
                 style={{
-                  backgroundColor: manualInput.trim() ? 'white' : 'var(--color-white-40)',
-                  color: 'var(--color-primary-text)',
-                  fontFamily: 'var(--font-sans)',
-                  boxShadow: manualInput.trim() ? 'var(--shadow-white-card)' : 'none',
+                  alignItems: 'center',
+                  backgroundColor: manualInput.trim() ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
                   border: 'none',
+                  borderRadius: '12px',
+                  boxShadow: manualInput.trim() ? '#00000026 0px 4px 20px' : 'none',
+                  color: 'var(--color-primary-text)',
                   cursor: manualInput.trim() ? 'pointer' : 'not-allowed',
+                  display: 'flex',
+                  fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  height: '56px',
+                  justifyContent: 'center',
+                  letterSpacing: '-0.01em',
+                  width: '100%',
                 }}
               >
                 Continuar
               </button>
 
-              <button
-                onClick={() => setPhase('idle')}
-                className="w-full text-[14px] font-medium text-center py-2"
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
-                  color: 'var(--color-white-80)',
-                  textDecoration: 'underline',
-                  textDecorationColor: 'var(--color-white-40)',
-                  textDecorationThickness: '1px',
-                  textUnderlineOffset: '3px',
-                }}
-              >
-                Usar GPS
-              </button>
-            </>
+              <div style={{ paddingBlock: '4px' }}>
+                <button
+                  onClick={() => setPhase('idle')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#FFFFFFCC',
+                    cursor: 'pointer',
+                    display: 'inline-block',
+                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    lineHeight: '18px',
+                    padding: 0,
+                    textAlign: 'center',
+                    textDecoration: 'underline',
+                    textDecorationColor: '#FFFFFF66',
+                    textDecorationThickness: '1px',
+                    textUnderlineOffset: '3px',
+                    width: '100%',
+                  }}
+                >
+                  Usar GPS
+                </button>
+              </div>
+            </div>
           )}
         </div>
 
