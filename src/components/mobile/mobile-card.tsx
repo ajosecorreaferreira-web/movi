@@ -18,11 +18,12 @@ interface MobileCardProps {
   onLongPress?: () => void
   swipeActions?: SwipeAction[]
   className?: string
+  style?: React.CSSProperties
 }
 
 const LONG_PRESS_DELAY = 500
 
-export function MobileCard({ children, onPress, onLongPress, swipeActions, className }: MobileCardProps) {
+export function MobileCard({ children, onPress, onLongPress, swipeActions, className, style }: MobileCardProps) {
   const { haptic } = useHaptics()
   const [pressing, setPressing] = useState(false)
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -82,6 +83,7 @@ export function MobileCard({ children, onPress, onLongPress, swipeActions, class
         backgroundColor: 'var(--card)',
         borderColor: 'var(--border)',
         color: 'var(--card-foreground)',
+        ...style,
       }}
     >
       {children}
