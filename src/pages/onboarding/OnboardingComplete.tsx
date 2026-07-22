@@ -5,9 +5,9 @@ import { useOnboardingStore } from '@/stores/onboardingStore'
 import { useHaptics } from '@/hooks/useHaptics'
 
 const AVATARS = [
-  { initial: 'A', bg: 'oklch(0.75 0.18 48)' },
-  { initial: 'M', bg: 'oklch(0.52 0.15 148)' },
-  { initial: 'C', bg: 'oklch(0.55 0.15 240)' },
+  { initial: 'A', bg: 'var(--color-primary-400)' },
+  { initial: 'M', bg: 'var(--color-success)' },
+  { initial: 'C', bg: 'var(--color-info)' },
 ]
 
 const CONFETTI = [
@@ -18,7 +18,7 @@ const CONFETTI = [
   { top: '130px', left: '260px', size: 12, color: 'var(--color-primary)',    delay: '0.15s', duration: '1.1s', rotate: -30 },
   { top: '180px', left: '330px', size: 7,  color: 'var(--color-gold)',       delay: '0.25s', duration: '1.5s', rotate: 0  },
   { top: '90px',  left: '140px', size: 5,  color: 'var(--color-xp)',         delay: '0.3s',  duration: '1.8s', rotate: 20 },
-  { top: '160px', left: '50px',  size: 9,  color: 'oklch(0.78 0.15 75)',     delay: '0.08s', duration: '1.4s', rotate: 0  },
+  { top: '160px', left: '50px',  size: 9,  color: 'var(--color-warning)',    delay: '0.08s', duration: '1.4s', rotate: 0  },
   { top: '70px',  left: '360px', size: 6,  color: 'var(--color-secondary)',  delay: '0.18s', duration: '1.6s', rotate: 60 },
   { top: '200px', left: '180px', size: 10, color: 'var(--color-xp)',         delay: '0.35s', duration: '1.2s', rotate: -45 },
 ]
@@ -45,7 +45,7 @@ export default function OnboardingComplete() {
     <div
       className="relative flex min-h-dvh flex-col overflow-hidden"
       style={{
-        backgroundColor: 'oklch(0.13 0.04 50)',
+        backgroundColor: 'var(--color-celebration-bg)',
         paddingTop: 'env(safe-area-inset-top)',
       }}
     >
@@ -76,16 +76,16 @@ export default function OnboardingComplete() {
       >
         {/* Trofeo */}
         <div
-          className="mb-7 flex items-center justify-center rounded-[28px]"
+          className="mb-7 flex items-center justify-center rounded-[var(--radius-xl)]"
           style={{
             width: 96,
             height: 96,
-            backgroundColor: 'oklch(0.78 0.16 85 / 0.15)',
-            border: '1px solid oklch(0.78 0.16 85 / 0.25)',
+            backgroundColor: 'var(--color-gold-subtle)',
+            border: '1px solid var(--color-gold-border)',
             animation: 'trophy-enter var(--duration-celebration) var(--ease-spring) forwards',
           }}
         >
-          <Trophy size={48} strokeWidth={1.5} color="oklch(0.78 0.16 85)" />
+          <Trophy size={48} strokeWidth={1.5} color="var(--color-gold)" />
         </div>
 
         {/* Headline */}
@@ -99,7 +99,7 @@ export default function OnboardingComplete() {
         {/* Subtítulo */}
         <p
           className="mb-9 max-w-[260px] text-center text-[17px] leading-relaxed"
-          style={{ color: 'rgba(255,255,255,0.65)' }}
+          style={{ color: 'var(--color-white-65)' }}
         >
           Hay{' '}
           <span className="font-bold" style={{ color: 'white' }}>12 personas</span>
@@ -116,7 +116,7 @@ export default function OnboardingComplete() {
                 width: 44,
                 height: 44,
                 backgroundColor: av.bg,
-                border: '2.5px solid oklch(0.13 0.04 50)',
+                border: '2.5px solid var(--color-celebration-bg)',
                 marginRight: i < AVATARS.length - 1 ? -12 : 0,
                 color: 'white',
                 zIndex: AVATARS.length - i,
@@ -130,17 +130,17 @@ export default function OnboardingComplete() {
             style={{
               width: 44,
               height: 44,
-              backgroundColor: 'oklch(0.25 0.03 50)',
-              border: '2.5px solid oklch(0.13 0.04 50)',
+              backgroundColor: 'var(--color-avatar-dark)',
+              border: '2.5px solid var(--color-celebration-bg)',
               marginLeft: -12,
-              color: 'rgba(255,255,255,0.7)',
+              color: 'var(--color-white-70)',
               zIndex: 0,
             }}
           >
             +9
           </div>
         </div>
-        <p className="mt-2.5 text-center text-[13px]" style={{ color: 'rgba(255,255,255,0.5)' }}>
+        <p className="mt-2.5 text-center text-[13px]" style={{ color: 'var(--color-white-50)' }}>
           Ana, Marta, Carlos y 9 más
         </p>
       </div>
@@ -150,7 +150,7 @@ export default function OnboardingComplete() {
         className="px-6"
         style={{
           paddingBottom: 'calc(env(safe-area-inset-bottom) + 40px)',
-          transition: 'opacity 400ms ease, transform 400ms ease',
+          transition: 'opacity var(--duration-slow) ease, transform var(--duration-slow) ease',
           opacity: showButton ? 1 : 0,
           transform: showButton ? 'translateY(0)' : 'translateY(16px)',
           pointerEvents: showButton ? 'auto' : 'none',
@@ -158,7 +158,7 @@ export default function OnboardingComplete() {
       >
         <button
           onClick={handleContinue}
-          className="flex w-full items-center justify-center gap-2.5 rounded-[14px]"
+          className="flex w-full items-center justify-center gap-2.5 rounded-[var(--radius-lg)]"
           style={{
             height: 58,
             backgroundColor: 'var(--color-primary)',
@@ -169,17 +169,17 @@ export default function OnboardingComplete() {
             fontSize: '17px',
             fontWeight: 700,
             letterSpacing: '-0.01em',
-            boxShadow: '0 8px 24px oklch(0.70 0.19 46 / 0.45)',
+            boxShadow: 'var(--shadow-primary-strong)',
           }}
           aria-label="Ver sesiones en mi zona"
         >
           Ver mi zona
-          <ArrowRight size={20} strokeWidth={2.5} color="white" />
+          <ArrowRight size={20} strokeWidth={1.5} color="white" />
         </button>
 
         <p
           className="mt-2.5 text-center text-[11px] font-medium uppercase tracking-widest"
-          style={{ color: 'rgba(255,255,255,0.3)' }}
+          style={{ color: 'var(--color-white-30)' }}
         >
           Toca para saltar
         </p>

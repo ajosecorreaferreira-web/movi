@@ -128,6 +128,24 @@
   --color-bronze:  oklch(0.62 0.10 55);    /* Bronce */
   --color-xp:      oklch(0.68 0.18 280);   /* Puntos XP — púrpura energético */
 
+  /* Celebration screen */
+  --color-celebration-bg: oklch(0.13 0.04 50);   /* Fondo oscuro pantalla logro */
+  --color-avatar-dark:    oklch(0.25 0.03 50);    /* Avatar +N sobre fondo celebration */
+
+  /* Gold opacity variants — trofeo */
+  --color-gold-subtle: oklch(0.78 0.16 85 / 0.15);
+  --color-gold-border: oklch(0.78 0.16 85 / 0.25);
+
+  /* White alpha — texto/bordes sobre fondos primarios u oscuros */
+  --color-white-25: oklch(1 0 0 / 0.25);
+  --color-white-30: oklch(1 0 0 / 0.30);
+  --color-white-40: oklch(1 0 0 / 0.40);
+  --color-white-50: oklch(1 0 0 / 0.50);
+  --color-white-65: oklch(1 0 0 / 0.65);
+  --color-white-70: oklch(1 0 0 / 0.70);
+  --color-white-75: oklch(1 0 0 / 0.75);
+  --color-white-80: oklch(1 0 0 / 0.80);
+
   /* ── BORDER RADIUS ── */
   --radius-none: 0px;
   --radius-xs:   4px;
@@ -206,7 +224,9 @@
 
   /* Sombra de color primario para CTAs */
   --shadow-primary: 0 4px 14px oklch(0.70 0.19 46 / 0.35);
+  --shadow-primary-strong: 0 8px 24px oklch(0.70 0.19 46 / 0.45);
   --shadow-secondary: 0 4px 14px oklch(0.45 0.13 148 / 0.25);
+  --shadow-white-card: 0 4px 20px oklch(0 0 0 / 0.15);
 
   /* ── MOTION ── */
 
@@ -328,7 +348,7 @@
 
 html {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -414,5 +434,5 @@ body {
 }
 
 .movi-shake-joy {
-  animation: shake-joy 0.6s var(--ease-spring);
+  animation: shake-joy var(--duration-slower) var(--ease-spring);
 }

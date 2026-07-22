@@ -56,14 +56,14 @@ export default function Step1Location() {
         >
           movi
         </span>
-        <span className="text-[13px] font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
+        <span className="text-[13px] font-medium" style={{ color: 'var(--color-white-70)' }}>
           Paso 1 de 2
         </span>
       </div>
 
       {/* Progress bar */}
       <div className="px-6 pt-3.5">
-        <div className="h-[3px] w-full rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.25)' }}>
+        <div className="h-[3px] w-full rounded-full" style={{ backgroundColor: 'var(--color-white-25)' }}>
           <div className="h-full w-1/2 rounded-full" style={{ backgroundColor: 'white' }} />
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function Step1Location() {
         >
           ¿Dónde<br />entrenas?
         </h1>
-        <p className="max-w-[280px] text-[17px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
+        <p className="max-w-[280px] text-[17px] leading-relaxed" style={{ color: 'var(--color-white-75)' }}>
           Te mostramos quién entrena cerca de ti hoy.
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function Step1Location() {
                 fontSize: '16px',
                 fontWeight: 700,
                 letterSpacing: '-0.01em',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                boxShadow: 'var(--shadow-white-card)',
                 border: 'none',
                 cursor: phase === 'loading' ? 'not-allowed' : 'pointer',
                 opacity: phase === 'loading' ? 0.8 : 1,
@@ -111,7 +111,7 @@ export default function Step1Location() {
               {phase === 'loading' ? (
                 <Loader2 size={20} className="animate-spin" color="var(--color-primary)" />
               ) : (
-                <MapPin size={20} strokeWidth={2} color="var(--color-primary)" />
+                <MapPin size={20} strokeWidth={1.5} color="var(--color-primary)" />
               )}
               {phase === 'loading' ? 'Obteniendo ubicación…' : 'Usar mi ubicación'}
             </button>
@@ -119,7 +119,7 @@ export default function Step1Location() {
             <button
               onClick={() => setPhase('manual')}
               className="py-1 text-center text-[14px] font-medium underline underline-offset-2"
-              style={{ color: 'rgba(255,255,255,0.8)', border: 'none', background: 'none', cursor: 'pointer' }}
+              style={{ color: 'var(--color-white-80)', border: 'none', background: 'none', cursor: 'pointer' }}
             >
               Buscar manualmente
             </button>
@@ -129,7 +129,7 @@ export default function Step1Location() {
             <div className="flex items-center gap-3 rounded-xl px-4" style={{
               height: '56px',
               backgroundColor: 'white',
-              border: '1px solid rgba(255,255,255,0.3)',
+              border: '1px solid var(--color-white-30)',
             }}>
               <Search size={18} color="var(--color-text-muted)" strokeWidth={1.5} />
               <input
@@ -151,7 +151,7 @@ export default function Step1Location() {
               style={{
                 width: '100%',
                 height: '56px',
-                backgroundColor: manualInput.trim() ? 'white' : 'rgba(255,255,255,0.4)',
+                backgroundColor: manualInput.trim() ? 'white' : 'var(--color-white-40)',
                 color: 'var(--color-primary-text)',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '16px',
@@ -167,7 +167,7 @@ export default function Step1Location() {
             <button
               onClick={() => setPhase('idle')}
               className="py-1 text-center text-[14px] font-medium underline underline-offset-2"
-              style={{ color: 'rgba(255,255,255,0.8)', border: 'none', background: 'none', cursor: 'pointer' }}
+              style={{ color: 'var(--color-white-80)', border: 'none', background: 'none', cursor: 'pointer' }}
             >
               Usar GPS
             </button>

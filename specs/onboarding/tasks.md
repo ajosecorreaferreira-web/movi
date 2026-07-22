@@ -96,6 +96,10 @@
 
 - [x] `npm run build` → 0 errores TypeScript, 2205 módulos compilados limpio
   - Nota: `audit:all` no existe en los scripts — se usa `build` + `lint` individualmente
+- [x] `npm run lint` → 0 errores ESLint
+- [x] `npm run audit:tokens` → 0 errores, 0 warnings (DS Token Audit limpio)
+  - Añadidos tokens: `--color-celebration-bg`, `--color-avatar-dark`, `--color-gold-subtle`, `--color-gold-border`, `--color-white-{25|30|40|50|65|70|75|80}`, `--shadow-primary-strong`, `--shadow-white-card`
+  - Corregidos `strokeWidth` a 1.5, `400ms` → `var(--duration-slow)`, `rounded-[Xpx]` → `rounded-[var(--radius-*)]`
 - [ ] Verificar touch targets: todos los interactivos ≥ 44×44px (inspección visual en DevTools)
 - [ ] Verificar safe areas: probar en iPhone SE (375px) con barra de navegación visible
 - [ ] Verificar skeleton loaders: simular latencia 3G en DevTools Network
@@ -106,9 +110,9 @@
 
 ## Bloque 7 — Commit
 
-- [ ] `git add src/pages/onboarding/ src/components/movi/ src/stores/onboardingStore.ts src/services/`
-- [ ] `git commit -m "feat(onboarding): flujo completo — location + level + celebration"`
-- [ ] `git push origin main`
+- [x] `git add src/pages/onboarding/ src/components/movi/ src/stores/onboardingStore.ts src/services/`
+- [x] `git commit -m "feat(onboarding): flujo completo — location + level + celebration"`
+- [x] `git push origin main`
 
 ---
 
