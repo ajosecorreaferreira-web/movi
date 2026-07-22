@@ -59,8 +59,8 @@ export default function Step1Location() {
         </div>
 
         {/* Contenido — ocupa el espacio disponible */}
-        <div className="flex-1 flex flex-col justify-center px-4 py-8">
-          <h1 className="text-4xl font-bold text-white leading-tight tracking-tight mb-3">
+        <div className="flex-1 flex flex-col justify-center px-6 py-8">
+          <h1 className="text-3xl font-bold text-white leading-tight tracking-tight mb-3 whitespace-nowrap">
             ¿Dónde entrenas?
           </h1>
           <p className="text-white/80 text-base">
@@ -70,8 +70,8 @@ export default function Step1Location() {
 
         {/* CTA sticky bottom */}
         <div
-          className="sticky bottom-0 flex flex-col gap-3 px-4 pt-4 bg-[var(--color-primary)]"
-          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+          className="sticky bottom-0 flex flex-col gap-3 px-6 pt-4 bg-[var(--color-primary)]"
+          style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
         >
           {!showManual ? (
             <>
