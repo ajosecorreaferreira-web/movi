@@ -6,7 +6,7 @@ import { useHaptics } from '@/hooks/useHaptics'
 
 const AVATARS = [
   { initial: 'A', bg: 'var(--color-primary-400)' },
-  { initial: 'M', bg: 'var(--color-success)' },
+  { initial: 'M', bg: 'var(--color-secondary)' },
   { initial: 'C', bg: 'var(--color-info)' },
 ]
 
@@ -99,7 +99,7 @@ export default function OnboardingComplete() {
 
         {/* Subtítulo */}
         <p
-          className="mb-9 max-w-[260px] text-center text-[17px] leading-relaxed"
+          className="mb-9 max-w-[260px] text-center text-[17px] leading-[26px]"
           style={{ color: 'var(--color-white-65)' }}
         >
           Hay{' '}
@@ -150,7 +150,7 @@ export default function OnboardingComplete() {
       <div
         className="sticky bottom-0 px-4 pt-4"
         style={{
-          paddingBottom: 'max(1rem, env(safe-area-inset-bottom))',
+          paddingBottom: 'max(3rem, env(safe-area-inset-bottom))',
           backgroundColor: 'var(--color-celebration-bg)',
           transition: 'opacity var(--duration-slow) ease, transform var(--duration-slow) ease',
           opacity: showButton ? 1 : 0,
@@ -160,17 +160,15 @@ export default function OnboardingComplete() {
       >
         <button
           onClick={handleContinue}
-          className="flex w-full items-center justify-center gap-2.5 rounded-[var(--radius-lg)]"
+          className="flex w-full items-center justify-center gap-2.5 text-[17px] font-bold tracking-[-0.01em] text-white"
           style={{
             height: 58,
+            borderRadius: '14px',
             backgroundColor: 'var(--color-primary)',
             border: 'none',
             cursor: 'pointer',
-            color: 'white',
             fontFamily: 'var(--font-sans)',
-            fontSize: '17px',
-            fontWeight: 700,
-            letterSpacing: '-0.01em',
+            lineHeight: '22px',
             boxShadow: 'var(--shadow-primary-strong)',
           }}
           aria-label="Ver sesiones en mi zona"

@@ -1,4 +1,4 @@
-import { Footprints, Wind, Zap, Flame, Trophy } from 'lucide-react'
+import { Footprints, Wind, Zap, Flame, Trophy, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const LEVELS = [
@@ -24,7 +24,7 @@ export function LevelSelector({ value, onChange }: LevelSelectorProps) {
     <div
       role="radiogroup"
       aria-label="Nivel de actividad"
-      className="flex flex-col gap-2.5"
+      className="flex flex-col gap-[10px]"
     >
       {LEVELS.map(({ id, name, Icon, desc }) => {
         const selected = value === id
@@ -36,8 +36,8 @@ export function LevelSelector({ value, onChange }: LevelSelectorProps) {
             aria-label={`${name} — ${desc}`}
             onClick={() => handleSelect(id)}
             className={cn(
-              'flex items-center gap-3.5 rounded-xl px-4 text-left transition-all',
-              'min-h-[64px] w-full cursor-pointer border focus-visible:outline-none focus-visible:ring-2',
+              'flex items-center gap-[14px] rounded-xl py-3.5 px-4 text-left transition-all',
+              'min-h-[68px] w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2',
               'focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2',
               selected
                 ? 'border-2 border-[var(--color-primary)] bg-[var(--color-primary-50)]'
@@ -46,7 +46,7 @@ export function LevelSelector({ value, onChange }: LevelSelectorProps) {
           >
             <div
               className={cn(
-                'flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]',
+                'flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)]',
                 selected ? 'bg-[var(--color-primary-100)]' : 'bg-[var(--color-surface-2)]'
               )}
             >
@@ -56,32 +56,25 @@ export function LevelSelector({ value, onChange }: LevelSelectorProps) {
                 color={selected ? 'var(--color-primary-text)' : 'var(--color-text-muted)'}
               />
             </div>
-            <div className="flex flex-1 flex-col gap-0.5 py-3.5">
+            <div className="flex flex-1 flex-col gap-0.5">
               <span
-                className="text-[15px] font-bold leading-tight tracking-tight"
+                className="text-[15px] font-bold leading-[18px] tracking-[-0.01em]"
                 style={{ color: selected ? 'var(--color-primary-text)' : 'var(--color-text)' }}
               >
                 {name}
               </span>
               <span
-                className="text-[13px] leading-snug"
+                className="text-[13px] leading-[16px]"
                 style={{
                   color: selected ? 'var(--color-primary-text)' : 'var(--color-text-muted)',
-                  opacity: selected ? 0.85 : 1,
+                  opacity: selected ? 0.8 : 1,
                 }}
               >
                 {desc}
               </span>
             </div>
             {selected && (
-              <svg
-                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="var(--color-primary)" strokeWidth="2.5"
-                strokeLinecap="round" strokeLinejoin="round"
-                className="shrink-0"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check size={18} strokeWidth={1.5} color="var(--color-primary)" className="shrink-0" />
             )}
           </button>
         )
