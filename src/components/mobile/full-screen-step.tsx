@@ -32,7 +32,9 @@ export function FullScreenStep({
 }: FullScreenStepProps) {
   const { haptic } = useHaptics()
   const prevStep = useRef(currentStep)
+  // eslint-disable-next-line react-hooks/refs
   const direction = currentStep > prevStep.current ? 1 : -1
+  // eslint-disable-next-line react-hooks/refs
   prevStep.current = currentStep
 
   function handleNext() {
@@ -44,8 +46,8 @@ export function FullScreenStep({
   const progress = (currentStep / totalSteps) * 100
 
   return (
-    <div className="flex h-full flex-col" style={{ backgroundColor: 'var(--background)' }}>
-      <div>
+    <div className="flex min-h-dvh flex-col" style={{ backgroundColor: 'var(--background)' }}>
+      <div className="sticky top-0 z-20" style={{ backgroundColor: 'var(--background)' }}>
         <div className="h-1 w-full" style={{ backgroundColor: 'var(--muted)' }}>
           <motion.div
             className="h-full"
@@ -60,6 +62,7 @@ export function FullScreenStep({
           onBack={onBack}
         />
       </div>
+
 
       <div className="flex-1 overflow-y-auto">
         <AnimatePresence mode="wait" initial={false}>
@@ -85,7 +88,7 @@ export function FullScreenStep({
       </div>
 
       <div
-        className="border-t px-4 py-3"
+        className="sticky bottom-0 border-t px-4 py-3"
         style={{
           paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))',
           borderColor: 'var(--border)',

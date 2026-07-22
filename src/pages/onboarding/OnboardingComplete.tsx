@@ -42,8 +42,9 @@ export default function OnboardingComplete() {
   }
 
   return (
+    <div className="flex min-h-dvh items-center justify-center bg-gray-100">
     <div
-      className="relative flex min-h-dvh flex-col overflow-hidden"
+      className="relative flex min-h-dvh w-full max-w-[390px] flex-col overflow-hidden"
       style={{
         backgroundColor: 'var(--color-celebration-bg)',
         paddingTop: 'env(safe-area-inset-top)',
@@ -184,6 +185,7 @@ export default function OnboardingComplete() {
           Toca para saltar
         </p>
       </div>
+    </div>
     </div>
   )
 }
