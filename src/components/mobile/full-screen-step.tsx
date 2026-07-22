@@ -90,7 +90,7 @@ export function FullScreenStep({
       <div
         className="sticky bottom-0 border-t px-4 py-3"
         style={{
-          paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))',
+          paddingBottom: 'max(1rem, env(safe-area-inset-bottom))',
           borderColor: 'var(--border)',
           backgroundColor: 'var(--background)',
         }}

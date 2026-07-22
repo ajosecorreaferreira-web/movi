@@ -42,7 +42,7 @@ export default function OnboardingComplete() {
   }
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-gray-100">
+    <div className="min-h-dvh bg-neutral-100 flex items-start justify-center">
     <div
       className="relative flex min-h-dvh w-full max-w-[390px] flex-col overflow-hidden"
       style={{
@@ -148,9 +148,10 @@ export default function OnboardingComplete() {
 
       {/* CTA */}
       <div
-        className="px-6"
+        className="sticky bottom-0 px-4 pt-4"
         style={{
-          paddingBottom: 'calc(env(safe-area-inset-bottom) + 40px)',
+          paddingBottom: 'max(1rem, env(safe-area-inset-bottom))',
+          backgroundColor: 'var(--color-celebration-bg)',
           transition: 'opacity var(--duration-slow) ease, transform var(--duration-slow) ease',
           opacity: showButton ? 1 : 0,
           transform: showButton ? 'translateY(0)' : 'translateY(16px)',

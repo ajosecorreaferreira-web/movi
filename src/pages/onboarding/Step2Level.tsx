@@ -20,7 +20,7 @@ export default function Step2Level() {
   }
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-gray-100">
+    <div className="min-h-dvh bg-neutral-100 flex items-start justify-center">
       <div className="w-full max-w-[390px] min-h-dvh">
         <FullScreenStep
           currentStep={2}
