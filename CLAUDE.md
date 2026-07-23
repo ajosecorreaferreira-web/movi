@@ -170,7 +170,13 @@ App · Nombre     → Pantallas desktop (1440px)
 5. **Élite** — crossfit, híbridos, pesas serias
 
 ### Los públicos
-Adolescentes, madres recientes, divorciados, viajeros de trabajo frecuente, viudos, recién mudados, personas mayores de 40-60 que quieren reconectar.
+- Adolescentes
+- Madres recientes
+- Divorciados
+- Viajeros de trabajo frecuente
+- Viudos
+- Recién mudados
+- Personas mayores de 40-60 que quieren reconectar
 - **Dueño de perro 🐕** — sale a diario, mismas zonas y horarios, tag dog-friendly en sesiones
 - **Padre/madre con hijos (custodia parcial) 👨‍👧** — fines de semana, sesiones familiares, nivel según edad del hijo
 
