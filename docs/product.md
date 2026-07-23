@@ -1,121 +1,134 @@
-# Movi — Producto
-> "El deporte es la excusa. La conexión es el producto."
+# product.md — Qué es Movi
+
+**Versión:** 2.0  
+**Fecha:** Julio 2026
 
 ---
 
-## Qué es Movi
+## El problema
 
-Movi es una PWA mobile-first que combate la soledad a través del deporte. Conecta personas para entrenar juntas — desde caminar hasta Hyrox. Para todos los niveles y todos los momentos de vida.
+La soledad es la pandemia silenciosa de nuestro tiempo. Pero decirle a alguien "descarga esta app para hacer amigos" no funciona — hay demasiada presión, demasiada exposición, demasiado riesgo de rechazo.
 
-No es una app de fitness. Es una app de esperanza.
-
-La diferencia: Nike Training Club te hace mejor deportista. Movi te hace sentir menos solo. El deporte es el vehiculo, no el destino.
-
----
-
-## El problema que resuelve
-
-La soledad es la epidemia silenciosa del siglo XXI. Afecta especialmente a:
-- Madres recientes que han perdido su red social de trabajo
-- Personas que acaban de mudarse a una ciudad o barrio nuevo
-- Divorciados que reconstruyen su vida social desde cero
-- Personas mayores de 60 que se jubilan y pierden su estructura de relaciones
-- Jóvenes introvertidos que quieren conectar pero no saben cómo empezar
-- Viajeros de trabajo frecuente que están solos en ciudades que no conocen
-
-El deporte tiene una propiedad única para combatir esto: **puedes estar junto a alguien sin tener que hablar**. El chico de Santander en el gimnasio de la urbanización — apenas se saludan, pero solo tenerlo al lado ya se siente como compañía. Eso es Movi.
+El deporte resuelve eso. Cuando quedas para entrenar, el objetivo declarado es el ejercicio. La conexión surge sola, sin presión, sin la incomodidad de "quedar para conocerse".
 
 ---
 
 ## La solución
 
-Una app que en 30 segundos te muestra quién está entrenando cerca de ti hoy, a qué nivel, en qué espacio, y te da la opción de unirte, organizar algo, o simplemente aparecer.
+**Movi** es una PWA mobile-first que conecta personas para entrenar juntas en espacios públicos cercanos. Sin gimnasio obligatorio, sin cuotas, sin compromisos fijos.
 
-Con una guía de entrenamiento contextual que sabe con quién vas, cuánto tiempo tienes, y en qué espacio estás. Con un sistema de gamificación que celebra las conexiones, no solo las calorías. Con quedadas mensuales organizadas automáticamente.
+**El concepto central:** El deporte es la excusa. La conexión es el producto.
 
----
-
-## Los 5 niveles de actividad
-
-| Nivel | Nombre | Actividades típicas |
-|---|---|---|
-| 1 | Activo | Caminar, moverse, estirar |
-| 2 | En marcha | Trote suave, funcional ligero, yoga |
-| 3 | En forma | Funcional, natación, ciclismo, pádel suave |
-| 4 | Potencia | Hyrox, pádel, tenis, funcional intenso |
-| 5 | Élite | CrossFit, powerlifting, híbridos de alto rendimiento |
-
-El nivel es **autodeclarado y puede cambiar cada día**. La pregunta en el onboarding es "¿Cuál es tu nivel hoy?" — no "¿Cuál es tu nivel en general?". Porque hay días de nivel 1 y días de nivel 4, y ambos son válidos.
+**La frase de marketing:** "No te vendemos un cuerpo. Te damos gente con quien conseguirlo."
 
 ---
 
-## Los 7 pilares del producto
+## Cómo funciona
 
-### 1 — Entrada sin fricción
-2 preguntas obligatorias: ubicación + nivel de hoy. En 30 segundos tienes sesiones cerca. El resto de datos se completan después o la IA los infiere del uso.
+**Onboarding en 2 preguntas:**
+1. ¿Dónde estás? (ubicación)
+2. ¿Cuál es tu nivel hoy? (1-5)
 
-### 2 — La guía de entrenamiento contextual
-Mejor que Nike Training Club en un aspecto: sabe con quién vas, cuánto tiempo tienes, y dónde estás. Sugiere ejercicios en pareja que no puedes hacer solo. Se adapta al espacio (parque, piscina, gimnasio). Guiado con voz si el usuario lo activa.
+En menos de 30 segundos el usuario ve quién entrena cerca y puede apuntarse a una sesión o proponer la suya.
 
-### 3 — El mapa de espacios
-Parques con máquinas al aire libre, zonas de cuerpo libre, piscinas y gimnasios municipales (con horarios y precios), urbanizaciones con zona comunitaria, gimnasios Hyrox y partners B2B.
+**3 modos de sesión:**
+- **Libre** — publicas una sesión, otros se unen si quieren
+- **Guiado** — la app organiza, tú apareces
+- **Solo visible** — entrenas solo pero apareces en el mapa
 
-### 4 — La conexión sin presión
-**Modo libre:** publicas sesión, otros se unen si quieren.
-**Modo guiado:** la app organiza, tú apareces.
-**Modo invisible:** entrenas solo, nadie sabe que estás.
-Incluye guía de ruptura del hielo — qué decir al llegar, cómo presentarte, la propuesta de café post-sesión.
-
-### 5 — Gamificación con significado
-```
-Entrenar solo:          10 puntos
-Entrenar acompañado:    25 puntos (+150%)
-Constancia 3×/semana:   bonus ×2
-Organizar sesión:       50 puntos
-Asistir a quedada:      100 puntos
-```
-Medallas que cuentan historias: "Primer encuentro", "Vecino activo", "Capitán", "Constante", "Colectivo".
-
-### 6 — Las quedadas mensuales
-1-2 veces al mes, grupos de máximo 15 personas por nivel y zona. Sistema de delegado/líder con instrucciones especiales. Opción de 5€/persona para acceder a instalaciones premium. La app gestiona confirmaciones, recordatorios y el entrenamiento del día.
-
-### 7 — El compromiso invisible
-Integración nativa con Google Calendar y Apple Calendar. Recordatorio el día anterior. El día del evento: "Hay 4 personas esperándote. Solo 20 minutos." Mensajes de ánimo que suenan humanos.
+**Filtros de sesión:**
+- Todos (default)
+- Solo mujeres
+- Solo hombres
+- Con niños 👶
+- Dog-friendly 🐕
 
 ---
 
-## El efecto social — El marketing lo hacen los usuarios
+## Los 5 niveles
 
-Movi está diseñada para crear momentos instagrameables:
-- El grupo exhausto y feliz después de entrenar
-- El café post-sesión
-- La foto de grupo con el frame de Movi
-- El resumen semanal visual para compartir en stories
-
-Como CrossFit e Hyrox crecieron sin invertir un euro en publicidad: la comunidad genera el contenido, el orgullo de pertenecer genera el crecimiento.
-
-El frame de Movi en cada post es la marca en el mundo real.
+1. **Activo** — caminar, moverme, empezar
+2. **En marcha** — trote suave, algo de funcional
+3. **En forma** — funcional, natación, bici
+4. **Potencia** — Hyrox, pádel, funcional intenso
+5. **Élite** — crossfit, híbridos, pesas serias
 
 ---
 
-## El resumen semanal
+## La guía de entrenamiento
 
-Domingo noche o lunes mañana. Limpio, rápido, motivador:
-```
-Esta semana:
-✅ 3 sesiones completadas
-👥 2 personas nuevas conocidas
-🔥 847 puntos ganados
-📈 +12% respecto a la semana pasada
-Tu racha: 18 días 🔥
-Esta semana quedan 2 sesiones cerca →
-```
+Mejor que Nike Training Club en un aspecto clave: es contextual.
+
+- Sabe dónde estás (parque, piscina, gimnasio) y adapta los ejercicios
+- Si vas acompañado, sugiere ejercicios en pareja
+- Vídeos cortos de 2-3 segundos por ejercicio
+- Guiado con voz — cuenta repeticiones y tiempos
+- Funcional como base universal — sin equipamiento obligatorio
+
+**Estructura de cada sesión:**
+- Llegada (5 min)
+- Calentamiento (5 min)
+- Bloque principal (20 min) — con vueltas y repeticiones
+- Finisher (5 min)
+- Enfriamiento (5 min)
 
 ---
 
-## Nutrición — Opcional y sin agobios
+## El efecto social — lo que hace que la gente lo use y lo comparta
 
-Solo aparece si el usuario lo activa. Nunca en el onboarding inicial. 3 ideas de desayuno según objetivo, 2 ideas de comida y cena, 1 consejo semanal. Sin tracking de calorías obligatorio. El bienestar de Movi no pasa por contar calorías.
+**El Momento Movi:**
+Al terminar una sesión grupal, la app propone hacer una foto de grupo con frame de Movi. Un tap para compartir en Instagram Stories o TikTok. El marketing lo hacen los usuarios.
+
+**El resumen semanal shareable:**
+"Esta semana entrené 3 veces, conocí a 2 personas nuevas." Listo para compartir como historia.
+
+**Las quedadas mensuales:**
+1-2 veces al mes la app organiza eventos por nivel y zona. Con sistema de delegados/líderes que reciben incentivos.
+
+---
+
+## Gamificación
+
+- Puntos por entrenar solo: 10 puntos
+- Puntos por entrenar acompañado: 25 puntos (+150%)
+- Bonus por constancia: 3 veces/semana → x2
+- Puntos por organizar sesión: 50 puntos
+- Puntos por asistir a quedada: 100 puntos
+
+**Medallas:** Primera sesión con alguien nuevo, 5 sesiones en el mismo parque, primera quedada organizada, 30 días sin fallar.
+
+---
+
+## Funcionalidades core
+
+- Onboarding en 2 preguntas
+- Mapa de sesiones cercanas en tiempo real
+- Plan de entrenamiento generado por IA
+- Mapa de espacios deportivos gratuitos (parques, máquinas, piscinas municipales)
+- Sesiones: publicar, unirse, modo solo visible
+- Filtros: nivel, distancia, género, dog-friendly, con niños
+- Gamificación: puntos, medallas, ranking local
+- Quedadas mensuales organizadas por nivel y zona
+- Sistema de delegados/líderes con incentivos
+- Integración Google Calendar y Apple Calendar
+- Notificaciones contextuales (no saturantes)
+- Resumen semanal/mensual shareable
+- "Momento Movi" — foto de grupo para redes sociales
+- Guía para romper el hielo
+- Guía de nutrición (opcional, se activa si el usuario quiere)
+
+---
+
+## Los espacios
+
+La infraestructura gratuita que nadie ha mapeado bien:
+- Parques con máquinas al aire libre (como el Pinar de Las Rozas)
+- Zonas de cuerpo libre
+- Piscinas y gimnasios municipales
+- Urbanizaciones con zona comunitaria
+- Espacios abiertos para correr
+- Gimnasios Hyrox y híbridos partners
+- Zonas dog-friendly para sesiones con perro
 
 ---
 
@@ -123,9 +136,46 @@ Solo aparece si el usuario lo activa. Nunca en el onboarding inicial. 3 ideas de
 
 **Freemium:**
 - Gratis: plan básico, ver sesiones, unirse a sesiones abiertas, 1 quedada mensual
-- Premium 6€/mes: plan avanzado, grupos exclusivos, estadísticas detalladas, nutrición, sin anuncios
+- Premium 6€/mes: plan avanzado, grupos pequeños exclusivos, estadísticas detalladas, nutrición, sin anuncios
 
-**B2B — 3 líneas:**
-- Gimnasios Hyrox y híbridos: pagan para aparecer en el mapa y acceder a usuarios cualificados
-- Ayuntamientos: integran instalaciones, pagan por uso o visibilidad
-- Clases especiales: 5€/persona para acceso a instalaciones premium — Movi gestiona el cobro y pasa el 70% al gimnasio
+**B2B:**
+- Gimnasios Hyrox y híbridos: instalaciones + clases especiales (5€/persona — Movi gestiona el cobro)
+- Ayuntamientos: integración instalaciones municipales
+
+---
+
+## Stack técnico
+
+```
+Framework:     React + Vite + TypeScript
+Estilos:       Tailwind CSS v4 + shadcn/ui
+Motion:        Motion (Framer Motion)
+PWA:           vite-plugin-pwa
+Estado:        Zustand
+Base de datos: Supabase (pendiente)
+Auth:          Google + Apple (pendiente)
+Maps:          Google Maps API con estilo personalizado Movi
+Deploy:        Vercel
+Repo:          github.com/ajosecorreaferreira-web/movi
+URL:           https://movi-neon-eight.vercel.app
+```
+
+---
+
+## Estado del MVP
+
+**Completado:**
+- ✅ Onboarding — Step1 (ubicación), Step2 (nivel), Complete (celebración)
+- ✅ Home — mapa Pinar Las Rozas, tabs días, lista sesiones, FAB proponer
+- ✅ Sistema de agentes Claude Code (6 agentes)
+- ✅ PWA configurada
+
+**Pendiente:**
+- ⏳ Pantalla de detalle de sesión (3 niveles)
+- ⏳ Motor de entrenamiento con IA
+- ⏳ Supabase + Auth
+- ⏳ Google Maps real con estilo Movi
+- ⏳ Notificaciones push
+- ⏳ Gamificación
+- ⏳ movi-admin (panel desktop)
+

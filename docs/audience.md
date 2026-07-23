@@ -1,129 +1,181 @@
-# Movi — Audiencia
-> Usuario principal: **Madre reciente (3-6 meses postparto)**
-> Diseñamos para ella. El resto se beneficia.
+# audience.md — Audiencia y Perfiles de Usuario de Movi
+
+**Versión:** 2.0  
+**Fecha:** Julio 2026
 
 ---
 
-## Por qué la madre reciente es el usuario principal
+## El principio de Movi
 
-Su necesidad es **urgente y emocional**, no solo funcional. No busca un compañero de entrenamiento — busca un ancla al mundo adulto. Sentir que sigue siendo ella. Que hay vida más allá del bebé y las noches sin dormir.
+Movi no es una app de fitness. Es una app de conexión humana con el deporte como pretexto. Los usuarios no vienen a Movi porque quieren entrenar mejor — vienen porque están solos, porque perdieron su red social, porque se acaban de mudar, porque necesitan un plan el domingo.
 
-Si el DS funciona para ella — con tiempo limitado, energía baja, presión cero, entrada de 20 minutos — funciona para todos los demás. Es el perfil más exigente como sistema de diseño.
-
-**La barrera psicológica de empezar es lo que más paraliza.** Movi lo sabe. Por eso el onboarding es de 30 segundos. Por eso el primer entreno puede ser "20 minutos caminando por el parque con el bebé".
+**El deporte es la excusa. La conexión es el producto.**
 
 ---
 
-## Los 4 perfiles de usuario
-
-### Perfil 1 — La Madre Reciente ★ PRINCIPAL
-**Quién es:**
-- 28-38 años, ha dado a luz hace 3-6 meses
-- Ha cogido algo de peso durante el embarazo
-- Está de baja o ha dejado de trabajar temporalmente
-- Su vida ha cambiado radicalmente — identidad, cuerpo, rutinas
-- Posible depresión postparto o simplemente mucha soledad
-
-**Un martes a las 7pm:**
-Está en casa con el bebé. Ha pasado otro día sin hablar con ningún adulto de verdad. Mira el móvil. Ve Instagram y se siente peor. Necesita con urgencia conectar con alguien, moverse, tener endorfinas. No le importa empezar hoy con 20 minutos en el parque.
-
-**Sus frenos:**
-- "No estoy en forma para ir al gym"
-- "El bebé no me deja tiempo"
-- "No conozco a nadie en el barrio desde que nos mudamos"
-- "¿Y si me pongo a llorar delante de alguien?"
-
-**Cómo Movi los elimina:**
-- Entrada en 30 segundos, sin juicio de forma física
-- Sesiones desde 20 minutos, con o sin bebé
-- Nivel 1 (Activo) normaliza el ritmo lento
-- Modo libre: nadie sabe que estás si no quieres
-- El primer mensaje de Movi: "Empieza como puedas. Eso ya es suficiente."
-
-**Diseño para ella:**
-- UX ultra simple, una mano libre (la otra tiene al bebé)
-- Cero fricción en el flujo principal
-- Tono extra cálido en sus primeras interacciones
-- Notificaciones respetan horarios de sueño del bebé (si lo activa)
+## Los perfiles de usuario
 
 ---
 
-### Perfil 2 — La Persona Mayor Activa
-**Quién es:**
-- 58-68 años, se ha mudado o lleva poco en la zona
-- Está bien de salud, buena forma base, pero se mueve poco últimamente
-- Tiene tiempo — jubilada o trabajo de media jornada
-- Quiere conexión humana real, no solo caminar sola
-- Le interesa actividad de baja-media intensidad: paseos rápidos, funcional suave, estiramientos en parque
+### Perfil 1 — La madre reciente
 
-**Su rol en Movi:**
-Usuario de alta retención. Una vez que encuentra "su grupo" en el barrio, se convierte en asidua y en embajadora natural (recomienda Movi a conocidos).
+**Situación:** Lleva meses en casa. Su vida social anterior desapareció. Quiere moverse pero no tiene con quién ni cuándo.
 
-**Diseño para ella:**
-- Texto base a 16px mínimo, nunca menos
-- Botones grandes y claros, sin iconos ambiguos
-- Sin jerga deportiva sin explicar
-- Perfil de nivel que normaliza "Activo" y "En marcha" como opciones válidas y respetables
+**Necesidad real:** Salir de casa con una excusa válida. Conocer a alguien que entienda su situación sin tener que explicarla.
+
+**Cómo usa Movi:** Busca sesiones nivel 1 por la mañana — caminatas, trote suave — cerca de su zona. Con o sin carrito.
+
+**Nivel:** 1-2  
+**Horario:** Mañanas entre semana  
+**Tag:** Con carrito 👶 / Dog-friendly 🐕
 
 ---
 
-### Perfil 3 — El Usuario Fit que Quiere Más
-**Quién es:**
-- 45-55 años, muy en forma, se cuida (aunque bebe cervezas y tiene vida social)
-- Tiene equipamiento en casa (puede que un home gym)
-- Quiere ir un paso más allá: Hyrox, cross training, running con ritmo
-- Busca compañeros que estén a su nivel — no quiere ir frenado
+### Perfil 2 — El divorciado / la divorciada
 
-**Su rol en Movi:**
-El perfil que más crece dentro del producto. Empieza buscando compañero de running y acaba organizando quedadas de Hyrox. Genera contenido instagrameable de forma natural.
+**Situación:** Su red social era compartida con la pareja. Ha perdido los planes del fin de semana, la rutina deportiva, los amigos en común.
 
-**Diseño para él:**
-- Filtros de nivel claros — puede buscar "solo Nivel 4-5"
-- Estadísticas más detalladas (Premium)
-- Perfil de espacio: puede compartir su home gym como espacio de sesión
-- Las célèbres notificaciones de "nuevo en tu nivel cerca" le activan
+**Necesidad real:** Reconstruir una vida social desde cero sin la presión de las apps de citas.
+
+**Cómo usa Movi:** Busca sesiones nivel 2-3 los fines de semana. Le importa el nivel de exigencia y que haya gente de edad similar.
+
+**Nivel:** 2-3  
+**Horario:** Fines de semana, tardes entre semana  
+**Tag:** Filtro de género si lo prefiere
 
 ---
 
-### Perfil 4 — El Joven Tímido
-**Quién es:**
-- 16-22 años, empieza a mirarse al espejo, quiere ponerse en forma
-- Mucho tiempo en redes, se siente solo, quiere un amigo/colega
-- No quiere ir al gym solo — da vergüenza
-- Le interesan los gimnasios al aire libre, el polideportivo, el funcional básico
-- Hablar poco y hacer mucho — la conexión llega con el tiempo
+### Perfil 3 — El viajero de trabajo
 
-**Su rol en Movi:**
-El más difícil emocionalmente. Requiere onboarding con máxima ausencia de presión. La guía de ruptura del hielo es especialmente importante para él.
+**Situación:** Pasa la semana en ciudades que no conoce. Hotel, oficina, restaurante. Sin tiempo ni contactos para socializar.
 
-**Diseño para él:**
-- Modo invisible disponible — puede "aparecer" sin comprometerse
-- El perfil de nivel sin foto de cara es válido (para quienes tienen vergüenza)
-- Grupos de edad opcionales (en Premium) para conectar con su franja
-- La "guía de qué decir al llegar" es su feature más valiosa
+**Necesidad real:** Una hora de normalidad. Moverse, ver a alguien, no cenar solo en el hotel.
+
+**Cómo usa Movi:** Abre el mapa en la ciudad donde está, busca una sesión esa tarde o mañana. Se une sin compromisos.
+
+**Nivel:** 2-4  
+**Horario:** Mañanas antes del trabajo, tardes después  
+**Tag:** Ninguno especial — necesita flexibilidad total
 
 ---
 
-## Mapa de roles
+### Perfil 4 — El recién mudado / la recién mudada
 
-| Rol | Quién | Feature clave |
-|---|---|---|
-| Usuario estándar | Todos los perfiles | Buscar / unirse a sesiones |
-| Organizador / Capitán | Perfil 3 principalmente, también Perfil 2 | Crear quedadas, liderar grupos |
-| Delegado de quedada | Cualquiera elegido por la app | Recibe instrucciones especiales, beneficios |
-| Gym / Partner B2B | Gimnasios Hyrox, instalaciones | Panel admin desktop, visibilidad en mapa |
-| Ayuntamiento | Administradores públicos | Integración de instalaciones municipales |
-| Admin Movi | Equipo interno | Panel de gestión completo |
+**Situación:** Nueva ciudad o nuevo barrio. No conoce a nadie. El trabajo no es suficiente para hacer amigos.
+
+**Necesidad real:** Un punto de entrada a la comunidad local. Sin la presión de "quedar para conocerse".
+
+**Cómo usa Movi:** Explora el mapa de su nueva zona, se apunta a sesiones recurrentes para ver caras conocidas cada semana.
+
+**Nivel:** Cualquiera  
+**Horario:** Flexible  
+**Tag:** Ninguno
 
 ---
 
-## Mapa sector → arquetipo de usuario
+### Perfil 5 — El mayor de 40-50-60 que quiere reconectar
 
-| Sector | Arquetipo Movi | Nivel habitual |
-|---|---|---|
-| Madres recientes | El Cuidador (necesita ser cuidada) | 1-2 |
-| Personas mayores (60+) | El Inocente (quiere simplicidad y conexión) | 1-2 |
-| Divorciados / recién mudados | El Explorador (nueva etapa vital) | 2-3 |
-| Viajeros de trabajo frecuente | El Héroe (eficiencia, buscan lo que sea cerca) | 3-4 |
-| Usuarios fit (45-55) | El Gobernante (quieren el mejor nivel) | 4-5 |
-| Adolescentes tímidos | El Forajido (quieren pertenecer sin exponerse) | 2-3 |
+**Situación:** Los hijos se fueron, el trabajo consume menos, los amigos se dispersaron. Quiere moverse pero no sabe cómo entrar en grupos ya formados.
+
+**Necesidad real:** Un entorno sin juicio donde el nivel de exigencia sea honesto y la edad no sea un problema.
+
+**Cómo usa Movi:** Busca sesiones nivel 1-2, prefiere grupos pequeños, valora la continuidad — ver a las mismas personas cada semana.
+
+**Nivel:** 1-3  
+**Horario:** Mañanas, cualquier día  
+**Tag:** Ninguno especial
+
+---
+
+### Perfil 6 — El adolescente
+
+**Situación:** Quiere hacer deporte pero no le apetece el gimnasio. Prefiere algo más espontáneo y social.
+
+**Necesidad real:** Un plan que no requiera compromiso fijo y donde pueda conocer gente de su edad.
+
+**Cómo usa Movi:** Sesiones nivel 2-4, cerca de donde vive, con gente similar. Le importa el tipo de actividad.
+
+**Nivel:** 2-4  
+**Horario:** Tardes y fines de semana  
+**Tag:** Filtro de género si lo prefiere
+
+---
+
+### Perfil 7 — El dueño de perro 🐕 *(nuevo)*
+
+**Situación:** Sale dos veces al día con el perro. Siempre a las mismas horas, por las mismas zonas. Ve a los mismos dueños de perros pero nunca pasa de un "hola".
+
+**Necesidad real:** Convertir esos encuentros casuales en planes reales. El perro es el pretexto perfecto — ya tienen tema de conversación.
+
+**Cómo usa Movi:** Activa el tag "con perro" en su perfil. Crea o se une a sesiones dog-friendly — caminatas, carreras, funcional en zonas que admiten perros.
+
+**Dato relevante:** Los dueños de perros hacen más ejercicio que la media y los paseos diarios reducen significativamente la soledad y el aislamiento social.
+
+**Nivel:** 1-3  
+**Horario:** Mañanas temprano, tardes  
+**Tag:** Dog-friendly 🐕  
+**Espacios:** Pinares, parques grandes, zonas verdes con perros permitidos
+
+---
+
+### Perfil 8 — El padre / la madre con hijos (custodia parcial) 👨‍👧 *(nuevo)*
+
+**Situación:** Separado/a. Los fines de semana con los hijos quiere hacer algo diferente al cine o el restaurante. Busca planes que conecten también a sus hijos con otros niños.
+
+**Necesidad real:** Un plan padre/madre + hijo que no requiera mucha organización y donde los adultos también conecten entre sí.
+
+**Cómo usa Movi:** Crea o busca sesiones "con niños" — circuito funcional para todas las edades, carrera familiar, bici, senderismo. El nivel lo marca la edad del hijo.
+
+**El hook emocional:** "Este domingo, tú y tu hijo tenéis planes."
+
+**Dato relevante:** Los programas intergeneracionales de deporte muestran los mejores resultados en reducción de soledad y fortalecimiento de lazos sociales — con beneficios para todas las edades.
+
+**Nivel:** 1-2 (lo define la capacidad del hijo)  
+**Horario:** Fines de semana, tardes  
+**Tag:** Con niños 👶
+
+---
+
+## Filtros de sesión disponibles
+
+Al crear una sesión, el organizador puede configurar quién puede unirse:
+
+```
+¿Quién puede apuntarse?
+  ○ Todos (default)
+  ○ Solo mujeres
+  ○ Solo hombres
+  ○ Con niños 👶
+  ○ Dog-friendly 🐕
+```
+
+**Por qué el filtro de género:**
+No es segregación — es comodidad y seguridad. Muchas mujeres prefieren entrenar entre mujeres no por miedo sino para estar más cómodas, sudar sin preocupaciones, hablar libremente. El creador de la sesión elige y la app lo respeta sin drama ni explicaciones.
+
+---
+
+## El decisor vs el usuario
+
+En algunos perfiles hay una distinción importante:
+
+**El dueño de perro** — decide y usa él mismo. Sin intermediarios.
+
+**El padre/madre con hijos** — decide el adulto pero el "producto" incluye al hijo. La sesión tiene que funcionar para los dos.
+
+**La madre reciente** — decide ella, pero el entorno (carrito, horario, ritmo) está condicionado por el bebé.
+
+---
+
+## Mapa de perfiles por sector y arquetipo de marca
+
+| Perfil | Momento de vida | Arquetipo de conexión |
+|--------|----------------|----------------------|
+| Madre reciente | Transición maternidad | Cuidador |
+| Divorciado/a | Reconstrucción | Explorador |
+| Viajero de trabajo | Rutina fragmentada | El Everyman |
+| Recién mudado/a | Nuevo comienzo | Explorador |
+| Mayor 40-60 | Reconexión | Cuidador |
+| Adolescente | Identidad social | Héroe |
+| Dueño de perro | Rutina diaria | Inocente |
+| Padre/madre con hijos | Custodia + conexión | Cuidador |
+
