@@ -147,6 +147,14 @@
   --color-white-75: oklch(1 0 0 / 0.75);
   --color-white-80: oklch(1 0 0 / 0.80);
 
+  /* ── MAP TERRAIN (Pinar de Las Rozas) ── */
+  --color-map-base:       oklch(0.94 0.01 70);   /* Suelo / terreno base */
+  --color-map-pinar:      oklch(0.88 0.05 140);  /* Masa forestal pinar */
+  --color-map-path:       oklch(0.75 0.04 65);   /* Caminos y senderos */
+  --color-map-road-edge:  oklch(0.88 0.01 75);   /* Borde carretera M-505 */
+  --color-map-calistenia: oklch(0.86 0.04 70);   /* Zona calistenia */
+  --color-map-label:      oklch(0.60 0.03 65);   /* Texto etiquetas mapa */
+
   /* ── BORDER RADIUS ── */
   --radius-none: 0px;
   --radius-xs:   4px;

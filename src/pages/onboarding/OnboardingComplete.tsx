@@ -42,7 +42,7 @@ export default function OnboardingComplete() {
 
   function handleContinue() {
     haptic('medium')
-    navigate('/map', { replace: true })
+    navigate('/home', { replace: true })
   }
 
   return (
