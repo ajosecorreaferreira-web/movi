@@ -57,7 +57,7 @@ export default function Step2Level() {
 
         {/* Content */}
         <div className="flex-1 flex flex-col overflow-y-auto">
-          <div className="px-6 pt-8">
+          <div className="px-6 pt-7">
             <h1
               className="text-[32px] font-extrabold leading-[38px] tracking-[-0.025em]"
               style={{ color: 'var(--color-text)' }}
@@ -83,7 +83,6 @@ export default function Step2Level() {
           style={{
             backgroundColor: 'var(--color-background)',
             paddingBottom: 'max(2.5rem, env(safe-area-inset-bottom))',
-            borderTop: '1px solid var(--color-border)',
           }}
         >
           <button
@@ -100,7 +99,7 @@ export default function Step2Level() {
             }}
           >
             Empezar
-            <ArrowRight size={20} strokeWidth={1.5} color="white" />
+            <ArrowRight size={18} strokeWidth={1.5} color="white" />
           </button>
         </div>
 

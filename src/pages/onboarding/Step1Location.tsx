@@ -53,7 +53,7 @@ export default function Step1Location() {
         >
           <div className="flex items-center justify-between mb-3">
             <span style={{
-              color: '#FFFFFF',
+              color: 'white',
               fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
               fontSize: '22px',
               fontWeight: 800,
@@ -63,7 +63,7 @@ export default function Step1Location() {
               movi
             </span>
             <span style={{
-              color: '#FFFFFFB3',
+              color: 'var(--color-white-70)',
               fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
               fontSize: '13px',
               fontWeight: 500,
@@ -73,15 +73,15 @@ export default function Step1Location() {
               Paso 1 de 2
             </span>
           </div>
-          <div style={{ backgroundColor: '#FFFFFF40', borderRadius: '9999px', height: '3px', width: '100%' }}>
-            <div style={{ backgroundColor: '#FFFFFF', borderRadius: '9999px', height: '3px', width: '50%' }} />
+          <div style={{ backgroundColor: 'var(--color-white-25)', borderRadius: '9999px', height: '3px', width: '100%' }}>
+            <div style={{ backgroundColor: 'white', borderRadius: '9999px', height: '3px', width: '50%' }} />
           </div>
         </div>
 
         {/* Contenido central */}
         <div className="flex-1 flex flex-col justify-center px-6 py-8">
           <h1 style={{
-            color: '#FFFFFF',
+            color: 'white',
             fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
             fontSize: '42px',
             fontWeight: 800,
@@ -93,7 +93,7 @@ export default function Step1Location() {
             {'¿Dónde\nentrenas?'}
           </h1>
           <p style={{
-            color: '#FFFFFFBF',
+            color: 'var(--color-white-75)',
             fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
             fontSize: '17px',
             lineHeight: '26px',
@@ -116,10 +116,10 @@ export default function Step1Location() {
                 aria-label="Usar mi ubicación actual"
                 style={{
                   alignItems: 'center',
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: 'white',
                   border: 'none',
                   borderRadius: '12px',
-                  boxShadow: '#00000026 0px 4px 20px',
+                  boxShadow: 'var(--shadow-white-card)',
                   cursor: phase === 'loading' ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   flexShrink: 0,
@@ -153,7 +153,7 @@ export default function Step1Location() {
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: '#FFFFFFCC',
+                    color: 'var(--color-white-80)',
                     cursor: 'pointer',
                     display: 'inline-block',
                     fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
@@ -163,7 +163,7 @@ export default function Step1Location() {
                     padding: 0,
                     textAlign: 'center',
                     textDecoration: 'underline',
-                    textDecorationColor: '#FFFFFF66',
+                    textDecorationColor: 'var(--color-white-40)',
                     textDecorationThickness: '1px',
                     textUnderlineOffset: '3px',
                     width: '100%',
@@ -177,8 +177,8 @@ export default function Step1Location() {
             <div className="flex flex-col gap-3">
               <div style={{
                 alignItems: 'center',
-                backgroundColor: '#FFFFFF',
-                border: '1px solid rgba(255,255,255,0.3)',
+                backgroundColor: 'white',
+                border: '1px solid var(--color-white-30)',
                 borderRadius: '12px',
                 display: 'flex',
                 gap: '12px',
@@ -207,10 +207,10 @@ export default function Step1Location() {
                 disabled={!manualInput.trim()}
                 style={{
                   alignItems: 'center',
-                  backgroundColor: manualInput.trim() ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
+                  backgroundColor: manualInput.trim() ? 'white' : 'var(--color-white-25)',
                   border: 'none',
                   borderRadius: '12px',
-                  boxShadow: manualInput.trim() ? '#00000026 0px 4px 20px' : 'none',
+                  boxShadow: manualInput.trim() ? 'var(--shadow-white-card)' : 'none',
                   color: 'var(--color-primary-text)',
                   cursor: manualInput.trim() ? 'pointer' : 'not-allowed',
                   display: 'flex',
@@ -232,7 +232,7 @@ export default function Step1Location() {
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: '#FFFFFFCC',
+                    color: 'var(--color-white-80)',
                     cursor: 'pointer',
                     display: 'inline-block',
                     fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
@@ -242,7 +242,7 @@ export default function Step1Location() {
                     padding: 0,
                     textAlign: 'center',
                     textDecoration: 'underline',
-                    textDecorationColor: '#FFFFFF66',
+                    textDecorationColor: 'var(--color-white-40)',
                     textDecorationThickness: '1px',
                     textUnderlineOffset: '3px',
                     width: '100%',

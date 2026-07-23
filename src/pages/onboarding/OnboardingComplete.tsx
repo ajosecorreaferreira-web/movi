@@ -21,6 +21,10 @@ const CONFETTI = [
   { top: '160px', left: '50px',  size: 9,  color: 'var(--color-warning)',    delay: '0.08s', duration: '1.4s', rotate: 0  },
   { top: '70px',  left: '360px', size: 6,  color: 'var(--color-secondary)',  delay: '0.18s', duration: '1.6s', rotate: 60 },
   { top: '200px', left: '180px', size: 10, color: 'var(--color-xp)',         delay: '0.35s', duration: '1.2s', rotate: -45 },
+  { top: '680px', left: '30px',  size: 8,  color: 'var(--color-primary)',    delay: '0.4s',  duration: '1.3s', rotate: 15 },
+  { top: '700px', left: '340px', size: 10, color: 'var(--color-gold)',       delay: '0.45s', duration: '1.1s', rotate: -20 },
+  { top: '740px', left: '120px', size: 7,  color: 'var(--color-xp)',         delay: '0.5s',  duration: '1.5s', rotate: 0 },
+  { top: '720px', left: '260px', size: 5,  color: 'var(--color-secondary)',  delay: '0.42s', duration: '1.7s', rotate: 30 },
 ]
 
 export default function OnboardingComplete() {
@@ -148,7 +152,7 @@ export default function OnboardingComplete() {
 
       {/* CTA */}
       <div
-        className="sticky bottom-0 px-4 pt-4"
+        className="sticky bottom-0 px-6 pt-4"
         style={{
           paddingBottom: 'max(3rem, env(safe-area-inset-bottom))',
           backgroundColor: 'var(--color-celebration-bg)',
@@ -176,13 +180,6 @@ export default function OnboardingComplete() {
           Ver mi zona
           <ArrowRight size={20} strokeWidth={1.5} color="white" />
         </button>
-
-        <p
-          className="mt-2.5 text-center text-[11px] font-medium uppercase tracking-widest"
-          style={{ color: 'var(--color-white-30)' }}
-        >
-          Toca para saltar
-        </p>
       </div>
     </div>
     </div>
