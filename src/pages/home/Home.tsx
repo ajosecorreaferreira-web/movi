@@ -14,7 +14,7 @@ interface Session {
   type: 'running' | 'functional' | 'walking' | 'yoga' | 'hiit'
 }
 
-const TABS = ['Hoy', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+const TABS = ['Hoy', 'Mañana', 'Jue', 'Vie', 'Sáb', 'Dom']
 
 const MOCK_SESSIONS: Session[] = [
   {
@@ -245,20 +245,11 @@ function SessionCard({ session }: { session: Session }) {
 
 function MapView() {
   return (
-    <div
-      style={{
-        width: '100%',
-        height: 240,
-        position: 'relative',
-        overflow: 'hidden',
-        backgroundColor: 'var(--color-map-base)',
-        flexShrink: 0,
-      }}
-    >
+    <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
       {/* SVG terrain */}
       <svg
         width="100%"
-        height="240"
+        height="100%"
         viewBox="0 0 390 240"
         preserveAspectRatio="xMidYMid slice"
         style={{ position: 'absolute', inset: 0 }}
@@ -419,6 +410,7 @@ function MapView() {
       >
         <button
           aria-label="Acercar mapa"
+          className="text-lg font-light"
           style={{
             width: 32,
             height: 32,
@@ -433,12 +425,12 @@ function MapView() {
             color: 'var(--color-text)',
             lineHeight: 1,
           }}
-          className="text-lg font-light"
         >
           +
         </button>
         <button
           aria-label="Alejar mapa"
+          className="text-lg font-light"
           style={{
             width: 32,
             height: 32,
@@ -454,7 +446,6 @@ function MapView() {
             color: 'var(--color-text)',
             lineHeight: 1,
           }}
-          className="text-lg font-light"
         >
           −
         </button>
@@ -466,6 +457,7 @@ function MapView() {
 export default function Home() {
   const { haptic } = useHaptics()
   const [activeTab, setActiveTab] = useState(0)
+  const [mapCollapsed, setMapCollapsed] = useState(false)
 
   function handleTabClick(i: number) {
     haptic('light')
@@ -473,14 +465,18 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-dvh flex items-start justify-center" style={{ backgroundColor: 'var(--color-background)' }}>
+    // Fix 1: fondo claro explícito en todos los niveles del árbol
+    <div
+      className="min-h-dvh flex items-start justify-center"
+      style={{ backgroundColor: 'var(--color-background)' }}
+    >
       <div
         className="w-full min-h-dvh flex flex-col"
-        style={{ backgroundColor: 'var(--color-background)', maxWidth: '390px', position: 'relative' }}
+        style={{ backgroundColor: 'var(--color-background)', maxWidth: '390px' }}
       >
-        {/* Header */}
+        {/* Header — sticky fuera del scroll container */}
         <div
-          className="sticky top-0 z-50"
+          className="sticky top-0 z-50 flex-shrink-0"
           style={{
             backgroundColor: 'var(--color-surface)',
             borderBottom: '1px solid var(--color-border)',
@@ -535,66 +531,83 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Map */}
-        <MapView />
-
-        {/* Day tabs */}
+        {/* Fix 2: scroll container — mapa + tabs sticky, lista scrollea */}
         <div
-          style={{
-            backgroundColor: 'var(--color-surface)',
-            borderBottom: '1px solid var(--color-border)',
-            flexShrink: 0,
+          className="flex-1 overflow-y-auto"
+          style={{ backgroundColor: 'var(--color-background)' }}
+          onScroll={(e) => {
+            setMapCollapsed(e.currentTarget.scrollTop > 60)
           }}
         >
+          {/* Sticky: mapa + tabs */}
           <div
-            style={{
-              display: 'flex',
-              gap: 4,
-              overflowX: 'auto',
-              scrollbarWidth: 'none',
-              paddingInline: 16,
-              paddingBlock: 8,
-            }}
+            className="sticky top-0 z-30"
+            style={{ backgroundColor: 'var(--color-surface)' }}
           >
-            {TABS.map((tab, i) => (
-              <button
-                key={tab}
-                onClick={() => handleTabClick(i)}
-                className="text-[13px] leading-[18px] tracking-[-0.01em]"
+            {/* Mapa colapsable */}
+            <div
+              style={{
+                height: mapCollapsed ? 120 : 240,
+                transition: 'height var(--duration-moderate) var(--ease-out)',
+                overflow: 'hidden',
+                backgroundColor: 'var(--color-map-base)',
+              }}
+            >
+              <MapView />
+            </div>
+
+            {/* Fix 3: tabs de días sin "Ahora" */}
+            <div style={{ borderBottom: '1px solid var(--color-border)' }}>
+              <div
                 style={{
-                  flexShrink: 0,
-                  height: 32,
-                  paddingInline: 14,
-                  borderRadius: 'var(--radius-full)',
-                  backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: activeTab === i ? 'white' : 'var(--color-text-muted)',
-                  fontFamily: 'var(--font-sans)',
-                  fontWeight: activeTab === i ? 600 : 500,
-                  transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
+                  display: 'flex',
+                  gap: 4,
+                  overflowX: 'auto',
+                  scrollbarWidth: 'none',
+                  paddingInline: 16,
+                  paddingBlock: 8,
                 }}
               >
-                {tab}
-              </button>
+                {TABS.map((tab, i) => (
+                  <button
+                    key={tab}
+                    onClick={() => handleTabClick(i)}
+                    className="text-[13px] leading-[18px] tracking-[-0.01em]"
+                    style={{
+                      flexShrink: 0,
+                      height: 32,
+                      paddingInline: 14,
+                      borderRadius: 'var(--radius-full)',
+                      backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: activeTab === i ? 'white' : 'var(--color-text-muted)',
+                      fontFamily: 'var(--font-sans)',
+                      fontWeight: activeTab === i ? 600 : 500,
+                      transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
+                    }}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Lista de sesiones */}
+          <div
+            style={{
+              padding: '16px 16px 100px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
+              backgroundColor: 'var(--color-background)',
+            }}
+          >
+            {MOCK_SESSIONS.map(session => (
+              <SessionCard key={session.id} session={session} />
             ))}
           </div>
-        </div>
-
-        {/* Session list */}
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '16px 16px 100px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 10,
-          }}
-        >
-          {MOCK_SESSIONS.map(session => (
-            <SessionCard key={session.id} session={session} />
-          ))}
         </div>
 
         {/* FAB */}
