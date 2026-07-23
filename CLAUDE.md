@@ -171,6 +171,8 @@ App · Nombre     → Pantallas desktop (1440px)
 
 ### Los públicos
 Adolescentes, madres recientes, divorciados, viajeros de trabajo frecuente, viudos, recién mudados, personas mayores de 40-60 que quieren reconectar.
+- **Dueño de perro 🐕** — sale a diario, mismas zonas y horarios, tag dog-friendly en sesiones
+- **Padre/madre con hijos (custodia parcial) 👨‍👧** — fines de semana, sesiones familiares, nivel según edad del hijo
 
 ### Funcionalidades core
 - Onboarding en 2 preguntas (ubicación + nivel)
@@ -186,6 +188,8 @@ Adolescentes, madres recientes, divorciados, viajeros de trabajo frecuente, viud
 - "Momento Movi" — foto de grupo para compartir en redes
 - Guía para romper el hielo
 - Guía de nutrición (opcional)
+- Filtros de sesión: Todos / Solo mujeres / Solo hombres / Con niños 👶 / Dog-friendly 🐕
+- Espacios dog-friendly en el mapa (pinares, parques grandes, zonas verdes)
 
 ### El efecto instagrameable
 La app genera momentos compartibles — foto de grupo al terminar sesión con frame de Movi, resumen semanal listo para Instagram Stories. El marketing lo hacen los propios usuarios.
