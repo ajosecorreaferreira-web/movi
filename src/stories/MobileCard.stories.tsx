@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { MobileCard } from '@/components/mobile/mobile-card'
 import { Trash2, Archive, Star } from 'lucide-react'

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MemoryRouter } from 'react-router-dom'
 import { BottomNav } from '@/components/mobile/bottom-nav'
 import { Home, Search, Bell, User, Settings } from 'lucide-react'

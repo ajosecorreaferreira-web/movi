@@ -25,7 +25,7 @@ export function BottomSheet({
 
   useEffect(() => {
     if (isOpen) haptic('light')
-  }, [isOpen])
+  }, [isOpen, haptic])
 
   function handleClose() {
     haptic('light')

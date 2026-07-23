@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MobileHeader } from '@/components/mobile/mobile-header'
 import { Bell, MoreHorizontal } from 'lucide-react'
 

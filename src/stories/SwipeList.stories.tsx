@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { SwipeList, SwipeListItem } from '@/components/mobile/swipe-list'
 import { Trash2, Archive, Star, Flag } from 'lucide-react'
 

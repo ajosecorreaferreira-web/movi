@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MobileToast, useToastWithHaptics } from '@/components/mobile/mobile-toast'
 import { Button } from '@/components/ui/button'
 

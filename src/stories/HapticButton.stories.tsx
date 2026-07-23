@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { HapticButton } from '@/components/mobile/haptic-button'
 import { Loader2, Zap, Trash2, Check } from 'lucide-react'
 

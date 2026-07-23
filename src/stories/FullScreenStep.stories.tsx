@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { FullScreenStep } from '@/components/mobile/full-screen-step'
 import { Input } from '@/components/ui/input'
