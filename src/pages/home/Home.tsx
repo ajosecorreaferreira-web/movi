@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame } from 'lucide-react'
 import { useHaptics } from '@/hooks/useHaptics'
 
@@ -246,7 +246,6 @@ function SessionCard({ session }: { session: Session }) {
 function MapView() {
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
-      {/* SVG terrain */}
       <svg
         width="100%"
         height="100%"
@@ -256,13 +255,11 @@ function MapView() {
         aria-hidden="true"
       >
         <rect width="390" height="240" style={{ fill: 'var(--color-map-base)' }} />
-        {/* Pinar */}
         <path
           d="M60 20 L280 20 L320 60 L340 120 L300 200 L200 220 L80 200 L30 120 Z"
           style={{ fill: 'var(--color-map-pinar)' }}
           opacity="0.85"
         />
-        {/* Paths through park */}
         <path
           d="M80 200 Q140 160 180 120 Q220 80 260 50"
           style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 3, strokeLinecap: 'round' }}
@@ -271,13 +268,11 @@ function MapView() {
           d="M200 220 Q220 170 240 140 Q260 110 300 80"
           style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 2.5, strokeLinecap: 'round' }}
         />
-        {/* M-505 road */}
         <path d="M0 130 L390 108" style={{ stroke: 'white', strokeWidth: 9, strokeLinecap: 'round', fill: 'none' }} />
         <path
           d="M0 130 L390 108"
           style={{ stroke: 'var(--color-map-road-edge)', strokeWidth: 0.5, strokeLinecap: 'round', fill: 'none' }}
         />
-        {/* Calistenia zone */}
         <rect
           x="140" y="124" width="72" height="46" rx="6"
           style={{ fill: 'var(--color-map-calistenia)' }}
@@ -294,17 +289,12 @@ function MapView() {
         </text>
       </svg>
 
-      {/* Carlos pin — running, blue, with tooltip */}
+      {/* Carlos pin */}
       <div
         style={{
-          position: 'absolute',
-          left: 195,
-          top: 85,
+          position: 'absolute', left: 195, top: 85,
           transform: 'translate(-50%, -100%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          zIndex: 10,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 10,
         }}
       >
         <div
@@ -312,56 +302,31 @@ function MapView() {
             backgroundColor: 'var(--color-surface)',
             borderRadius: 'var(--radius-sm)',
             boxShadow: 'var(--shadow-md)',
-            padding: '4px 8px',
-            marginBottom: 4,
-            whiteSpace: 'nowrap',
+            padding: '4px 8px', marginBottom: 4, whiteSpace: 'nowrap',
           }}
         >
-          <span
-            className="text-[11px] font-semibold leading-4"
-            style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)' }}
-          >
+          <span className="text-[11px] font-semibold leading-4" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)' }}>
             Carlos · Ahora
           </span>
         </div>
         <div
           style={{
-            width: 32,
-            height: 32,
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-info)',
-            border: '2.5px solid white',
-            boxShadow: 'var(--shadow-sm)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            width: 32, height: 32, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-info)', border: '2.5px solid white',
+            boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
         >
           <span className="text-xs font-bold" style={{ color: 'white', fontFamily: 'var(--font-sans)' }}>C</span>
         </div>
       </div>
 
-      {/* Ana +2 pin — primary orange */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 145,
-          top: 148,
-          transform: 'translate(-50%, -50%)',
-          zIndex: 9,
-        }}
-      >
+      {/* Ana +2 pin */}
+      <div style={{ position: 'absolute', left: 145, top: 148, transform: 'translate(-50%, -50%)', zIndex: 9 }}>
         <div
           style={{
-            width: 36,
-            height: 36,
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary)',
-            border: '2.5px solid white',
-            boxShadow: 'var(--shadow-sm)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            width: 36, height: 36, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-primary)', border: '2.5px solid white',
+            boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
         >
           <span className="text-[11px] font-bold" style={{ color: 'white', fontFamily: 'var(--font-sans)' }}>A+2</span>
@@ -369,27 +334,12 @@ function MapView() {
       </div>
 
       {/* Grupo 5 pin */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 255,
-          top: 68,
-          transform: 'translate(-50%, -50%)',
-          zIndex: 8,
-        }}
-      >
+      <div style={{ position: 'absolute', left: 255, top: 68, transform: 'translate(-50%, -50%)', zIndex: 8 }}>
         <div
           style={{
-            width: 28,
-            height: 28,
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary)',
-            border: '2px solid white',
-            boxShadow: 'var(--shadow-xs)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            opacity: 0.85,
+            width: 28, height: 28, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-primary)', border: '2px solid white',
+            boxShadow: 'var(--shadow-xs)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.85,
           }}
         >
           <span className="text-[10px] font-bold" style={{ color: 'white', fontFamily: 'var(--font-sans)' }}>5</span>
@@ -399,56 +349,30 @@ function MapView() {
       {/* Zoom controls */}
       <div
         style={{
-          position: 'absolute',
-          right: 12,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          zIndex: 20,
+          position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
+          display: 'flex', flexDirection: 'column', zIndex: 20,
         }}
       >
         <button
           aria-label="Acercar mapa"
           className="text-lg font-light"
           style={{
-            width: 32,
-            height: 32,
-            backgroundColor: 'var(--color-surface)',
-            border: '1px solid var(--color-border)',
-            borderRadius: '6px 6px 0 0',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: 'var(--shadow-xs)',
-            color: 'var(--color-text)',
-            lineHeight: 1,
+            width: 32, height: 32, backgroundColor: 'var(--color-surface)',
+            border: '1px solid var(--color-border)', borderRadius: '6px 6px 0 0',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: 'var(--shadow-xs)', color: 'var(--color-text)', lineHeight: 1,
           }}
-        >
-          +
-        </button>
+        >+</button>
         <button
           aria-label="Alejar mapa"
           className="text-lg font-light"
           style={{
-            width: 32,
-            height: 32,
-            backgroundColor: 'var(--color-surface)',
-            border: '1px solid var(--color-border)',
-            borderTop: 'none',
-            borderRadius: '0 0 6px 6px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: 'var(--shadow-xs)',
-            color: 'var(--color-text)',
-            lineHeight: 1,
+            width: 32, height: 32, backgroundColor: 'var(--color-surface)',
+            border: '1px solid var(--color-border)', borderTop: 'none', borderRadius: '0 0 6px 6px',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: 'var(--shadow-xs)', color: 'var(--color-text)', lineHeight: 1,
           }}
-        >
-          −
-        </button>
+        >−</button>
       </div>
     </div>
   )
@@ -459,190 +383,181 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
 
-  function handleTabClick(i: number) {
-    haptic('light')
-    setActiveTab(i)
-  }
+  // Scroll del documento — window.scrollY funciona porque el padre NO tiene overflow
+  useEffect(() => {
+    const handleScroll = () => {
+      setMapCollapsed(window.scrollY > 60)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    // Fix 1: fondo claro explícito en todos los niveles del árbol
     <div
-      className="min-h-dvh flex items-start justify-center"
-      style={{ backgroundColor: 'var(--color-background)' }}
+      style={{
+        minHeight: '100dvh',
+        backgroundColor: 'var(--color-background)',
+        maxWidth: '390px',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        // Sin overflow — el scroll es del documento
+      }}
     >
-      <div
-        className="w-full min-h-dvh flex flex-col"
-        style={{ backgroundColor: 'var(--color-background)', maxWidth: '390px' }}
+      {/* Header — flujo normal, scrollea con el contenido */}
+      <header
+        style={{
+          height: 56,
+          flexShrink: 0,
+          backgroundColor: 'var(--color-surface)',
+          borderBottom: '1px solid var(--color-border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingInline: 24,
+          paddingTop: 'max(0px, env(safe-area-inset-top))',
+        }}
       >
-        {/* Header — sticky fuera del scroll container */}
-        <div
-          className="sticky top-0 z-50 flex-shrink-0"
+        <span
+          className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
+          style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
+        >
+          movi
+        </span>
+        <button
+          onClick={() => haptic('light')}
+          aria-label="Notificaciones"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            borderBottom: '1px solid var(--color-border)',
-            paddingTop: 'max(0px, env(safe-area-inset-top))',
+            width: 40, height: 40, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-surface-2)', border: 'none',
+            cursor: 'pointer', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', position: 'relative',
           }}
         >
+          <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
           <div
             style={{
-              height: 56,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingInline: 24,
+              position: 'absolute', top: 8, right: 9,
+              width: 7, height: 7, borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--color-error)',
+              border: '1.5px solid var(--color-surface)',
             }}
-          >
-            <span
-              className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
-              style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
-            >
-              movi
-            </span>
-            <button
-              onClick={() => haptic('light')}
-              aria-label="Notificaciones"
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-2)',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-              }}
-            >
-              <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 8,
-                  right: 9,
-                  width: 7,
-                  height: 7,
-                  borderRadius: 'var(--radius-full)',
-                  backgroundColor: 'var(--color-error)',
-                  border: '1.5px solid var(--color-surface)',
-                }}
-              />
-            </button>
-          </div>
+          />
+        </button>
+      </header>
+
+      {/* Bloque sticky — funciona porque el padre NO tiene overflow */}
+      <div
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 30,
+          backgroundColor: 'var(--color-surface)',
+        }}
+      >
+        {/* Mapa colapsable */}
+        <div
+          style={{
+            height: mapCollapsed ? 120 : 240,
+            transition: 'height var(--duration-moderate) var(--ease-out)',
+            overflow: 'hidden',
+            backgroundColor: 'var(--color-map-base)',
+          }}
+        >
+          <MapView />
         </div>
 
-        {/* Fix 2: scroll container — mapa + tabs sticky, lista scrollea */}
-        <div
-          className="flex-1 overflow-y-auto"
-          style={{ backgroundColor: 'var(--color-background)' }}
-          onScroll={(e) => {
-            setMapCollapsed(e.currentTarget.scrollTop > 60)
-          }}
-        >
-          {/* Sticky: mapa + tabs */}
-          <div
-            className="sticky top-0 z-30"
-            style={{ backgroundColor: 'var(--color-surface)' }}
-          >
-            {/* Mapa colapsable */}
-            <div
-              style={{
-                height: mapCollapsed ? 120 : 240,
-                transition: 'height var(--duration-moderate) var(--ease-out)',
-                overflow: 'hidden',
-                backgroundColor: 'var(--color-map-base)',
-              }}
-            >
-              <MapView />
-            </div>
-
-            {/* Fix 3: tabs de días sin "Ahora" */}
-            <div style={{ borderBottom: '1px solid var(--color-border)' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  gap: 4,
-                  overflowX: 'auto',
-                  scrollbarWidth: 'none',
-                  paddingInline: 16,
-                  paddingBlock: 8,
-                }}
-              >
-                {TABS.map((tab, i) => (
-                  <button
-                    key={tab}
-                    onClick={() => handleTabClick(i)}
-                    className="text-[13px] leading-[18px] tracking-[-0.01em]"
-                    style={{
-                      flexShrink: 0,
-                      height: 32,
-                      paddingInline: 14,
-                      borderRadius: 'var(--radius-full)',
-                      backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: activeTab === i ? 'white' : 'var(--color-text-muted)',
-                      fontFamily: 'var(--font-sans)',
-                      fontWeight: activeTab === i ? 600 : 500,
-                      transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
-                    }}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Lista de sesiones */}
+        {/* Tabs de días */}
+        <div style={{ borderBottom: '1px solid var(--color-border)' }}>
           <div
             style={{
-              padding: '16px 16px 100px',
               display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-              backgroundColor: 'var(--color-background)',
+              gap: 4,
+              overflowX: 'auto',
+              scrollbarWidth: 'none',
+              paddingInline: 16,
+              paddingBlock: 8,
             }}
           >
-            {MOCK_SESSIONS.map(session => (
-              <SessionCard key={session.id} session={session} />
+            {TABS.map((tab, i) => (
+              <button
+                key={tab}
+                onClick={() => { haptic('light'); setActiveTab(i) }}
+                className="text-[13px] leading-[18px] tracking-[-0.01em]"
+                style={{
+                  flexShrink: 0,
+                  height: 32,
+                  paddingInline: 14,
+                  borderRadius: 'var(--radius-full)',
+                  backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: activeTab === i ? 'white' : 'var(--color-text-muted)',
+                  fontFamily: 'var(--font-sans)',
+                  fontWeight: activeTab === i ? 600 : 500,
+                  transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
+                }}
+              >
+                {tab}
+              </button>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* FAB */}
-        <div
+      {/* Lista de sesiones — scroll natural del documento, sin overflow en este div */}
+      <div
+        style={{
+          flex: 1,
+          padding: '16px 16px 24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 10,
+          backgroundColor: 'var(--color-background)',
+        }}
+      >
+        {MOCK_SESSIONS.map(session => (
+          <SessionCard key={session.id} session={session} />
+        ))}
+      </div>
+
+      {/* FAB — sticky bottom */}
+      <div
+        style={{
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 40,
+          display: 'flex',
+          justifyContent: 'center',
+          paddingBlock: 16,
+          paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
+          backgroundColor: 'transparent',
+          pointerEvents: 'none',
+        }}
+      >
+        <button
+          onClick={() => haptic('medium')}
+          aria-label="Proponer una sesión"
+          className="text-base font-bold tracking-[-0.01em] whitespace-nowrap"
           style={{
-            position: 'fixed',
-            bottom: 'max(24px, env(safe-area-inset-bottom))',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 40,
+            height: 52,
+            paddingInline: 24,
+            borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-primary)',
+            border: 'none',
+            boxShadow: 'var(--shadow-primary-strong)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            color: 'white',
+            fontFamily: 'var(--font-sans)',
+            pointerEvents: 'auto',
           }}
         >
-          <button
-            onClick={() => haptic('medium')}
-            aria-label="Proponer una sesión"
-            className="text-base font-bold tracking-[-0.01em] whitespace-nowrap"
-            style={{
-              height: 52,
-              paddingInline: 24,
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-primary)',
-              border: 'none',
-              boxShadow: 'var(--shadow-primary-strong)',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              color: 'white',
-              fontFamily: 'var(--font-sans)',
-            }}
-          >
-            <Plus size={20} strokeWidth={1.5} color="white" />
-            Proponer una sesión
-          </button>
-        </div>
+          <Plus size={20} strokeWidth={1.5} color="white" />
+          Proponer una sesión
+        </button>
       </div>
     </div>
   )
