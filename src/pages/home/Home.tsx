@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame } from 'lucide-react'
+import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
 import { useHaptics } from '@/hooks/useHaptics'
+import MOVI_MAP_STYLE from '@/lib/mapStyles.json'
+
+const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined
+const HAS_MAPS = !!GOOGLE_MAPS_KEY && GOOGLE_MAPS_KEY !== 'TU_API_KEY'
 
 interface Session {
   id: string
@@ -14,7 +20,14 @@ interface Session {
   type: 'running' | 'functional' | 'walking' | 'yoga' | 'hiit'
 }
 
-const TABS = ['Hoy', 'Mañana', 'Jue', 'Vie', 'Sáb', 'Dom']
+interface MapPin {
+  id: string
+  lat: number
+  lng: number
+  status: 'now' | 'soon' | 'future'
+}
+
+const TABS = ['Semana', 'Hoy', 'Mañana', 'Jue', 'Vie', 'Sáb']
 
 const MOCK_SESSIONS: Session[] = [
   {
@@ -74,6 +87,17 @@ const MOCK_SESSIONS: Session[] = [
   },
 ]
 
+const PINAR_CENTER = { lat: 40.3485, lng: -3.8789 }
+
+// 4 círculos de actividad cerca del Pinar de Las Rozas
+const MOCK_PINS: MapPin[] = [
+  { id: '1', lat: 40.3485, lng: -3.8789, status: 'now' },
+  { id: '2', lat: 40.3495, lng: -3.877, status: 'soon' },
+  { id: '3', lat: 40.3475, lng: -3.88, status: 'future' },
+  { id: '4', lat: 40.351, lng: -3.876, status: 'future' },
+]
+
+
 const TYPE_ICONS = {
   running: Zap,
   functional: Dumbbell,
@@ -90,12 +114,31 @@ const STATUS_BORDER_COLOR: Record<Session['status'], string> = {
 
 const LEVEL_LABELS = ['', 'Activo', 'En marcha', 'En forma', 'Potencia', 'Élite']
 
+function PinCircle({ status }: { status: 'now' | 'soon' | 'future' }) {
+  return (
+    <div
+      style={{
+        width: status === 'now' ? 40 : 32,
+        height: status === 'now' ? 40 : 32,
+        borderRadius: '50%',
+        backgroundColor: status === 'now' ? 'var(--color-primary)' : 'white',
+        border: status === 'now' ? 'none' : '2px solid var(--color-primary)',
+        boxShadow: 'var(--shadow-sm)',
+        cursor: 'pointer',
+      }}
+    />
+  )
+}
+
 function SessionCard({ session }: { session: Session }) {
   const { haptic } = useHaptics()
+  const navigate = useNavigate()
   const Icon = TYPE_ICONS[session.type]
 
   return (
     <div
+      id={`session-card-${session.id}`}
+      onClick={() => { haptic('light'); navigate(`/session/${session.id}`) }}
       style={{
         backgroundColor: 'var(--color-surface)',
         borderRadius: 'var(--radius-sm)',
@@ -105,6 +148,7 @@ function SessionCard({ session }: { session: Session }) {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        cursor: 'pointer',
       }}
     >
       {/* Top row */}
@@ -182,8 +226,11 @@ function SessionCard({ session }: { session: Session }) {
         </div>
       </div>
 
-      {/* Actions */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+      {/* Actions — stop propagation para no disparar la navegación de la card */}
+      <div
+        style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}
+        onClick={e => e.stopPropagation()}
+      >
         {session.status === 'now' ? (
           <button
             onClick={() => haptic('medium')}
@@ -202,48 +249,30 @@ function SessionCard({ session }: { session: Session }) {
             Acompañarle
           </button>
         ) : (
-          <>
-            <button
-              onClick={() => haptic('light')}
-              className="text-[13px] font-medium"
-              style={{
-                height: 36,
-                paddingInline: '14px',
-                borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'transparent',
-                border: '1px solid var(--color-border-strong)',
-                color: 'var(--color-text-muted)',
-                fontFamily: 'var(--font-sans)',
-                cursor: 'pointer',
-              }}
-            >
-              Ver más
-            </button>
-            <button
-              onClick={() => haptic('medium')}
-              className="text-[13px] font-semibold tracking-[-0.01em]"
-              style={{
-                height: 36,
-                paddingInline: '14px',
-                borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-primary)',
-                border: 'none',
-                color: 'var(--color-primary-foreground)',
-                fontFamily: 'var(--font-sans)',
-                cursor: 'pointer',
-                boxShadow: 'var(--shadow-primary)',
-              }}
-            >
-              Apuntarme
-            </button>
-          </>
+          <button
+            onClick={() => haptic('medium')}
+            className="text-[13px] font-semibold tracking-[-0.01em]"
+            style={{
+              height: 36,
+              paddingInline: '14px',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--color-primary)',
+              border: 'none',
+              color: 'var(--color-primary-foreground)',
+              fontFamily: 'var(--font-sans)',
+              cursor: 'pointer',
+              boxShadow: 'var(--shadow-primary)',
+            }}
+          >
+            Apuntarme
+          </button>
         )}
       </div>
     </div>
   )
 }
 
-function MapView() {
+function SVGMap({ onPinTap }: { onPinTap: (id: string) => void }) {
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
       <svg
@@ -289,12 +318,14 @@ function MapView() {
         </text>
       </svg>
 
-      {/* Carlos pin */}
+      {/* Carlos pin → sesión 1 */}
       <div
+        onClick={() => onPinTap('1')}
         style={{
           position: 'absolute', left: 195, top: 85,
           transform: 'translate(-50%, -100%)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 10,
+          cursor: 'pointer',
         }}
       >
         <div
@@ -320,8 +351,11 @@ function MapView() {
         </div>
       </div>
 
-      {/* Ana +2 pin */}
-      <div style={{ position: 'absolute', left: 145, top: 148, transform: 'translate(-50%, -50%)', zIndex: 9 }}>
+      {/* Ana +2 pin → sesión 2 */}
+      <div
+        onClick={() => onPinTap('2')}
+        style={{ position: 'absolute', left: 145, top: 148, transform: 'translate(-50%, -50%)', zIndex: 9, cursor: 'pointer' }}
+      >
         <div
           style={{
             width: 36, height: 36, borderRadius: 'var(--radius-full)',
@@ -333,8 +367,11 @@ function MapView() {
         </div>
       </div>
 
-      {/* Grupo 5 pin */}
-      <div style={{ position: 'absolute', left: 255, top: 68, transform: 'translate(-50%, -50%)', zIndex: 8 }}>
+      {/* Grupo 5 pin → sesión 3 */}
+      <div
+        onClick={() => onPinTap('3')}
+        style={{ position: 'absolute', left: 255, top: 68, transform: 'translate(-50%, -50%)', zIndex: 8, cursor: 'pointer' }}
+      >
         <div
           style={{
             width: 28, height: 28, borderRadius: 'var(--radius-full)',
@@ -378,6 +415,36 @@ function MapView() {
   )
 }
 
+function MapView({ onPinTap }: { onPinTap: (id: string) => void }) {
+  if (HAS_MAPS) {
+    return (
+      <APIProvider apiKey={GOOGLE_MAPS_KEY!}>
+        <Map
+          style={{ width: '100%', height: '100%' }}
+          defaultCenter={PINAR_CENTER}
+          defaultZoom={15}
+          disableDefaultUI={true}
+          gestureHandling="cooperative"
+          styles={MOVI_MAP_STYLE}
+        >
+          {MOCK_PINS.map(pin => (
+            <AdvancedMarker
+              key={pin.id}
+              position={{ lat: pin.lat, lng: pin.lng }}
+              onClick={() => onPinTap(pin.id)}
+            >
+              <PinCircle status={pin.status} />
+            </AdvancedMarker>
+          ))}
+        </Map>
+      </APIProvider>
+    )
+  }
+
+  // TODO: reemplazar con Google Maps cuando haya API key en VITE_GOOGLE_MAPS_API_KEY
+  return <SVGMap onPinTap={onPinTap} />
+}
+
 export default function Home() {
   const { haptic } = useHaptics()
   const [activeTab, setActiveTab] = useState(0)
@@ -391,6 +458,11 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handlePinTap = (sessionId: string) => {
+    const cardEl = document.getElementById(`session-card-${sessionId}`)
+    cardEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <div
@@ -414,16 +486,31 @@ export default function Home() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingInline: 24,
+          paddingInline: 20,
           paddingTop: 'max(0px, env(safe-area-inset-top))',
         }}
       >
+        {/* Hamburguesa — izquierda */}
+        <button
+          aria-label="Menú"
+          style={{
+            width: 40, height: 40, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'transparent', border: 'none',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
+        </button>
+
+        {/* Logo — centro */}
         <span
           className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
           style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
         >
           movi
         </span>
+
+        {/* Notificaciones — derecha */}
         <button
           onClick={() => haptic('light')}
           aria-label="Notificaciones"
@@ -464,7 +551,7 @@ export default function Home() {
             backgroundColor: 'var(--color-map-base)',
           }}
         >
-          <MapView />
+          <MapView onPinTap={handlePinTap} />
         </div>
 
         {/* Tabs de días */}

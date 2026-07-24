@@ -4,6 +4,7 @@ import Step1Location from '@/pages/onboarding/Step1Location'
 import Step2Level from '@/pages/onboarding/Step2Level'
 import OnboardingComplete from '@/pages/onboarding/OnboardingComplete'
 import Home from '@/pages/home/Home'
+import SessionDetail from '@/pages/session/SessionDetail'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/onboarding/level" element={<Step2Level />} />
           <Route path="/onboarding/done" element={<OnboardingComplete />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/session/:id" element={<SessionDetail />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
