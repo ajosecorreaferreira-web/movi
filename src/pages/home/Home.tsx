@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
@@ -7,6 +7,7 @@ import MOVI_MAP_STYLE from '@/lib/mapStyles.json'
 
 const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined
 const HAS_MAPS = !!GOOGLE_MAPS_KEY && GOOGLE_MAPS_KEY !== 'TU_API_KEY'
+console.log('Maps key:', GOOGLE_MAPS_KEY ? 'OK' : 'MISSING')
 
 interface Session {
   id: string
@@ -89,14 +90,12 @@ const MOCK_SESSIONS: Session[] = [
 
 const PINAR_CENTER = { lat: 40.3485, lng: -3.8789 }
 
-// 4 círculos de actividad cerca del Pinar de Las Rozas
 const MOCK_PINS: MapPin[] = [
   { id: '1', lat: 40.3485, lng: -3.8789, status: 'now' },
   { id: '2', lat: 40.3495, lng: -3.877, status: 'soon' },
   { id: '3', lat: 40.3475, lng: -3.88, status: 'future' },
   { id: '4', lat: 40.351, lng: -3.876, status: 'future' },
 ]
-
 
 const TYPE_ICONS = {
   running: Zap,
@@ -226,7 +225,7 @@ function SessionCard({ session }: { session: Session }) {
         </div>
       </div>
 
-      {/* Actions — stop propagation para no disparar la navegación de la card */}
+      {/* Actions */}
       <div
         style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}
         onClick={e => e.stopPropagation()}
@@ -274,49 +273,54 @@ function SessionCard({ session }: { session: Session }) {
 
 function SVGMap({ onPinTap }: { onPinTap: (id: string) => void }) {
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 390 240"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ position: 'absolute', inset: 0 }}
-        aria-hidden="true"
-      >
-        <rect width="390" height="240" style={{ fill: 'var(--color-map-base)' }} />
-        <path
-          d="M60 20 L280 20 L320 60 L340 120 L300 200 L200 220 L80 200 L30 120 Z"
-          style={{ fill: 'var(--color-map-pinar)' }}
-          opacity="0.85"
-        />
-        <path
-          d="M80 200 Q140 160 180 120 Q220 80 260 50"
-          style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 3, strokeLinecap: 'round' }}
-        />
-        <path
-          d="M200 220 Q220 170 240 140 Q260 110 300 80"
-          style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 2.5, strokeLinecap: 'round' }}
-        />
-        <path d="M0 130 L390 108" style={{ stroke: 'white', strokeWidth: 9, strokeLinecap: 'round', fill: 'none' }} />
-        <path
-          d="M0 130 L390 108"
-          style={{ stroke: 'var(--color-map-road-edge)', strokeWidth: 0.5, strokeLinecap: 'round', fill: 'none' }}
-        />
-        <rect
-          x="140" y="124" width="72" height="46" rx="6"
-          style={{ fill: 'var(--color-map-calistenia)' }}
-          opacity="0.9"
-        />
-        <text
-          x="176" y="117"
-          style={{ fill: 'var(--color-map-label)', fontSize: 8 }}
-          fontFamily="system-ui"
-          fontWeight="500"
-          textAnchor="middle"
+    // Outer: no overflow:hidden — los círculos se renderizan sin clipping
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+
+      {/* Terrain SVG — clipped a los bordes del mapa */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 390 240"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ position: 'absolute', inset: 0 }}
+          aria-hidden="true"
         >
-          Zona calistenia
-        </text>
-      </svg>
+          <rect width="390" height="240" style={{ fill: 'var(--color-map-base)' }} />
+          <path
+            d="M60 20 L280 20 L320 60 L340 120 L300 200 L200 220 L80 200 L30 120 Z"
+            style={{ fill: 'var(--color-map-pinar)' }}
+            opacity="0.85"
+          />
+          <path
+            d="M80 200 Q140 160 180 120 Q220 80 260 50"
+            style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 3, strokeLinecap: 'round' }}
+          />
+          <path
+            d="M200 220 Q220 170 240 140 Q260 110 300 80"
+            style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 2.5, strokeLinecap: 'round' }}
+          />
+          <path d="M0 130 L390 108" style={{ stroke: 'white', strokeWidth: 9, strokeLinecap: 'round', fill: 'none' }} />
+          <path
+            d="M0 130 L390 108"
+            style={{ stroke: 'var(--color-map-road-edge)', strokeWidth: 0.5, strokeLinecap: 'round', fill: 'none' }}
+          />
+          <rect
+            x="140" y="124" width="72" height="46" rx="6"
+            style={{ fill: 'var(--color-map-calistenia)' }}
+            opacity="0.9"
+          />
+          <text
+            x="176" y="117"
+            style={{ fill: 'var(--color-map-label)', fontSize: 8 }}
+            fontFamily="system-ui"
+            fontWeight="500"
+            textAnchor="middle"
+          >
+            Zona calistenia
+          </text>
+        </svg>
+      </div>
 
       {/* Carlos pin → sesión 1 */}
       <div
@@ -441,7 +445,6 @@ function MapView({ onPinTap }: { onPinTap: (id: string) => void }) {
     )
   }
 
-  // TODO: reemplazar con Google Maps cuando haya API key en VITE_GOOGLE_MAPS_API_KEY
   return <SVGMap onPinTap={onPinTap} />
 }
 
@@ -449,11 +452,19 @@ export default function Home() {
   const { haptic } = useHaptics()
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
+  const [headerVisible, setHeaderVisible] = useState(true)
+  const lastScrollYRef = useRef(0)
 
-  // Scroll del documento — window.scrollY funciona porque el padre NO tiene overflow
   useEffect(() => {
     const handleScroll = () => {
-      setMapCollapsed(window.scrollY > 60)
+      const currentScrollY = window.scrollY
+      if (currentScrollY > lastScrollYRef.current && currentScrollY > 60) {
+        setHeaderVisible(false)
+      } else {
+        setHeaderVisible(true)
+      }
+      setMapCollapsed(currentScrollY > 60)
+      lastScrollYRef.current = currentScrollY
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -473,67 +484,10 @@ export default function Home() {
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        // Sin overflow — el scroll es del documento
+        colorScheme: 'light',
       }}
     >
-      {/* Header — flujo normal, scrollea con el contenido */}
-      <header
-        style={{
-          height: 56,
-          flexShrink: 0,
-          backgroundColor: 'var(--color-surface)',
-          borderBottom: '1px solid var(--color-border)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingInline: 20,
-          paddingTop: 'max(0px, env(safe-area-inset-top))',
-        }}
-      >
-        {/* Hamburguesa — izquierda */}
-        <button
-          aria-label="Menú"
-          style={{
-            width: 40, height: 40, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'transparent', border: 'none',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
-        </button>
-
-        {/* Logo — centro */}
-        <span
-          className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
-          style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
-        >
-          movi
-        </span>
-
-        {/* Notificaciones — derecha */}
-        <button
-          onClick={() => haptic('light')}
-          aria-label="Notificaciones"
-          style={{
-            width: 40, height: 40, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-surface-2)', border: 'none',
-            cursor: 'pointer', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', position: 'relative',
-          }}
-        >
-          <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
-          <div
-            style={{
-              position: 'absolute', top: 8, right: 9,
-              width: 7, height: 7, borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-error)',
-              border: '1.5px solid var(--color-surface)',
-            }}
-          />
-        </button>
-      </header>
-
-      {/* Bloque sticky — funciona porque el padre NO tiene overflow */}
+      {/* Sticky top: header + mapa + tabs en un único bloque sticky */}
       <div
         style={{
           position: 'sticky',
@@ -542,6 +496,71 @@ export default function Home() {
           backgroundColor: 'var(--color-surface)',
         }}
       >
+        {/* Header — colapsa altura al bajar, reaparece al subir */}
+        <div
+          style={{
+            height: headerVisible ? 56 : 0,
+            overflow: 'hidden',
+            transition: 'height 250ms var(--ease-out)',
+            backgroundColor: 'var(--color-surface)',
+          }}
+        >
+          <header
+            style={{
+              height: 56,
+              flexShrink: 0,
+              borderBottom: '1px solid var(--color-border)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingInline: 20,
+              paddingTop: 'max(0px, env(safe-area-inset-top))',
+            }}
+          >
+            {/* Hamburguesa — izquierda */}
+            <button
+              aria-label="Menú"
+              style={{
+                width: 40, height: 40, borderRadius: 'var(--radius-full)',
+                backgroundColor: 'transparent', border: 'none',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
+            </button>
+
+            {/* Logo — centro */}
+            <span
+              className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
+              style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
+            >
+              movi
+            </span>
+
+            {/* Notificaciones — derecha */}
+            <button
+              onClick={() => haptic('light')}
+              aria-label="Notificaciones"
+              style={{
+                width: 40, height: 40, borderRadius: 'var(--radius-full)',
+                backgroundColor: 'var(--color-surface-2)', border: 'none',
+                cursor: 'pointer', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', position: 'relative',
+              }}
+            >
+              <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
+              <div
+                style={{
+                  position: 'absolute', top: 8, right: 9,
+                  width: 7, height: 7, borderRadius: 'var(--radius-full)',
+                  backgroundColor: 'var(--color-error)',
+                  border: '1.5px solid var(--color-surface)',
+                }}
+              />
+            </button>
+          </header>
+        </div>
+
         {/* Mapa colapsable */}
         <div
           style={{
@@ -592,7 +611,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Lista de sesiones — scroll natural del documento, sin overflow en este div */}
+      {/* Lista de sesiones */}
       <div
         style={{
           flex: 1,

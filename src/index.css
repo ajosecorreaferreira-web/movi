@@ -316,8 +316,8 @@
   --content-padding-tablet: var(--space-6);
 }
 
-/* ─── DARK MODE ─── */
-@media (prefers-color-scheme: dark) {
+/* ─── DARK MODE — desactivado temporalmente, Movi es light-first ─── */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --color-background:    oklch(0.12 0.02 50);
     --color-surface:       oklch(0.18 0.02 50);
@@ -332,7 +332,6 @@
     --color-text-subtle:   oklch(0.50 0.02 60);
     --color-text-inverse:  oklch(0.18 0.03 50);
 
-    /* El primario se aclara levemente en dark para mantener ratio */
     --color-primary:       oklch(0.75 0.18 50);
     --color-primary-hover: oklch(0.80 0.17 50);
     --color-primary-text:  oklch(0.80 0.17 50);
@@ -346,7 +345,7 @@
     --shadow-lg:  0 10px 15px oklch(0 0 0 / 0.30), 0 4px 6px oklch(0 0 0 / 0.15);
     --shadow-xl:  0 20px 25px oklch(0 0 0 / 0.35), 0 8px 10px oklch(0 0 0 / 0.20);
   }
-}
+} */
 
 /* ─── BASE ─── */
 html {
