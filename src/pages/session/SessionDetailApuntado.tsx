@@ -249,19 +249,34 @@ export default function SessionDetailApuntado() {
         </div>
       </div>
 
-      {/* CTA Desapuntarme */}
-      <div style={{ position: 'sticky', bottom: 0, zIndex: 10, backgroundColor: 'var(--color-surface)', boxShadow: '#0000000F 0px -4px 12px', padding: '12px 20px', paddingBottom: 'max(34px, env(safe-area-inset-bottom))' }}>
+      {/* Spacer para que el CTA flotante no tape el último elemento */}
+      <div style={{ height: 88 }} />
+
+      {/* CTA flotante pill — outline verde */}
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 'max(24px, env(safe-area-inset-bottom))',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 48px)',
+          maxWidth: '342px',
+          zIndex: 50,
+        }}
+      >
         <button
           onClick={handleDesapuntarme}
           style={{
-            width: '100%', height: 52, borderRadius: '9999px',
-            backgroundColor: '#fff',
-            border: '1.5px solid var(--color-success)',
+            width: '100%', height: 52,
+            backgroundColor: 'white',
+            color: 'var(--color-success)',
+            border: '2px solid var(--color-success)',
+            borderRadius: 'var(--radius-full)',
+            fontSize: 16, fontWeight: 700,
+            fontFamily: 'var(--font-sans)',
             cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             boxShadow: '#017F3126 0px 2px 8px',
-            color: 'var(--color-success-text)', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
-            letterSpacing: '-0.01em',
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24">

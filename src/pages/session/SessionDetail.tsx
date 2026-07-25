@@ -375,36 +375,39 @@ export default function SessionDetail() {
         </div>
       </div>
 
-      {/* Spacer para que el CTA fijo no tape el último elemento */}
-      <div style={{ height: 80 }} />
+      {/* Spacer para que el CTA flotante no tape el último elemento */}
+      <div style={{ height: 88 }} />
 
-      {/* CTA flotante */}
+      {/* CTA flotante pill */}
       <div
         style={{
-          position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-          width: '100%', maxWidth: '390px',
+          position: 'fixed',
+          bottom: 'max(24px, env(safe-area-inset-bottom))',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 48px)',
+          maxWidth: '342px',
           zIndex: 50,
-          backgroundColor: 'var(--color-surface)',
-          boxShadow: '0 -4px 12px rgba(0,0,0,0.06)',
-          padding: '12px 20px',
-          paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
         }}
       >
         <button
           onClick={handleApuntarme}
           style={{
-            width: '100%', height: 52, borderRadius: '9999px',
+            width: '100%', height: 52,
             backgroundColor: 'var(--color-primary)',
-            border: 'none', cursor: 'pointer',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'var(--radius-full)',
+            fontSize: 16, fontWeight: 700,
+            fontFamily: 'var(--font-sans)',
+            cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-            boxShadow: '#F96F1659 0px 4px 14px',
-            color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
-            letterSpacing: '-0.01em',
+            boxShadow: 'var(--shadow-primary)',
           }}
         >
           Apuntarme a esta sesión
           <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>
