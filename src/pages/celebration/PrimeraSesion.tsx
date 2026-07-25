@@ -26,6 +26,7 @@ export default function PrimeraSesion() {
     <div
       style={{
         minHeight: '100dvh',
+        width: '100%',
         maxWidth: '390px',
         margin: '0 auto',
         backgroundColor: 'oklch(13% 0.040 50)',

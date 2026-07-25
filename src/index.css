@@ -443,6 +443,13 @@ body {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
+
+  @media (max-width: 430px) {
+    body, #root {
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+  }
 }
 
 .movi-shake-joy {

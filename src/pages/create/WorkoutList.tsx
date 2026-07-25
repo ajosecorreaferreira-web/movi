@@ -82,6 +82,7 @@ export default function WorkoutList() {
     <div
       style={{
         minHeight: '100dvh',
+        width: '100%',
         maxWidth: '390px',
         margin: '0 auto',
         backgroundColor: 'var(--color-background)',
