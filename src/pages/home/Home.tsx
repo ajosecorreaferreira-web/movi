@@ -484,6 +484,7 @@ export default function Home() {
     () => !!new URLSearchParams(window.location.search).get('apuntado')
   )
   const lastScrollYRef = useRef(0)
+  const ticking = useRef(false)
 
   useEffect(() => {
     if (!apuntadoSessionId) return
@@ -494,14 +495,20 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      if (currentScrollY > lastScrollYRef.current && currentScrollY > 60) {
-        setHeaderVisible(false)
-      } else {
-        setHeaderVisible(true)
+      if (!ticking.current) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY
+          if (currentScrollY > lastScrollYRef.current + 5) {
+            setHeaderVisible(false)
+          } else if (currentScrollY < lastScrollYRef.current - 5) {
+            setHeaderVisible(true)
+          }
+          setMapCollapsed(currentScrollY > 60)
+          lastScrollYRef.current = currentScrollY
+          ticking.current = false
+        })
+        ticking.current = true
       }
-      setMapCollapsed(currentScrollY > 60)
-      lastScrollYRef.current = currentScrollY
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)

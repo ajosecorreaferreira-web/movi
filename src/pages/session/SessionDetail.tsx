@@ -375,14 +375,19 @@ export default function SessionDetail() {
         </div>
       </div>
 
-      {/* CTA pegajoso */}
+      {/* Spacer para que el CTA fijo no tape el último elemento */}
+      <div style={{ height: 80 }} />
+
+      {/* CTA flotante */}
       <div
         style={{
-          position: 'sticky', bottom: 0, zIndex: 10,
+          position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
+          width: '100%', maxWidth: '390px',
+          zIndex: 50,
           backgroundColor: 'var(--color-surface)',
-          boxShadow: '#0000000F 0px -4px 12px',
+          boxShadow: '0 -4px 12px rgba(0,0,0,0.06)',
           padding: '12px 20px',
-          paddingBottom: 'max(34px, env(safe-area-inset-bottom))',
+          paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
         }}
       >
         <button
