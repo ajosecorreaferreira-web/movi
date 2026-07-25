@@ -318,28 +318,32 @@ export default function CreateSession() {
         </div>
       </div>
 
-      {/* CTA flotante */}
+      {/* CTA flotante pill */}
       <div
         style={{
-          position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-          width: '100%', maxWidth: '390px',
+          position: 'fixed',
+          bottom: 'max(24px, env(safe-area-inset-bottom))',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 48px)',
+          maxWidth: '342px',
           zIndex: 50,
-          backgroundColor: 'var(--color-surface)',
-          borderTop: '1px solid var(--color-border)',
-          paddingInline: 20,
-          paddingTop: 12,
-          paddingBottom: 'max(20px, env(safe-area-inset-bottom))',
         }}
       >
         <button
           onClick={() => navigate('/celebration/session-published')}
           style={{
-            width: '100%', height: 52, borderRadius: '9999px',
+            width: '100%',
+            height: '52px',
             backgroundColor: 'var(--color-primary)',
-            border: 'none', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
-            letterSpacing: '-0.01em',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'var(--radius-full)',
+            fontSize: '16px',
+            fontWeight: 700,
+            fontFamily: 'var(--font-sans)',
+            cursor: 'pointer',
+            boxShadow: 'var(--shadow-primary)',
           }}
         >
           Publicar sesión →
