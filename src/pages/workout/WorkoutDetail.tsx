@@ -112,6 +112,8 @@ export default function WorkoutDetail() {
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set(['warmup']))
   const [viewMode, setViewMode] = useState<'list' | 'timeline'>('list')
   const blockRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const hasScrolled = useRef(false)
 
   const toggleBlock = (id: string) => {
     setExpandedBlocks(prev => {
@@ -125,22 +127,32 @@ export default function WorkoutDetail() {
     })
   }
 
-  // Scrollspy
+  // Scrollspy — ignora activaciones al montar, solo actúa tras scroll real
   useEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const handleScrollStart = () => { hasScrolled.current = true }
+    container.addEventListener('scroll', handleScrollStart, { passive: true })
+
     const observers: IntersectionObserver[] = []
     MOCK_WORKOUT_BLOCKS.forEach(block => {
       const el = blockRefs.current[block.id]
       if (!el) return
       const obs = new IntersectionObserver(
         ([entry]) => {
+          if (!hasScrolled.current) return
           if (entry.isIntersecting) setActiveBlock(block.id)
         },
-        { threshold: 0.5 }
+        { threshold: 0.5, root: container }
       )
       obs.observe(el)
       observers.push(obs)
     })
-    return () => observers.forEach(o => o.disconnect())
+    return () => {
+      observers.forEach(o => o.disconnect())
+      container.removeEventListener('scroll', handleScrollStart)
+    }
   }, [])
 
   const scrollToBlock = (id: string) => {
@@ -217,7 +229,7 @@ export default function WorkoutDetail() {
       </header>
 
       {/* Scrollable area */}
-      <div style={{ flex: 1, overflowY: 'auto', paddingBottom: 100 }}>
+      <div ref={scrollContainerRef} style={{ flex: 1, overflowY: 'auto', paddingBottom: 100 }}>
 
         {/* Hero */}
         <div style={{ width: '100%', height: 180, backgroundColor: '#D4E6C3', position: 'relative', flexShrink: 0 }}>

@@ -429,7 +429,7 @@ function SVGMap({ onPinTap }: { onPinTap: (id: string) => void }) {
 function MapView({ onPinTap }: { onPinTap: (id: string) => void }) {
   const [mapsError, setMapsError] = useState(false)
   const apiKey = GOOGLE_MAPS_KEY
-  const hasValidKey = !!apiKey && apiKey !== 'TU_API_KEY'
+  const hasValidKey = !!apiKey && apiKey.length > 10 && apiKey !== 'TU_API_KEY' && apiKey !== 'undefined'
 
   // gm_authFailure se dispara cuando la API key no tiene Maps JS API habilitada
   useEffect(() => {
