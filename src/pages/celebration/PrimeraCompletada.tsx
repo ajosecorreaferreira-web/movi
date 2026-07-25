@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { Flame } from 'lucide-react'
 
 const CONFETTI = [
   { color: 'var(--color-gold)', shape: 'rect', w: 10, h: 10, left: 35, top: 55, deg: 20 },
@@ -52,10 +53,7 @@ export default function PrimeraCompletada() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingInline: 32, paddingBottom: 16, position: 'relative' }}>
         {/* Icono llama */}
         <div style={{ width: 100, height: 100, borderRadius: '9999px', backgroundColor: '#2D1D14', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginBottom: 28 }}>
-          <svg width="52" height="52" viewBox="0 0 24 24">
-            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c.24 0 .49-.04.71-.12.42-.15.79-.42 1.08-.78.3-.35.5-.77.57-1.22.07-.45 0-.91-.19-1.32-.29-.6-.82-1.05-1.48-1.22A3.5 3.5 0 0 1 9 9.5c0-.63.17-1.24.48-1.76C10 6.98 10.7 6.55 11.5 6.5c-.5 1 0 2.5 1 3.5 1 1 1 2 1 3a4 4 0 0 1-4 4z" fill="var(--color-gold)" stroke="oklch(70% 0.140 75)" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M12 2c0 3 2 5.5 2 8.5a4 4 0 0 1-8 0c0-1 .5-2 1-3-1 2 1 4 3 4-1-2-1-4 2-7.5z" fill="var(--color-gold)" stroke="oklch(70% 0.140 75)" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Flame size={48} color="#F59E0B" />
         </div>
 
         <h1 style={{ color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '42px', textAlign: 'center', margin: '0 0 12px 0' }}>

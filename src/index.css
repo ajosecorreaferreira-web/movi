@@ -89,7 +89,7 @@
   --color-secondary-subtle:     var(--color-secondary-50);
 
   /* Tierra caliente — neutros cálidos */
-  --color-background:   oklch(0.98 0.01 75);   /* Crema cálida, no blanco clínico */
+  --color-background:   oklch(0.98 0.005 80);  /* Blanco roto cálido #F8F7F5 */
   --color-surface:      oklch(1 0 0);           /* Blanco para cards */
   --color-surface-2:    oklch(0.96 0.01 75);   /* Surface elevada */
   --color-surface-3:    oklch(0.93 0.01 75);   /* Surface más elevada */
