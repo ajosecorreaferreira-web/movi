@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
+import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
 import { MapStatic } from '@/components/home/MapStatic'
@@ -287,6 +287,7 @@ export default function Home() {
   }
 
   return (
+  <>
     <div
       style={{
         minHeight: '100dvh',
@@ -446,7 +447,7 @@ export default function Home() {
       <div
         style={{
           flex: 1,
-          padding: '16px 16px 24px',
+          padding: '16px 16px 88px',
           display: 'flex',
           flexDirection: 'column',
           gap: 10,
@@ -457,45 +458,39 @@ export default function Home() {
           <SessionCard key={session.id} session={session} isApuntado={session.id === apuntadoSessionId} />
         ))}
       </div>
+    </div>
 
-      {/* FAB — sticky bottom */}
-      <div
+    {/* FAB — fuera del wrapper con transform para que position: fixed funcione */}
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 'max(24px, env(safe-area-inset-bottom))',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'calc(100% - 48px)',
+        maxWidth: '342px',
+        zIndex: 50,
+      }}
+    >
+      <button
+        onClick={() => { haptic('medium'); navigate('/create') }}
         style={{
-          position: 'sticky',
-          bottom: 0,
-          zIndex: 40,
-          display: 'flex',
-          justifyContent: 'center',
-          paddingBlock: 16,
-          paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
-          backgroundColor: 'transparent',
-          pointerEvents: 'none',
+          width: '100%',
+          height: '52px',
+          backgroundColor: 'var(--color-primary)',
+          color: 'white',
+          border: 'none',
+          borderRadius: 'var(--radius-full)',
+          fontSize: '16px',
+          fontWeight: 700,
+          fontFamily: 'var(--font-sans)',
+          cursor: 'pointer',
+          boxShadow: 'var(--shadow-primary-strong)',
         }}
       >
-        <button
-          onClick={() => { haptic('medium'); navigate('/create') }}
-          aria-label="Proponer una sesión"
-          className="text-base font-bold tracking-[-0.01em] whitespace-nowrap"
-          style={{
-            height: 52,
-            paddingInline: 24,
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary)',
-            border: 'none',
-            boxShadow: 'var(--shadow-primary-strong)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            color: 'white',
-            fontFamily: 'var(--font-sans)',
-            pointerEvents: 'auto',
-          }}
-        >
-          <Plus size={20} strokeWidth={1.5} color="white" />
-          Proponer una sesión
-        </button>
-      </div>
+        + Proponer una sesión
+      </button>
     </div>
+  </>
   )
 }
