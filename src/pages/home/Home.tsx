@@ -470,6 +470,7 @@ function MapView({ onPinTap }: { onPinTap: (id: string) => void }) {
 
 export default function Home() {
   const { haptic } = useHaptics()
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [, setSearchParams] = useSearchParams()
@@ -704,7 +705,7 @@ export default function Home() {
         }}
       >
         <button
-          onClick={() => haptic('medium')}
+          onClick={() => { haptic('medium'); navigate('/create') }}
           aria-label="Proponer una sesión"
           className="text-base font-bold tracking-[-0.01em] whitespace-nowrap"
           style={{
