@@ -110,7 +110,11 @@ export default function WorkoutDetail() {
   const navigate = useNavigate()
   const [activeBlock, setActiveBlock] = useState('warmup')
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set(['warmup']))
-  const [viewMode, setViewMode] = useState<'list' | 'timeline'>('list')
+  const [blockViewModes, setBlockViewModes] = useState<Record<string, 'list' | 'timeline'>>({})
+
+  const getBlockView = (blockId: string) => blockViewModes[blockId] ?? 'list'
+  const setBlockView = (blockId: string, mode: 'list' | 'timeline') =>
+    setBlockViewModes(prev => ({ ...prev, [blockId]: mode }))
   const blockRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const hasScrolled = useRef(false)
 
@@ -305,6 +309,7 @@ export default function WorkoutDetail() {
           {MOCK_WORKOUT_BLOCKS.map(block => {
             const isExpanded = expandedBlocks.has(block.id)
             const isActive = activeBlock === block.id
+            const viewMode = getBlockView(block.id)
 
             return (
               <div
@@ -337,7 +342,7 @@ export default function WorkoutDetail() {
                     {isExpanded && (
                       <>
                         <button
-                          onClick={e => { e.stopPropagation(); setViewMode('list') }}
+                          onClick={e => { e.stopPropagation(); setBlockView(block.id, 'list') }}
                           aria-label="Vista lista"
                           style={{
                             width: 28, height: 28, borderRadius: 4, border: 'none', cursor: 'pointer',
@@ -352,7 +357,7 @@ export default function WorkoutDetail() {
                           </svg>
                         </button>
                         <button
-                          onClick={e => { e.stopPropagation(); setViewMode('timeline') }}
+                          onClick={e => { e.stopPropagation(); setBlockView(block.id, 'timeline') }}
                           aria-label="Vista timeline"
                           style={{
                             width: 28, height: 28, borderRadius: 4, border: 'none', cursor: 'pointer',
