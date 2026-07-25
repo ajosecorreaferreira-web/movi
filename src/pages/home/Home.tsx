@@ -6,8 +6,6 @@ import { useHaptics } from '@/hooks/useHaptics'
 import MOVI_MAP_STYLE from '@/lib/mapStyles.json'
 
 const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined
-const HAS_MAPS = !!GOOGLE_MAPS_KEY && GOOGLE_MAPS_KEY !== 'TU_API_KEY'
-console.log('Maps key:', GOOGLE_MAPS_KEY ? 'OK' : 'MISSING')
 
 interface Session {
   id: string
@@ -429,32 +427,48 @@ function SVGMap({ onPinTap }: { onPinTap: (id: string) => void }) {
 }
 
 function MapView({ onPinTap }: { onPinTap: (id: string) => void }) {
-  if (HAS_MAPS) {
-    return (
-      <APIProvider apiKey={GOOGLE_MAPS_KEY!}>
-        <Map
-          style={{ width: '100%', height: '100%' }}
-          defaultCenter={PINAR_CENTER}
-          defaultZoom={15}
-          disableDefaultUI={true}
-          gestureHandling="cooperative"
-          styles={MOVI_MAP_STYLE}
-        >
-          {MOCK_PINS.map(pin => (
-            <AdvancedMarker
-              key={pin.id}
-              position={{ lat: pin.lat, lng: pin.lng }}
-              onClick={() => onPinTap(pin.id)}
-            >
-              <PinCircle status={pin.status} />
-            </AdvancedMarker>
-          ))}
-        </Map>
-      </APIProvider>
-    )
+  const [mapsError, setMapsError] = useState(false)
+  const apiKey = GOOGLE_MAPS_KEY
+  const hasValidKey = !!apiKey && apiKey !== 'TU_API_KEY'
+
+  // gm_authFailure se dispara cuando la API key no tiene Maps JS API habilitada
+  useEffect(() => {
+    if (!hasValidKey) return
+    const w = window as typeof window & { gm_authFailure?: () => void }
+    const prev = w.gm_authFailure
+    w.gm_authFailure = () => {
+      setMapsError(true)
+      prev?.()
+    }
+    return () => { w.gm_authFailure = prev }
+  }, [hasValidKey])
+
+  if (!hasValidKey || mapsError) {
+    return <SVGMap onPinTap={onPinTap} />
   }
 
-  return <SVGMap onPinTap={onPinTap} />
+  return (
+    <APIProvider apiKey={apiKey}>
+      <Map
+        style={{ width: '100%', height: '100%' }}
+        defaultCenter={PINAR_CENTER}
+        defaultZoom={15}
+        disableDefaultUI={true}
+        gestureHandling="cooperative"
+        styles={MOVI_MAP_STYLE}
+      >
+        {MOCK_PINS.map(pin => (
+          <AdvancedMarker
+            key={pin.id}
+            position={{ lat: pin.lat, lng: pin.lng }}
+            onClick={() => onPinTap(pin.id)}
+          >
+            <PinCircle status={pin.status} />
+          </AdvancedMarker>
+        ))}
+      </Map>
+    </APIProvider>
+  )
 }
 
 export default function Home() {
