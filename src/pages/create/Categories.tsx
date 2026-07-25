@@ -85,8 +85,11 @@ export default function Categories() {
       {/* Grid categorías */}
       <div
         style={{
-          display: 'flex', flexWrap: 'wrap', gap: 12,
-          padding: '16px 20px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '12px',
+          padding: '16px',
+          width: '100%',
           paddingBottom: 'max(24px, env(safe-area-inset-bottom))',
         }}
       >
@@ -97,7 +100,7 @@ export default function Categories() {
               key={id}
               onClick={() => handleSelect(id)}
               style={{
-                width: 165, height: 120, flexShrink: 0,
+                width: '100%', height: 120,
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 gap: 8,
                 borderRadius: 'var(--radius-md)',

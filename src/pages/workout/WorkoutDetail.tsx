@@ -112,7 +112,6 @@ export default function WorkoutDetail() {
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set(['warmup']))
   const [viewMode, setViewMode] = useState<'list' | 'timeline'>('list')
   const blockRefs = useRef<Record<string, HTMLDivElement | null>>({})
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
   const hasScrolled = useRef(false)
 
   const toggleBlock = (id: string) => {
@@ -129,11 +128,8 @@ export default function WorkoutDetail() {
 
   // Scrollspy — ignora activaciones al montar, solo actúa tras scroll real
   useEffect(() => {
-    const container = scrollContainerRef.current
-    if (!container) return
-
     const handleScrollStart = () => { hasScrolled.current = true }
-    container.addEventListener('scroll', handleScrollStart, { passive: true })
+    window.addEventListener('scroll', handleScrollStart, { passive: true })
 
     const observers: IntersectionObserver[] = []
     MOCK_WORKOUT_BLOCKS.forEach(block => {
@@ -144,14 +140,14 @@ export default function WorkoutDetail() {
           if (!hasScrolled.current) return
           if (entry.isIntersecting) setActiveBlock(block.id)
         },
-        { threshold: 0.5, root: container }
+        { threshold: 0.5, root: null }
       )
       obs.observe(el)
       observers.push(obs)
     })
     return () => {
       observers.forEach(o => o.disconnect())
-      container.removeEventListener('scroll', handleScrollStart)
+      window.removeEventListener('scroll', handleScrollStart)
     }
   }, [])
 
@@ -169,8 +165,6 @@ export default function WorkoutDetail() {
         maxWidth: '430px',
         margin: '0 auto',
         backgroundColor: 'var(--color-background)',
-        display: 'flex',
-        flexDirection: 'column',
         colorScheme: 'light',
       }}
     >
@@ -229,10 +223,7 @@ export default function WorkoutDetail() {
         </button>
       </header>
 
-      {/* Scrollable area */}
-      <div ref={scrollContainerRef} style={{ flex: 1, overflowY: 'auto', paddingBottom: 100 }}>
-
-        {/* Hero */}
+      {/* Hero */}
         <div style={{ width: '100%', height: 180, backgroundColor: '#D4E6C3', position: 'relative', flexShrink: 0 }}>
           <div
             style={{
@@ -271,14 +262,16 @@ export default function WorkoutDetail() {
           ))}
         </div>
 
-        {/* Tabs sticky */}
+        {/* Tabs sticky — relativas al documento */}
         <div
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             paddingInline: 16, height: 44, overflowX: 'auto',
             backgroundColor: 'var(--color-surface)',
             borderBottom: '1px solid var(--color-border)',
-            position: 'sticky', top: 56, zIndex: 20,
+            position: 'sticky', top: 56, zIndex: 40,
+            transform: 'translate3d(0,0,0)',
+            WebkitTransform: 'translate3d(0,0,0)',
           }}
         >
           {MOCK_WORKOUT_BLOCKS.map(block => {
@@ -308,7 +301,7 @@ export default function WorkoutDetail() {
         </div>
 
         {/* Bloques de entrenamiento */}
-        <div style={{ backgroundColor: 'var(--color-surface)' }}>
+        <div style={{ backgroundColor: 'var(--color-surface)', paddingBottom: '88px' }}>
           {MOCK_WORKOUT_BLOCKS.map(block => {
             const isExpanded = expandedBlocks.has(block.id)
             const isActive = activeBlock === block.id
@@ -401,9 +394,6 @@ export default function WorkoutDetail() {
             )
           })}
         </div>
-
-        <div style={{ height: 96 }} />
-      </div>
 
       {/* CTA flotante */}
       <div

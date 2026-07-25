@@ -213,9 +213,12 @@ export default function WorkoutList() {
       {/* Grid entrenamientos */}
       <div
         style={{
-          display: 'flex', flexWrap: 'wrap', gap: 12,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '12px',
           padding: '12px 16px',
-          paddingBottom: 'max(24px, env(safe-area-inset-bottom))',
+          paddingBottom: '88px',
+          width: '100%',
           flex: 1,
         }}
       >
@@ -224,7 +227,7 @@ export default function WorkoutList() {
             key={workout.id}
             onClick={() => navigate(`/create/workout-detail/${workout.id}`)}
             style={{
-              width: 165, flexShrink: 0,
+              width: '100%',
               display: 'flex', flexDirection: 'column',
               borderRadius: 'var(--radius-md)', overflow: 'hidden',
               boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
