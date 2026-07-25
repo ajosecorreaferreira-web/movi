@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
 import { useHaptics } from '@/hooks/useHaptics'
-import MOVI_MAP_STYLE from '@/lib/mapStyles.json'
-
-const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined
+import { MapStatic } from '@/components/home/MapStatic'
 
 interface Session {
   id: string
@@ -17,13 +14,6 @@ interface Session {
   participants: number
   status: 'now' | 'soon' | 'future'
   type: 'running' | 'functional' | 'walking' | 'yoga' | 'hiit'
-}
-
-interface MapPin {
-  id: string
-  lat: number
-  lng: number
-  status: 'now' | 'soon' | 'future'
 }
 
 const TABS = ['Semana', 'Hoy', 'Mañana', 'Jue', 'Vie', 'Sáb']
@@ -86,15 +76,6 @@ const MOCK_SESSIONS: Session[] = [
   },
 ]
 
-const PINAR_CENTER = { lat: 40.3485, lng: -3.8789 }
-
-const MOCK_PINS: MapPin[] = [
-  { id: '1', lat: 40.3485, lng: -3.8789, status: 'now' },
-  { id: '2', lat: 40.3495, lng: -3.877, status: 'soon' },
-  { id: '3', lat: 40.3475, lng: -3.88, status: 'future' },
-  { id: '4', lat: 40.351, lng: -3.876, status: 'future' },
-]
-
 const TYPE_ICONS = {
   running: Zap,
   functional: Dumbbell,
@@ -110,22 +91,6 @@ const STATUS_BORDER_COLOR: Record<Session['status'], string> = {
 }
 
 const LEVEL_LABELS = ['', 'Activo', 'En marcha', 'En forma', 'Potencia', 'Élite']
-
-function PinCircle({ status }: { status: 'now' | 'soon' | 'future' }) {
-  return (
-    <div
-      style={{
-        width: status === 'now' ? 40 : 32,
-        height: status === 'now' ? 40 : 32,
-        borderRadius: '50%',
-        backgroundColor: status === 'now' ? 'var(--color-primary)' : 'white',
-        border: status === 'now' ? 'none' : '2px solid var(--color-primary)',
-        boxShadow: 'var(--shadow-sm)',
-        cursor: 'pointer',
-      }}
-    />
-  )
-}
 
 function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: boolean }) {
   const { haptic } = useHaptics()
@@ -278,201 +243,12 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
   )
 }
 
-function SVGMap({ onPinTap }: { onPinTap: (id: string) => void }) {
-  return (
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-
-      {/* Terrain SVG — absolutamente posicionado, el map container ya tiene overflow:hidden */}
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 390 240"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ position: 'absolute', inset: 0 }}
-        aria-hidden="true"
-      >
-        <rect width="390" height="240" style={{ fill: 'var(--color-map-base)' }} />
-        <path
-          d="M60 20 L280 20 L320 60 L340 120 L300 200 L200 220 L80 200 L30 120 Z"
-          style={{ fill: 'var(--color-map-pinar)' }}
-          opacity="0.85"
-        />
-        <path
-          d="M80 200 Q140 160 180 120 Q220 80 260 50"
-          style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 3, strokeLinecap: 'round' }}
-        />
-        <path
-          d="M200 220 Q220 170 240 140 Q260 110 300 80"
-          style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 2.5, strokeLinecap: 'round' }}
-        />
-        <path d="M0 130 L390 108" style={{ stroke: 'white', strokeWidth: 9, strokeLinecap: 'round', fill: 'none' }} />
-        <path
-          d="M0 130 L390 108"
-          style={{ stroke: 'var(--color-map-road-edge)', strokeWidth: 0.5, strokeLinecap: 'round', fill: 'none' }}
-        />
-        <rect
-          x="140" y="124" width="72" height="46" rx="6"
-          style={{ fill: 'var(--color-map-calistenia)' }}
-          opacity="0.9"
-        />
-        <text
-          x="176" y="117"
-          style={{ fill: 'var(--color-map-label)', fontSize: 8 }}
-          fontFamily="system-ui"
-          fontWeight="500"
-          textAnchor="middle"
-        >
-          Zona calistenia
-        </text>
-      </svg>
-
-      {/* Carlos pin → sesión 1 */}
-      <div
-        onClick={() => onPinTap('1')}
-        style={{
-          position: 'absolute', left: 195, top: 85,
-          transform: 'translate(-50%, -100%)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 10,
-          cursor: 'pointer',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: 'var(--color-surface)',
-            borderRadius: 'var(--radius-sm)',
-            boxShadow: 'var(--shadow-md)',
-            padding: '4px 8px', marginBottom: 4, whiteSpace: 'nowrap',
-          }}
-        >
-          <span className="text-[11px] font-semibold leading-4" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)' }}>
-            Carlos · Ahora
-          </span>
-        </div>
-        <div
-          style={{
-            width: 32, height: 32, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-info)', border: '2.5px solid white',
-            boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <span className="text-xs font-bold" style={{ color: 'white', fontFamily: 'var(--font-sans)' }}>C</span>
-        </div>
-      </div>
-
-      {/* Ana +2 pin → sesión 2 */}
-      <div
-        onClick={() => onPinTap('2')}
-        style={{ position: 'absolute', left: 145, top: 148, transform: 'translate(-50%, -50%)', zIndex: 9, cursor: 'pointer' }}
-      >
-        <div
-          style={{
-            width: 36, height: 36, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary)', border: '2.5px solid white',
-            boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <span className="text-[11px] font-bold" style={{ color: 'white', fontFamily: 'var(--font-sans)' }}>A+2</span>
-        </div>
-      </div>
-
-      {/* Grupo 5 pin → sesión 3 */}
-      <div
-        onClick={() => onPinTap('3')}
-        style={{ position: 'absolute', left: 255, top: 68, transform: 'translate(-50%, -50%)', zIndex: 8, cursor: 'pointer' }}
-      >
-        <div
-          style={{
-            width: 28, height: 28, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary)', border: '2px solid white',
-            boxShadow: 'var(--shadow-xs)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.85,
-          }}
-        >
-          <span className="text-[10px] font-bold" style={{ color: 'white', fontFamily: 'var(--font-sans)' }}>5</span>
-        </div>
-      </div>
-
-      {/* Zoom controls */}
-      <div
-        style={{
-          position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
-          display: 'flex', flexDirection: 'column', zIndex: 20,
-        }}
-      >
-        <button
-          aria-label="Acercar mapa"
-          className="text-lg font-light"
-          style={{
-            width: 32, height: 32, backgroundColor: 'var(--color-surface)',
-            border: '1px solid var(--color-border)', borderRadius: '6px 6px 0 0',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: 'var(--shadow-xs)', color: 'var(--color-text)', lineHeight: 1,
-          }}
-        >+</button>
-        <button
-          aria-label="Alejar mapa"
-          className="text-lg font-light"
-          style={{
-            width: 32, height: 32, backgroundColor: 'var(--color-surface)',
-            border: '1px solid var(--color-border)', borderTop: 'none', borderRadius: '0 0 6px 6px',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: 'var(--shadow-xs)', color: 'var(--color-text)', lineHeight: 1,
-          }}
-        >−</button>
-      </div>
-    </div>
-  )
-}
-
-function MapView({ onPinTap }: { onPinTap: (id: string) => void }) {
-  const [mapsError, setMapsError] = useState(false)
-  const apiKey = GOOGLE_MAPS_KEY
-  const hasValidKey = !!apiKey && apiKey.length > 10 && apiKey !== 'TU_API_KEY' && apiKey !== 'undefined'
-
-  // gm_authFailure se dispara cuando la API key no tiene Maps JS API habilitada
-  useEffect(() => {
-    if (!hasValidKey) return
-    const w = window as typeof window & { gm_authFailure?: () => void }
-    const prev = w.gm_authFailure
-    w.gm_authFailure = () => {
-      setMapsError(true)
-      prev?.()
-    }
-    return () => { w.gm_authFailure = prev }
-  }, [hasValidKey])
-
-  if (!hasValidKey || mapsError) {
-    return <SVGMap onPinTap={onPinTap} />
-  }
-
-  return (
-    <APIProvider apiKey={apiKey}>
-      <Map
-        style={{ width: '100%', height: '100%' }}
-        defaultCenter={PINAR_CENTER}
-        defaultZoom={15}
-        disableDefaultUI={true}
-        gestureHandling="cooperative"
-        styles={MOVI_MAP_STYLE}
-      >
-        {MOCK_PINS.map(pin => (
-          <AdvancedMarker
-            key={pin.id}
-            position={{ lat: pin.lat, lng: pin.lng }}
-            onClick={() => onPinTap(pin.id)}
-          >
-            <PinCircle status={pin.status} />
-          </AdvancedMarker>
-        ))}
-      </Map>
-    </APIProvider>
-  )
-}
-
 export default function Home() {
   const { haptic } = useHaptics()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
+  const [activePin, setActivePin] = useState<string | null>(null)
   const [, setSearchParams] = useSearchParams()
   const [apuntadoSessionId] = useState<string | null>(
     () => new URLSearchParams(window.location.search).get('apuntado')
@@ -505,6 +281,7 @@ export default function Home() {
   }, [])
 
   const handlePinTap = (sessionId: string) => {
+    setActivePin(prev => prev === sessionId ? null : sessionId)
     const cardEl = document.getElementById(`session-card-${sessionId}`)
     cardEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -615,20 +392,11 @@ export default function Home() {
           backgroundColor: 'var(--color-surface)',
         }}
       >
-        {/* Mapa colapsable — GPU layer propio, aísla overflow:hidden de iOS Safari */}
-        <div
-          style={{
-            position: 'relative',
-            height: mapCollapsed ? 120 : 240,
-            transition: 'height var(--duration-moderate) var(--ease-out)',
-            overflow: 'hidden',
-            backgroundColor: 'var(--color-map-base)',
-            transform: 'translate3d(0,0,0)',
-            WebkitTransform: 'translate3d(0,0,0)',
-          }}
-        >
-          <MapView onPinTap={handlePinTap} />
-        </div>
+        <MapStatic
+          activePin={activePin}
+          onPinTap={handlePinTap}
+          collapsed={mapCollapsed}
+        />
 
         {/* Tabs de días */}
         <div style={{ borderBottom: '1px solid var(--color-border)' }}>
