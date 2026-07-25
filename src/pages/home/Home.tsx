@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
@@ -483,9 +483,6 @@ export default function Home() {
   const [showToast, setShowToast] = useState<boolean>(
     () => !!new URLSearchParams(window.location.search).get('apuntado')
   )
-  const lastScrollYRef = useRef(0)
-  const ticking = useRef(false)
-
   useEffect(() => {
     if (!apuntadoSessionId) return
     setSearchParams({}, { replace: true })
@@ -494,22 +491,19 @@ export default function Home() {
   }, [apuntadoSessionId, setSearchParams])
 
   useEffect(() => {
+    let lastY = 0
+
     const handleScroll = () => {
-      if (!ticking.current) {
-        requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY
-          if (currentScrollY > lastScrollYRef.current + 5) {
-            setHeaderVisible(false)
-          } else if (currentScrollY < lastScrollYRef.current - 5) {
-            setHeaderVisible(true)
-          }
-          setMapCollapsed(currentScrollY > 60)
-          lastScrollYRef.current = currentScrollY
-          ticking.current = false
-        })
-        ticking.current = true
+      const y = window.scrollY
+      const delta = y - lastY
+
+      if (Math.abs(delta) > 5) {
+        setHeaderVisible(delta < 0)
+        setMapCollapsed(y > 60)
+        lastY = y
       }
     }
+
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -559,29 +553,30 @@ export default function Home() {
           top: 0,
           zIndex: 30,
           backgroundColor: 'var(--color-surface)',
+          transform: 'translateZ(0)',
+          willChange: 'transform',
+          WebkitTransform: 'translateZ(0)',
         }}
       >
-        {/* Header — colapsa altura al bajar, reaparece al subir */}
-        <div
+        {/* Header — max-height + opacity (iOS Safari safe, sin translateY) */}
+        <header
           style={{
-            height: headerVisible ? 56 : 0,
+            maxHeight: headerVisible ? '56px' : '0px',
+            opacity: headerVisible ? 1 : 0,
             overflow: 'hidden',
-            transition: 'height 250ms var(--ease-out)',
+            transition: 'max-height 250ms ease, opacity 200ms ease',
+            willChange: 'max-height, opacity',
+            height: 56,
+            flexShrink: 0,
+            borderBottom: '1px solid var(--color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingInline: 20,
+            paddingTop: 'max(0px, env(safe-area-inset-top))',
             backgroundColor: 'var(--color-surface)',
           }}
         >
-          <header
-            style={{
-              height: 56,
-              flexShrink: 0,
-              borderBottom: '1px solid var(--color-border)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingInline: 20,
-              paddingTop: 'max(0px, env(safe-area-inset-top))',
-            }}
-          >
             {/* Hamburguesa — izquierda */}
             <button
               aria-label="Menú"
@@ -624,7 +619,6 @@ export default function Home() {
               />
             </button>
           </header>
-        </div>
 
         {/* Mapa colapsable */}
         <div
