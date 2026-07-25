@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Bell, MapPin, Users, Plus, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
 import { useHaptics } from '@/hooks/useHaptics'
 import MOVI_MAP_STYLE from '@/lib/mapStyles.json'
@@ -129,39 +129,58 @@ function PinCircle({ status }: { status: 'now' | 'soon' | 'future' }) {
   )
 }
 
-function SessionCard({ session }: { session: Session }) {
+function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: boolean }) {
   const { haptic } = useHaptics()
   const navigate = useNavigate()
   const Icon = TYPE_ICONS[session.type]
 
+  const borderColor = isApuntado ? 'var(--color-success)' : STATUS_BORDER_COLOR[session.status]
+
   return (
     <div
       id={`session-card-${session.id}`}
-      onClick={() => { haptic('light'); navigate(`/session/${session.id}`) }}
+      onClick={() => {
+        haptic('light')
+        navigate(isApuntado ? `/session/${session.id}/apuntado` : `/session/${session.id}`)
+      }}
       style={{
         backgroundColor: 'var(--color-surface)',
         borderRadius: 'var(--radius-sm)',
-        borderLeft: `6px solid ${STATUS_BORDER_COLOR[session.status]}`,
+        borderLeft: `6px solid ${borderColor}`,
         boxShadow: 'var(--shadow-xs)',
         padding: '14px 14px 14px 12px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
         cursor: 'pointer',
+        position: 'relative',
       }}
     >
+      {/* Badge apuntado */}
+      {isApuntado && (
+        <div style={{
+          position: 'absolute', top: 12, right: 12,
+          display: 'flex', alignItems: 'center', gap: 4,
+          backgroundColor: 'var(--color-success-subtle)',
+          borderRadius: 'var(--radius-full)',
+          padding: '3px 10px',
+        }}>
+          <svg width="11" height="11" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12" fill="none" stroke="var(--color-success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span className="text-[12px] font-bold leading-4" style={{ color: 'var(--color-success-text)', fontFamily: 'var(--font-sans)' }}>
+            Apuntado
+          </span>
+        </div>
+      )}
+
       {/* Top row */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', paddingRight: isApuntado ? 90 : 0 }}>
         <div
           style={{
-            width: 36,
-            height: 36,
-            borderRadius: 'var(--radius-sm)',
+            width: 36, height: 36, borderRadius: 'var(--radius-sm)',
             backgroundColor: 'var(--color-surface-2)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
           }}
         >
           <Icon size={16} strokeWidth={1.5} color="var(--color-text-muted)" />
@@ -173,22 +192,31 @@ function SessionCard({ session }: { session: Session }) {
           >
             {session.title}
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {isApuntado ? (
             <span
-              className="text-[13px] leading-[18px]"
-              style={{
-                color: session.status === 'now' ? 'var(--color-primary)' : 'var(--color-text-muted)',
-                fontFamily: 'var(--font-sans)',
-                fontWeight: session.status === 'now' ? 600 : 400,
-              }}
+              className="text-[12px] font-medium leading-4"
+              style={{ color: 'var(--color-success-text)', fontFamily: 'var(--font-sans)' }}
             >
-              {session.time}
+              ⏰ Mañana · En 14 horas
             </span>
-            <span className="text-[13px]" style={{ color: 'var(--color-border-strong)' }}>·</span>
-            <span className="text-[13px] leading-[18px]" style={{ color: 'var(--color-text-muted)' }}>
-              {session.distance}
-            </span>
-          </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span
+                className="text-[13px] leading-[18px]"
+                style={{
+                  color: session.status === 'now' ? 'var(--color-primary)' : 'var(--color-text-muted)',
+                  fontFamily: 'var(--font-sans)',
+                  fontWeight: session.status === 'now' ? 600 : 400,
+                }}
+              >
+                {session.time}
+              </span>
+              <span className="text-[13px]" style={{ color: 'var(--color-border-strong)' }}>·</span>
+              <span className="text-[13px] leading-[18px]" style={{ color: 'var(--color-text-muted)' }}>
+                {session.distance}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -207,66 +235,47 @@ function SessionCard({ session }: { session: Session }) {
             {session.participants} {session.participants === 1 ? 'persona' : 'personas'}
           </span>
         </div>
-        <div
-          style={{
-            marginLeft: 'auto',
-            backgroundColor: 'var(--color-surface-2)',
-            borderRadius: 'var(--radius-full)',
-            padding: '2px 8px',
-            flexShrink: 0,
-          }}
-        >
-          <span
-            className="text-[11px] font-medium leading-4"
-            style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}
-          >
+        <div style={{ marginLeft: 'auto', backgroundColor: 'var(--color-surface-2)', borderRadius: 'var(--radius-full)', padding: '2px 8px', flexShrink: 0 }}>
+          <span className="text-[11px] font-medium leading-4" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}>
             {LEVEL_LABELS[session.level]}
           </span>
         </div>
       </div>
 
-      {/* Actions */}
-      <div
-        style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}
-        onClick={e => e.stopPropagation()}
-      >
-        {session.status === 'now' ? (
-          <button
-            onClick={() => haptic('medium')}
-            className="text-[13px] font-semibold tracking-[-0.01em]"
-            style={{
-              height: 36,
-              paddingInline: '16px',
-              borderRadius: 'var(--radius-sm)',
-              backgroundColor: 'var(--color-info-subtle)',
-              border: '1px solid var(--color-info)',
-              color: 'var(--color-info-text)',
-              fontFamily: 'var(--font-sans)',
-              cursor: 'pointer',
-            }}
-          >
-            Acompañarle
-          </button>
-        ) : (
-          <button
-            onClick={() => haptic('medium')}
-            className="text-[13px] font-semibold tracking-[-0.01em]"
-            style={{
-              height: 36,
-              paddingInline: '14px',
-              borderRadius: 'var(--radius-sm)',
-              backgroundColor: 'var(--color-primary)',
-              border: 'none',
-              color: 'var(--color-primary-foreground)',
-              fontFamily: 'var(--font-sans)',
-              cursor: 'pointer',
-              boxShadow: 'var(--shadow-primary)',
-            }}
-          >
-            Apuntarme
-          </button>
-        )}
-      </div>
+      {/* Actions — solo cuando no está apuntado */}
+      {!isApuntado && (
+        <div
+          style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}
+          onClick={e => e.stopPropagation()}
+        >
+          {session.status === 'now' ? (
+            <button
+              onClick={() => haptic('medium')}
+              className="text-[13px] font-semibold tracking-[-0.01em]"
+              style={{
+                height: 36, paddingInline: '16px', borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-info-subtle)', border: '1px solid var(--color-info)',
+                color: 'var(--color-info-text)', fontFamily: 'var(--font-sans)', cursor: 'pointer',
+              }}
+            >
+              Acompañarle
+            </button>
+          ) : (
+            <button
+              onClick={() => haptic('medium')}
+              className="text-[13px] font-semibold tracking-[-0.01em]"
+              style={{
+                height: 36, paddingInline: '14px', borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-primary)', border: 'none',
+                color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
+                cursor: 'pointer', boxShadow: 'var(--shadow-primary)',
+              }}
+            >
+              Apuntarme
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -453,7 +462,21 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [headerVisible, setHeaderVisible] = useState(true)
+  const [, setSearchParams] = useSearchParams()
+  const [apuntadoSessionId] = useState<string | null>(
+    () => new URLSearchParams(window.location.search).get('apuntado')
+  )
+  const [showToast, setShowToast] = useState<boolean>(
+    () => !!new URLSearchParams(window.location.search).get('apuntado')
+  )
   const lastScrollYRef = useRef(0)
+
+  useEffect(() => {
+    if (!apuntadoSessionId) return
+    setSearchParams({}, { replace: true })
+    const timer = setTimeout(() => setShowToast(false), 4000)
+    return () => clearTimeout(timer)
+  }, [apuntadoSessionId, setSearchParams])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -487,6 +510,27 @@ export default function Home() {
         colorScheme: 'light',
       }}
     >
+      {/* Toast apuntado */}
+      {showToast && (
+        <div style={{
+          position: 'fixed', top: 64, left: '50%', transform: 'translateX(-50%)',
+          zIndex: 50, maxWidth: 320, width: 'calc(100% - 70px)',
+          backgroundColor: '#fff',
+          borderLeft: '3px solid var(--color-success)',
+          borderRadius: 10, boxShadow: '#0000001F 0px 4px 16px',
+          display: 'flex', alignItems: 'center', gap: 10,
+          padding: '12px 16px',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="22 4 12 14.01 9 11.01" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, lineHeight: '20px' }}>
+            ¡Apuntado! Te avisamos 30 min antes.
+          </span>
+        </div>
+      )}
+
       {/* Sticky top: header + mapa + tabs en un único bloque sticky */}
       <div
         style={{
@@ -591,20 +635,27 @@ export default function Home() {
                 onClick={() => { haptic('light'); setActiveTab(i) }}
                 className="text-[13px] leading-[18px] tracking-[-0.01em]"
                 style={{
-                  flexShrink: 0,
-                  height: 32,
-                  paddingInline: 14,
+                  flexShrink: 0, height: 32, paddingInline: 14,
                   borderRadius: 'var(--radius-full)',
                   backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
+                  border: 'none', cursor: 'pointer',
                   color: activeTab === i ? 'white' : 'var(--color-text-muted)',
                   fontFamily: 'var(--font-sans)',
                   fontWeight: activeTab === i ? 600 : 500,
                   transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
+                  position: 'relative',
                 }}
               >
                 {tab}
+                {/* Dot verde en "Mañana" (índice 2) cuando hay sesión apuntada */}
+                {i === 2 && apuntadoSessionId && (
+                  <div style={{
+                    position: 'absolute', top: -3, right: -3,
+                    width: 8, height: 8, borderRadius: '9999px',
+                    backgroundColor: 'var(--color-success)',
+                    border: '1.5px solid var(--color-surface)',
+                  }} />
+                )}
               </button>
             ))}
           </div>
@@ -623,7 +674,7 @@ export default function Home() {
         }}
       >
         {MOCK_SESSIONS.map(session => (
-          <SessionCard key={session.id} session={session} />
+          <SessionCard key={session.id} session={session} isApuntado={session.id === apuntadoSessionId} />
         ))}
       </div>
 
