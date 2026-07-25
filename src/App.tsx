@@ -9,6 +9,12 @@ import SessionDetailApuntado from '@/pages/session/SessionDetailApuntado'
 import PrimeraSesion from '@/pages/celebration/PrimeraSesion'
 import PrimeraCompletada from '@/pages/celebration/PrimeraCompletada'
 import Racha5Dias from '@/pages/celebration/Racha5Dias'
+import CreateSession from '@/pages/create/CreateSession'
+import Categories from '@/pages/create/Categories'
+import WorkoutList from '@/pages/create/WorkoutList'
+import WorkoutDetailCreate from '@/pages/create/WorkoutDetailCreate'
+import WorkoutDetail from '@/pages/workout/WorkoutDetail'
+import SessionPublished from '@/pages/celebration/SessionPublished'
 
 function App() {
   return (
@@ -25,6 +31,12 @@ function App() {
           <Route path="/celebration/first-session" element={<PrimeraSesion />} />
           <Route path="/celebration/first-completed" element={<PrimeraCompletada />} />
           <Route path="/celebration/streak-5" element={<Racha5Dias />} />
+          <Route path="/create" element={<CreateSession />} />
+          <Route path="/create/categories" element={<Categories />} />
+          <Route path="/create/workouts/:category" element={<WorkoutList />} />
+          <Route path="/create/workout-detail/:id" element={<WorkoutDetailCreate />} />
+          <Route path="/workout/:id" element={<WorkoutDetail />} />
+          <Route path="/celebration/session-published" element={<SessionPublished />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
