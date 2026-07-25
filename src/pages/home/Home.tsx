@@ -475,7 +475,6 @@ export default function Home() {
   const { haptic } = useHaptics()
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
-  const [headerVisible, setHeaderVisible] = useState(true)
   const [, setSearchParams] = useSearchParams()
   const [apuntadoSessionId] = useState<string | null>(
     () => new URLSearchParams(window.location.search).get('apuntado')
@@ -492,20 +491,19 @@ export default function Home() {
 
   useEffect(() => {
     let lastY = 0
-
+    let rafId: number
     const handleScroll = () => {
-      const y = window.scrollY
-      const delta = y - lastY
-
-      if (Math.abs(delta) > 5) {
-        setHeaderVisible(delta < 0)
-        setMapCollapsed(y > 60)
-        lastY = y
-      }
+      cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
+        const y = window.scrollY
+        if (Math.abs(y - lastY) > 8) {
+          setMapCollapsed(y > 80)
+          lastY = y
+        }
+      })
     }
-
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => { window.removeEventListener('scroll', handleScroll); cancelAnimationFrame(rafId) }
   }, [])
 
   const handlePinTap = (sessionId: string) => {
@@ -553,19 +551,14 @@ export default function Home() {
           top: 0,
           zIndex: 30,
           backgroundColor: 'var(--color-surface)',
-          transform: 'translateZ(0)',
-          willChange: 'transform',
-          WebkitTransform: 'translateZ(0)',
+          transform: 'translate3d(0,0,0)',
+          WebkitTransform: 'translate3d(0,0,0)',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
         }}
       >
-        {/* Header — max-height + opacity (iOS Safari safe, sin translateY) */}
         <header
           style={{
-            maxHeight: headerVisible ? '56px' : '0px',
-            opacity: headerVisible ? 1 : 0,
-            overflow: 'hidden',
-            transition: 'max-height 250ms ease, opacity 200ms ease',
-            willChange: 'max-height, opacity',
             height: 56,
             flexShrink: 0,
             borderBottom: '1px solid var(--color-border)',
@@ -575,6 +568,10 @@ export default function Home() {
             paddingInline: 20,
             paddingTop: 'max(0px, env(safe-area-inset-top))',
             backgroundColor: 'var(--color-surface)',
+            transform: 'translate3d(0,0,0)',
+            WebkitTransform: 'translate3d(0,0,0)',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
           }}
         >
             {/* Hamburguesa — izquierda */}
