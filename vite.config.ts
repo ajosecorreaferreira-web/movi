@@ -17,16 +17,20 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
-      workbox: { maximumFileSizeToCacheInBytes: 5 * 1024 * 1024 },
+      workbox: {
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api\//],
+      },
       manifest: {
-        name: 'Dusty Design System',
-        short_name: 'Dusty DS',
-        description: 'Design System por Dusty — audit, build, ship.',
-        theme_color: '#0A0A0A',
-        background_color: '#0A0A0A',
+        name: 'Movi',
+        short_name: 'Movi',
+        description: 'Entrena con gente. Combate la soledad a través del deporte.',
+        theme_color: '#F96F16',
+        background_color: '#F8F7F5',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
+        start_url: '/home',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
