@@ -280,54 +280,51 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
 
 function SVGMap({ onPinTap }: { onPinTap: (id: string) => void }) {
   return (
-    // Outer: no overflow:hidden — los círculos se renderizan sin clipping
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
 
-      {/* Terrain SVG — clipped a los bordes del mapa */}
-      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 390 240"
-          preserveAspectRatio="xMidYMid slice"
-          style={{ position: 'absolute', inset: 0 }}
-          aria-hidden="true"
+      {/* Terrain SVG — absolutamente posicionado, el map container ya tiene overflow:hidden */}
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 390 240"
+        preserveAspectRatio="xMidYMid slice"
+        style={{ position: 'absolute', inset: 0 }}
+        aria-hidden="true"
+      >
+        <rect width="390" height="240" style={{ fill: 'var(--color-map-base)' }} />
+        <path
+          d="M60 20 L280 20 L320 60 L340 120 L300 200 L200 220 L80 200 L30 120 Z"
+          style={{ fill: 'var(--color-map-pinar)' }}
+          opacity="0.85"
+        />
+        <path
+          d="M80 200 Q140 160 180 120 Q220 80 260 50"
+          style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 3, strokeLinecap: 'round' }}
+        />
+        <path
+          d="M200 220 Q220 170 240 140 Q260 110 300 80"
+          style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 2.5, strokeLinecap: 'round' }}
+        />
+        <path d="M0 130 L390 108" style={{ stroke: 'white', strokeWidth: 9, strokeLinecap: 'round', fill: 'none' }} />
+        <path
+          d="M0 130 L390 108"
+          style={{ stroke: 'var(--color-map-road-edge)', strokeWidth: 0.5, strokeLinecap: 'round', fill: 'none' }}
+        />
+        <rect
+          x="140" y="124" width="72" height="46" rx="6"
+          style={{ fill: 'var(--color-map-calistenia)' }}
+          opacity="0.9"
+        />
+        <text
+          x="176" y="117"
+          style={{ fill: 'var(--color-map-label)', fontSize: 8 }}
+          fontFamily="system-ui"
+          fontWeight="500"
+          textAnchor="middle"
         >
-          <rect width="390" height="240" style={{ fill: 'var(--color-map-base)' }} />
-          <path
-            d="M60 20 L280 20 L320 60 L340 120 L300 200 L200 220 L80 200 L30 120 Z"
-            style={{ fill: 'var(--color-map-pinar)' }}
-            opacity="0.85"
-          />
-          <path
-            d="M80 200 Q140 160 180 120 Q220 80 260 50"
-            style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 3, strokeLinecap: 'round' }}
-          />
-          <path
-            d="M200 220 Q220 170 240 140 Q260 110 300 80"
-            style={{ stroke: 'var(--color-map-path)', fill: 'none', strokeWidth: 2.5, strokeLinecap: 'round' }}
-          />
-          <path d="M0 130 L390 108" style={{ stroke: 'white', strokeWidth: 9, strokeLinecap: 'round', fill: 'none' }} />
-          <path
-            d="M0 130 L390 108"
-            style={{ stroke: 'var(--color-map-road-edge)', strokeWidth: 0.5, strokeLinecap: 'round', fill: 'none' }}
-          />
-          <rect
-            x="140" y="124" width="72" height="46" rx="6"
-            style={{ fill: 'var(--color-map-calistenia)' }}
-            opacity="0.9"
-          />
-          <text
-            x="176" y="117"
-            style={{ fill: 'var(--color-map-label)', fontSize: 8 }}
-            fontFamily="system-ui"
-            fontWeight="500"
-            textAnchor="middle"
-          >
-            Zona calistenia
-          </text>
-        </svg>
-      </div>
+          Zona calistenia
+        </text>
+      </svg>
 
       {/* Carlos pin → sesión 1 */}
       <div
@@ -544,86 +541,88 @@ export default function Home() {
         </div>
       )}
 
-      {/* Sticky top: header + mapa + tabs en un único bloque sticky */}
-      <div
+      {/* Header — sticky propio, GPU layer aislado */}
+      <header
         style={{
           position: 'sticky',
           top: 0,
-          zIndex: 30,
-          backgroundColor: 'var(--color-surface)',
+          zIndex: 50,
+          height: 56,
+          backgroundColor: 'var(--color-background)',
+          borderBottom: '1px solid var(--color-border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingInline: 20,
+          paddingTop: 'max(0px, env(safe-area-inset-top))',
           transform: 'translate3d(0,0,0)',
           WebkitTransform: 'translate3d(0,0,0)',
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden',
         }}
       >
-        <header
+        {/* Hamburguesa — izquierda */}
+        <button
+          aria-label="Menú"
           style={{
-            height: 56,
-            flexShrink: 0,
-            borderBottom: '1px solid var(--color-border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingInline: 20,
-            paddingTop: 'max(0px, env(safe-area-inset-top))',
-            backgroundColor: 'var(--color-surface)',
-            transform: 'translate3d(0,0,0)',
-            WebkitTransform: 'translate3d(0,0,0)',
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
+            width: 40, height: 40, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'transparent', border: 'none',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
         >
-            {/* Hamburguesa — izquierda */}
-            <button
-              aria-label="Menú"
-              style={{
-                width: 40, height: 40, borderRadius: 'var(--radius-full)',
-                backgroundColor: 'transparent', border: 'none',
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
-            </button>
+          <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
+        </button>
 
-            {/* Logo — centro */}
-            <span
-              className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
-              style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
-            >
-              movi
-            </span>
+        {/* Logo — centro */}
+        <span
+          className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
+          style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
+        >
+          movi
+        </span>
 
-            {/* Notificaciones — derecha */}
-            <button
-              onClick={() => haptic('light')}
-              aria-label="Notificaciones"
-              style={{
-                width: 40, height: 40, borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-2)', border: 'none',
-                cursor: 'pointer', display: 'flex', alignItems: 'center',
-                justifyContent: 'center', position: 'relative',
-              }}
-            >
-              <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
-              <div
-                style={{
-                  position: 'absolute', top: 8, right: 9,
-                  width: 7, height: 7, borderRadius: 'var(--radius-full)',
-                  backgroundColor: 'var(--color-error)',
-                  border: '1.5px solid var(--color-surface)',
-                }}
-              />
-            </button>
-          </header>
+        {/* Notificaciones — derecha */}
+        <button
+          onClick={() => haptic('light')}
+          aria-label="Notificaciones"
+          style={{
+            width: 40, height: 40, borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-surface-2)', border: 'none',
+            cursor: 'pointer', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', position: 'relative',
+          }}
+        >
+          <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
+          <div
+            style={{
+              position: 'absolute', top: 8, right: 9,
+              width: 7, height: 7, borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--color-error)',
+              border: '1.5px solid var(--color-surface)',
+            }}
+          />
+        </button>
+      </header>
 
-        {/* Mapa colapsable */}
+      {/* Mapa + tabs — sticky bajo el header */}
+      <div
+        style={{
+          position: 'sticky',
+          top: 56,
+          zIndex: 30,
+          backgroundColor: 'var(--color-surface)',
+        }}
+      >
+        {/* Mapa colapsable — GPU layer propio, aísla overflow:hidden de iOS Safari */}
         <div
           style={{
+            position: 'relative',
             height: mapCollapsed ? 120 : 240,
             transition: 'height var(--duration-moderate) var(--ease-out)',
             overflow: 'hidden',
             backgroundColor: 'var(--color-map-base)',
+            transform: 'translate3d(0,0,0)',
+            WebkitTransform: 'translate3d(0,0,0)',
           }}
         >
           <MapView onPinTap={handlePinTap} />
@@ -659,7 +658,6 @@ export default function Home() {
                 }}
               >
                 {tab}
-                {/* Dot verde en "Mañana" (índice 2) cuando hay sesión apuntada */}
                 {i === 2 && apuntadoSessionId && (
                   <div style={{
                     position: 'absolute', top: -3, right: -3,
