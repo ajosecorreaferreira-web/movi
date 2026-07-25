@@ -36,7 +36,7 @@ export default function OnboardingComplete() {
   useEffect(() => {
     complete()
     haptic('success')
-    const timer = setTimeout(() => setShowButton(true), 2500)
+    const timer = setTimeout(() => setShowButton(true), 500)
     return () => clearTimeout(timer)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -26,7 +26,7 @@ export default function Categories() {
       style={{
         minHeight: '100dvh',
         width: '100%',
-        maxWidth: '390px',
+        maxWidth: '430px',
         margin: '0 auto',
         backgroundColor: 'var(--color-background)',
         display: 'flex',

@@ -19,7 +19,7 @@ export default function SessionDetail() {
         minHeight: '100dvh',
         backgroundColor: 'var(--color-background)',
         width: '100%',
-        maxWidth: '390px',
+        maxWidth: '430px',
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',

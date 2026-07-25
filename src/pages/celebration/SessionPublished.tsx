@@ -26,7 +26,7 @@ export default function SessionPublished() {
       style={{
         minHeight: '100dvh',
         width: '100%',
-        maxWidth: '390px',
+        maxWidth: '430px',
         margin: '0 auto',
         backgroundColor: 'oklch(13% 0.040 50)',
         display: 'flex',

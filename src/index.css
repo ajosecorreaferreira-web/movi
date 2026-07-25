@@ -436,6 +436,13 @@ body {
 }
 
 @layer base {
+  html, body, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   [style*="position: sticky"],
   [style*="position: fixed"] {
     -webkit-transform: translate3d(0,0,0);
@@ -448,6 +455,11 @@ body {
     body, #root {
       max-width: 100% !important;
       margin: 0 !important;
+    }
+    #root > * {
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
   }
 }
