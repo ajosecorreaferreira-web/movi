@@ -15,6 +15,9 @@ import WorkoutList from '@/pages/create/WorkoutList'
 import WorkoutDetailCreate from '@/pages/create/WorkoutDetailCreate'
 import WorkoutDetail from '@/pages/workout/WorkoutDetail'
 import SessionPublished from '@/pages/celebration/SessionPublished'
+import ProgramProposal from '@/pages/program/ProgramProposal'
+import ProgramTimeline from '@/pages/program/ProgramTimeline'
+import ProgramStart from '@/pages/celebration/ProgramStart'
 
 function App() {
   return (
@@ -37,6 +40,10 @@ function App() {
           <Route path="/create/workout-detail/:id" element={<WorkoutDetailCreate />} />
           <Route path="/workout/:id" element={<WorkoutDetail />} />
           <Route path="/celebration/session-published" element={<SessionPublished />} />
+          {/* Flujo programa 3 semanas */}
+          <Route path="/program/proposal" element={<ProgramProposal />} />
+          <Route path="/program" element={<ProgramTimeline />} />
+          <Route path="/celebration/program-start" element={<ProgramStart />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

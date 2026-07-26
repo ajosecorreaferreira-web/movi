@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu } from 'lucide-react'
+import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu, ChevronRight } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
 import { MapStatic } from '@/components/home/MapStatic'
+import { useProgramStore } from '@/stores/programStore'
+import { FeelingSheet } from '@/components/program/FeelingSheet'
 
 interface Session {
   id: string
@@ -77,16 +79,16 @@ const MOCK_SESSIONS: Session[] = [
 ]
 
 const TYPE_ICONS = {
-  running: Zap,
+  running:    Zap,
   functional: Dumbbell,
-  walking: MapPin,
-  yoga: Wind,
-  hiit: Flame,
+  walking:    MapPin,
+  yoga:       Wind,
+  hiit:       Flame,
 }
 
 const STATUS_BORDER_COLOR: Record<Session['status'], string> = {
-  now: 'var(--color-primary)',
-  soon: 'var(--color-warning)',
+  now:    'var(--color-primary)',
+  soon:   'var(--color-warning)',
   future: 'var(--color-text-muted)',
 }
 
@@ -256,6 +258,13 @@ export default function Home() {
   const [showToast, setShowToast] = useState<boolean>(
     () => !!new URLSearchParams(window.location.search).get('apuntado')
   )
+
+  /* Programa activo */
+  const { program, showFeelingSheet, setShowFeelingSheet } = useProgramStore()
+  const nextSession = program?.sessions.find(
+    (s) => s.status === 'today' || s.status === 'upcoming'
+  )
+
   useEffect(() => {
     if (!apuntadoSessionId) return
     setSearchParams({}, { replace: true })
@@ -287,210 +296,272 @@ export default function Home() {
   }
 
   return (
-  <>
-    <div
-      style={{
-        minHeight: '100dvh',
-        backgroundColor: 'var(--color-background)',
-        width: '100%',
-        maxWidth: '430px',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        colorScheme: 'light',
-      }}
-    >
-      {/* Toast apuntado */}
-      {showToast && (
-        <div style={{
-          position: 'fixed', top: 64, left: '50%', transform: 'translateX(-50%)',
-          zIndex: 50, maxWidth: 320, width: 'calc(100% - 70px)',
-          backgroundColor: '#fff',
-          borderLeft: '3px solid var(--color-success)',
-          borderRadius: 10, boxShadow: '#0000001F 0px 4px 16px',
-          display: 'flex', alignItems: 'center', gap: 10,
-          padding: '12px 16px',
-        }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <polyline points="22 4 12 14.01 9 11.01" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, lineHeight: '20px' }}>
-            ¡Apuntado! Te avisamos 30 min antes.
-          </span>
-        </div>
-      )}
-
-      {/* Header — sticky propio, GPU layer aislado */}
-      <header
+    <>
+      <div
         style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          height: 56,
+          minHeight: '100dvh',
           backgroundColor: 'var(--color-background)',
-          borderBottom: '1px solid var(--color-border)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingInline: 20,
-          paddingTop: 'max(0px, env(safe-area-inset-top))',
-          transform: 'translate3d(0,0,0)',
-          WebkitTransform: 'translate3d(0,0,0)',
-          backfaceVisibility: 'hidden',
-          WebkitBackfaceVisibility: 'hidden',
-        }}
-      >
-        {/* Hamburguesa — izquierda */}
-        <button
-          aria-label="Menú"
-          style={{
-            width: 40, height: 40, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'transparent', border: 'none',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
-        </button>
-
-        {/* Logo — centro */}
-        <span
-          className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
-          style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
-        >
-          movi
-        </span>
-
-        {/* Notificaciones — derecha */}
-        <button
-          onClick={() => haptic('light')}
-          aria-label="Notificaciones"
-          style={{
-            width: 40, height: 40, borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-surface-2)', border: 'none',
-            cursor: 'pointer', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', position: 'relative',
-          }}
-        >
-          <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
-          <div
-            style={{
-              position: 'absolute', top: 8, right: 9,
-              width: 7, height: 7, borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-error)',
-              border: '1.5px solid var(--color-surface)',
-            }}
-          />
-        </button>
-      </header>
-
-      {/* Mapa + tabs — sticky bajo el header */}
-      <div
-        style={{
-          position: 'sticky',
-          top: 56,
-          zIndex: 30,
-          backgroundColor: 'var(--color-surface)',
-        }}
-      >
-        <MapStatic
-          activePin={activePin}
-          onPinTap={handlePinTap}
-          collapsed={mapCollapsed}
-        />
-
-        {/* Tabs de días */}
-        <div style={{ borderBottom: '1px solid var(--color-border)' }}>
-          <div
-            style={{
-              display: 'flex',
-              gap: 4,
-              overflowX: 'auto',
-              scrollbarWidth: 'none',
-              paddingInline: 16,
-              paddingBlock: 8,
-            }}
-          >
-            {TABS.map((tab, i) => (
-              <button
-                key={tab}
-                onClick={() => { haptic('light'); setActiveTab(i) }}
-                className="text-[13px] leading-[18px] tracking-[-0.01em]"
-                style={{
-                  flexShrink: 0, height: 32, paddingInline: 14,
-                  borderRadius: 'var(--radius-full)',
-                  backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
-                  border: 'none', cursor: 'pointer',
-                  color: activeTab === i ? 'white' : 'var(--color-text-muted)',
-                  fontFamily: 'var(--font-sans)',
-                  fontWeight: activeTab === i ? 600 : 500,
-                  transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
-                  position: 'relative',
-                }}
-              >
-                {tab}
-                {i === 2 && apuntadoSessionId && (
-                  <div style={{
-                    position: 'absolute', top: -3, right: -3,
-                    width: 8, height: 8, borderRadius: '9999px',
-                    backgroundColor: 'var(--color-success)',
-                    border: '1.5px solid var(--color-surface)',
-                  }} />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Lista de sesiones */}
-      <div
-        style={{
-          flex: 1,
-          padding: '16px 16px 88px',
+          width: '100%',
+          maxWidth: '430px',
+          margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: 10,
-          backgroundColor: 'var(--color-background)',
+          colorScheme: 'light',
         }}
       >
-        {MOCK_SESSIONS.map(session => (
-          <SessionCard key={session.id} session={session} isApuntado={session.id === apuntadoSessionId} />
-        ))}
-      </div>
-    </div>
+        {/* Toast apuntado */}
+        {showToast && (
+          <div style={{
+            position: 'fixed', top: 64, left: '50%', transform: 'translateX(-50%)',
+            zIndex: 50, maxWidth: 320, width: 'calc(100% - 70px)',
+            backgroundColor: '#fff',
+            borderLeft: '3px solid var(--color-success)',
+            borderRadius: 10, boxShadow: '#0000001F 0px 4px 16px',
+            display: 'flex', alignItems: 'center', gap: 10,
+            padding: '12px 16px',
+          }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <polyline points="22 4 12 14.01 9 11.01" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, lineHeight: '20px' }}>
+              ¡Apuntado! Te avisamos 30 min antes.
+            </span>
+          </div>
+        )}
 
-    {/* FAB — fuera del wrapper con transform para que position: fixed funcione */}
-    <div
-      style={{
-        position: 'fixed',
-        bottom: 'max(24px, env(safe-area-inset-bottom))',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 'calc(100% - 48px)',
-        maxWidth: '342px',
-        zIndex: 50,
-      }}
-    >
-      <button
-        onClick={() => { haptic('medium'); navigate('/create') }}
+        {/* Header — sticky, GPU layer aislado */}
+        <header
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 50,
+            height: 56,
+            backgroundColor: 'var(--color-background)',
+            borderBottom: '1px solid var(--color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingInline: 20,
+            paddingTop: 'max(0px, env(safe-area-inset-top))',
+            transform: 'translate3d(0,0,0)',
+            WebkitTransform: 'translate3d(0,0,0)',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}
+        >
+          {/* Hamburguesa — izquierda */}
+          <button
+            aria-label="Menú"
+            style={{
+              width: 40, height: 40, borderRadius: 'var(--radius-full)',
+              backgroundColor: 'transparent', border: 'none',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <Menu size={24} strokeWidth={1.5} color="var(--color-text)" />
+          </button>
+
+          {/* Logo — centro */}
+          <span
+            className="text-[22px] font-extrabold tracking-[-0.03em] leading-7"
+            style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)' }}
+          >
+            movi
+          </span>
+
+          {/* Notificaciones — derecha */}
+          <button
+            onClick={() => haptic('light')}
+            aria-label="Notificaciones"
+            style={{
+              width: 40, height: 40, borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--color-surface-2)', border: 'none',
+              cursor: 'pointer', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', position: 'relative',
+            }}
+          >
+            <Bell size={20} strokeWidth={1.5} color="var(--color-text)" />
+            <div
+              style={{
+                position: 'absolute', top: 8, right: 9,
+                width: 7, height: 7, borderRadius: 'var(--radius-full)',
+                backgroundColor: 'var(--color-error)',
+                border: '1.5px solid var(--color-surface)',
+              }}
+            />
+          </button>
+        </header>
+
+        {/* Mapa + tabs — sticky bajo el header */}
+        <div
+          style={{
+            position: 'sticky',
+            top: 56,
+            zIndex: 30,
+            backgroundColor: 'var(--color-surface)',
+          }}
+        >
+          {/* Banner programa activo — exacto al diseño Paper */}
+          {program && nextSession && (
+            <div
+              onClick={() => { haptic('light'); navigate('/program') }}
+              style={{
+                backgroundColor: 'var(--color-primary-50)',
+                borderBottom: '1px solid var(--color-primary-200)',
+                height: 44,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingInline: 16,
+                cursor: 'pointer',
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 13,
+                  color: 'var(--color-primary-text)',
+                  lineHeight: '16px',
+                }}
+              >
+                📅 Tu programa · Próxima: {nextSession.date} · {nextSession.time}
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: 'var(--color-primary)',
+                  lineHeight: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                Ver <ChevronRight size={14} strokeWidth={1.5} color="var(--color-primary)" />
+              </span>
+            </div>
+          )}
+
+          <MapStatic
+            activePin={activePin}
+            onPinTap={handlePinTap}
+            collapsed={mapCollapsed}
+          />
+
+          {/* Tabs de días */}
+          <div style={{ borderBottom: '1px solid var(--color-border)' }}>
+            <div
+              style={{
+                display: 'flex',
+                gap: 4,
+                overflowX: 'auto',
+                scrollbarWidth: 'none',
+                paddingInline: 16,
+                paddingBlock: 8,
+              }}
+            >
+              {TABS.map((tab, i) => (
+                <button
+                  key={tab}
+                  onClick={() => { haptic('light'); setActiveTab(i) }}
+                  className="text-[13px] leading-[18px] tracking-[-0.01em]"
+                  style={{
+                    flexShrink: 0, height: 28, paddingInline: 12,
+                    borderRadius: 'var(--radius-full)',
+                    backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
+                    border: 'none', cursor: 'pointer',
+                    color: activeTab === i ? 'white' : 'var(--color-text-muted)',
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: activeTab === i ? 600 : 500,
+                    transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
+                    position: 'relative',
+                  }}
+                >
+                  {tab}
+                  {i === 2 && apuntadoSessionId && (
+                    <div style={{
+                      position: 'absolute', top: -3, right: -3,
+                      width: 8, height: 8, borderRadius: '9999px',
+                      backgroundColor: 'var(--color-success)',
+                      border: '1.5px solid var(--color-surface)',
+                    }} />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Lista de sesiones */}
+        <div
+          style={{
+            flex: 1,
+            padding: '16px 16px 88px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10,
+            backgroundColor: 'var(--color-background)',
+          }}
+        >
+          {MOCK_SESSIONS.map(session => (
+            <SessionCard key={session.id} session={session} isApuntado={session.id === apuntadoSessionId} />
+          ))}
+        </div>
+      </div>
+
+      {/* FAB — fuera del wrapper con transform para que position: fixed funcione */}
+      <div
         style={{
-          width: '100%',
-          height: '52px',
-          backgroundColor: 'var(--color-primary)',
-          color: 'white',
-          border: 'none',
-          borderRadius: 'var(--radius-full)',
-          fontSize: '16px',
-          fontWeight: 700,
-          fontFamily: 'var(--font-sans)',
-          cursor: 'pointer',
-          boxShadow: 'var(--shadow-primary-strong)',
+          position: 'fixed',
+          bottom: 'max(24px, env(safe-area-inset-bottom))',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 48px)',
+          maxWidth: '342px',
+          zIndex: 50,
         }}
       >
-        + Proponer una sesión
-      </button>
-    </div>
-  </>
+        <button
+          onClick={() => { haptic('medium'); navigate('/create') }}
+          style={{
+            width: '100%',
+            height: '52px',
+            backgroundColor: 'var(--color-primary)',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'var(--radius-full)',
+            fontSize: '16px',
+            fontWeight: 700,
+            fontFamily: 'var(--font-sans)',
+            cursor: 'pointer',
+            boxShadow: 'var(--shadow-primary-strong)',
+          }}
+        >
+          + Proponer una sesión
+        </button>
+      </div>
+
+      {/* FeelingSheet — renderizado fuera del scroll container */}
+      <FeelingSheet
+        isOpen={showFeelingSheet}
+        onClose={() => setShowFeelingSheet(false)}
+        sessionInfo={{
+          partnerName: program?.partnerName ?? 'Ana',
+          workoutName: 'Funcional',
+          location: program?.location ?? 'Pinar de Las Rozas',
+        }}
+        onAnswer={(feeling) => {
+          setShowFeelingSheet(false)
+          if (feeling === 'great') {
+            navigate('/program/proposal?type=group')
+          } else if (feeling === 'ok') {
+            navigate('/program/proposal?type=solo')
+          }
+          // 'notforme' → solo cierra el sheet
+        }}
+      />
+    </>
   )
 }
