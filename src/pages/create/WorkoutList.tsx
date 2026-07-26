@@ -60,6 +60,7 @@ export default function WorkoutList() {
   const categoryName = CATEGORY_NAMES[category ?? ''] ?? category ?? 'Entrenamientos'
 
   const [search, setSearch] = useState('')
+  const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null)
   const [showFilters, setShowFilters] = useState(false)
   const [activeFilters, setActiveFilters] = useState<Filters>({
     duracion: null,
@@ -79,6 +80,7 @@ export default function WorkoutList() {
   }, [search])
 
   return (
+  <>
     <div
       style={{
         minHeight: '100dvh',
@@ -222,17 +224,20 @@ export default function WorkoutList() {
           flex: 1,
         }}
       >
-        {filtered.map(workout => (
+        {filtered.map(workout => {
+          const isSelected = selectedWorkout === workout.id
+          return (
           <button
             key={workout.id}
-            onClick={() => navigate(`/create/workout-detail/${workout.id}`)}
+            onClick={() => setSelectedWorkout(isSelected ? null : workout.id)}
             style={{
               width: '100%',
               display: 'flex', flexDirection: 'column',
               borderRadius: 'var(--radius-md)', overflow: 'hidden',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+              boxShadow: isSelected ? 'var(--shadow-primary)' : '0 1px 4px rgba(0,0,0,0.08)',
               backgroundColor: 'var(--color-surface)',
-              border: 'none', cursor: 'pointer', textAlign: 'left',
+              border: isSelected ? '2px solid var(--color-primary)' : '2px solid transparent',
+              cursor: 'pointer', textAlign: 'left',
             }}
           >
             {/* Imagen placeholder */}
@@ -258,7 +263,8 @@ export default function WorkoutList() {
               <LevelDots level={workout.level} />
             </div>
           </button>
-        ))}
+          )
+        })}
       </div>
 
       {/* Filter Sheet */}
@@ -272,5 +278,40 @@ export default function WorkoutList() {
         initialFilters={activeFilters}
       />
     </div>
+
+    {/* FAB — fuera del wrapper para que position: fixed funcione correctamente */}
+    {selectedWorkout && (
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 'max(24px, env(safe-area-inset-bottom))',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 48px)',
+          maxWidth: '342px',
+          zIndex: 50,
+        }}
+      >
+        <button
+          onClick={() => navigate(-1)}
+          style={{
+            width: '100%',
+            height: '52px',
+            backgroundColor: 'var(--color-primary)',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'var(--radius-full)',
+            fontSize: '16px',
+            fontWeight: 700,
+            fontFamily: 'var(--font-sans)',
+            cursor: 'pointer',
+            boxShadow: 'var(--shadow-primary)',
+          }}
+        >
+          Guardar selección →
+        </button>
+      </div>
+    )}
+  </>
   )
 }

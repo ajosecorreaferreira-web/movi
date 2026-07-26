@@ -391,7 +391,7 @@ export default function WorkoutDetailCreate() {
             boxShadow: '#F96F1659 0px 4px 14px',
           }}
         >
-          Elegir este entrenamiento →
+          Seleccionar este entrenamiento →
         </button>
       </div>
     </div>
