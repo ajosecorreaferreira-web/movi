@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 interface MapStaticProps {
   activePin: string | null
   onPinTap: (id: string) => void
@@ -5,9 +7,9 @@ interface MapStaticProps {
 }
 
 const apiKey = import.meta.env.VITE_STADIA_API_KEY
-const MAP_URL = apiKey
-  ? `https://tiles.stadiamaps.com/static/alidade_smooth@2x.png?center=-3.8789,40.3485&zoom=16&width=780&height=480&api_key=${apiKey}`
-  : null
+const hasValidKey = apiKey && apiKey.length > 10
+
+console.log('Stadia key:', apiKey ? `${apiKey.substring(0, 8)}...` : 'MISSING')
 
 function getTooltipStyle(pinId: string): React.CSSProperties {
   if (pinId === '3') {
@@ -41,6 +43,8 @@ const LABELS: Record<string, string> = {
 }
 
 export function MapStatic({ activePin, onPinTap, collapsed }: MapStaticProps) {
+  const [mapError, setMapError] = useState(false)
+
   return (
     <div style={{
       position: 'relative',
@@ -59,10 +63,11 @@ export function MapStatic({ activePin, onPinTap, collapsed }: MapStaticProps) {
         overflow: 'hidden',
         backgroundColor: '#F0EDE6',
       }}>
-        {MAP_URL ? (
+        {hasValidKey && !mapError ? (
           <img
-            src={MAP_URL}
+            src={`https://tiles.stadiamaps.com/static/alidade_smooth@2x.png?center=-3.8789,40.3485&zoom=16&width=780&height=480&api_key=${apiKey}`}
             alt="Pinar de Las Rozas"
+            onError={() => setMapError(true)}
             style={{
               position: 'absolute',
               inset: 0,
