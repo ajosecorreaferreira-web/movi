@@ -39,7 +39,7 @@ export default function ProgramStart() {
         width: '100%',
         maxWidth: '430px',
         margin: '0 auto',
-        backgroundColor: 'oklch(13% 0.040 50)',
+        backgroundColor: 'var(--color-celebration-bg)',
         display: 'flex',
         flexDirection: 'column',
         colorScheme: 'dark',
@@ -90,8 +90,8 @@ export default function ProgramStart() {
             width: 96,
             height: 96,
             borderRadius: 'var(--radius-xl)',
-            backgroundColor: 'oklch(78% 0.160 85 / 15%)',
-            border: '1px solid oklch(78% 0.160 85 / 25%)',
+            backgroundColor: 'var(--color-gold-subtle)',
+            border: '1px solid var(--color-gold-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -116,7 +116,7 @@ export default function ProgramStart() {
             fontFamily: 'var(--font-sans)',
             fontSize: 36,
             fontWeight: 800,
-            color: 'white',
+            color: 'var(--color-primary-foreground)',
             textAlign: 'center',
             letterSpacing: '-0.03em',
             lineHeight: '44px',
@@ -132,7 +132,7 @@ export default function ProgramStart() {
           style={{
             fontFamily: 'var(--font-sans)',
             fontSize: 17,
-            color: 'rgba(255,255,255,0.7)',
+            color: 'var(--color-white-70)',
             textAlign: 'center',
             lineHeight: '26px',
             marginBottom: 32,
@@ -147,7 +147,7 @@ export default function ProgramStart() {
           style={{
             width: '100%',
             height: 1,
-            backgroundColor: 'rgba(255,255,255,0.2)',
+            backgroundColor: 'var(--color-white-20)',
             marginBottom: 24,
             flexShrink: 0,
           }}
@@ -160,7 +160,7 @@ export default function ProgramStart() {
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: 13,
-                color: 'rgba(255,255,255,0.6)',
+                color: 'var(--color-white-60)',
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase',
                 lineHeight: '16px',
@@ -184,7 +184,7 @@ export default function ProgramStart() {
                   fontFamily: 'var(--font-sans)',
                   fontSize: 20,
                   fontWeight: 700,
-                  color: 'white',
+                  color: 'var(--color-primary-foreground)',
                   lineHeight: '24px',
                 }}
               >
@@ -206,7 +206,7 @@ export default function ProgramStart() {
                     fontFamily: 'var(--font-sans)',
                     fontSize: 12,
                     fontWeight: 600,
-                    color: 'white',
+                    color: 'var(--color-primary-foreground)',
                     lineHeight: '16px',
                   }}
                 >
@@ -220,7 +220,7 @@ export default function ProgramStart() {
         {/* Aviso notificaciones */}
         <div
           style={{
-            backgroundColor: 'rgba(255,255,255,0.15)',
+            backgroundColor: 'var(--color-white-15)',
             borderRadius: 'var(--radius-full)',
             paddingBlock: 8,
             paddingInline: 16,
@@ -231,7 +231,7 @@ export default function ProgramStart() {
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: 13,
-              color: 'rgba(255,255,255,0.7)',
+              color: 'var(--color-white-70)',
               lineHeight: '16px',
               display: 'block',
               textAlign: 'center',
@@ -261,7 +261,7 @@ export default function ProgramStart() {
             width: '100%',
             height: 58,
             backgroundColor: 'var(--color-primary)',
-            color: 'white',
+            color: 'var(--color-primary-foreground)',
             border: 'none',
             borderRadius: 'var(--radius-full)',
             fontFamily: 'var(--font-sans)',
@@ -269,7 +269,7 @@ export default function ProgramStart() {
             fontWeight: 600,
             lineHeight: '20px',
             cursor: 'pointer',
-            boxShadow: 'rgba(249,111,22,0.45) 0px 4px 14px',
+            boxShadow: 'var(--color-primary-glow) 0px 4px 14px',
           }}
         >
           Ver mi programa →

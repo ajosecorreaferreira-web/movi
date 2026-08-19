@@ -47,7 +47,7 @@ function ToggleSwitch({ value, onChange, label }: ToggleSwitchProps) {
         <div
           style={{
             position: 'absolute', top: 2, width: 20, height: 20, borderRadius: '50%',
-            backgroundColor: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.20)',
+            backgroundColor: 'var(--color-surface)', boxShadow: 'var(--color-shadow-sm) 0px 1px 3px',
             left: value ? 22 : 2, transition: 'left 150ms ease',
           }}
         />
@@ -154,14 +154,14 @@ export default function CreateSession() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     backgroundColor: isActive ? 'var(--color-primary)' : 'var(--color-surface)',
                     border: `1.5px solid ${isActive ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                    boxShadow: isActive ? '#F96F1666 0px 4px 12px' : 'none',
+                    boxShadow: isActive ? 'var(--color-primary-glow-sm) 0px 4px 12px' : 'none',
                     cursor: 'pointer', transition: 'all 150ms ease',
                   }}
                 >
                   <Icon
                     size={24}
                     strokeWidth={1.5}
-                    stroke={isActive ? '#fff' : 'var(--color-text-muted)'}
+                    stroke={isActive ? 'var(--color-primary-foreground)' : 'var(--color-text-muted)'}
                   />
                 </button>
               )
@@ -185,7 +185,7 @@ export default function CreateSession() {
           style={{
             backgroundColor: 'var(--color-surface)',
             borderRadius: 'var(--radius-md)',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+            boxShadow: 'var(--color-shadow-xs) 0px 1px 4px',
             padding: 16,
             position: 'relative',
           }}
@@ -230,7 +230,7 @@ export default function CreateSession() {
               borderRadius: '9999px', paddingBlock: 3, paddingInline: 10,
             }}
           >
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 700, color: '#fff', lineHeight: '14px' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 700, color: 'var(--color-primary-foreground)', lineHeight: '14px' }}>
               ✨ IA
             </span>
           </div>
@@ -336,7 +336,7 @@ export default function CreateSession() {
             width: '100%',
             height: '52px',
             backgroundColor: 'var(--color-primary)',
-            color: 'white',
+            color: 'var(--color-primary-foreground)',
             border: 'none',
             borderRadius: 'var(--radius-full)',
             fontSize: '16px',

@@ -304,14 +304,14 @@ function SessionCard({
   const isUpcoming  = session.status === 'upcoming'
 
   /* Colores exactos de Paper */
-  const bgColor     = isCompleted ? 'oklch(95% 0.040 148)' : 'var(--color-surface)'
+  const bgColor     = isCompleted ? 'var(--color-success-subtle)' : 'var(--color-surface)'
   const borderLeft  = isCompleted
-    ? '6px solid oklch(52% 0.150 148)'
+    ? '6px solid var(--color-success)'
     : isToday
     ? '6px solid var(--color-primary)'
     : 'none'
   const borderBox   = isUpcoming ? '1px solid var(--color-border)' : undefined
-  const boxShadow   = isToday ? '#1C0D0614 0px 1px 3px' : undefined
+  const boxShadow   = isToday ? 'var(--color-shadow-xs) 0px 1px 3px' : undefined
 
   return (
     <div
@@ -342,7 +342,7 @@ function SessionCard({
             fontSize: 14,
             fontWeight: 600,
             color: isCompleted
-              ? 'oklch(32% 0.100 148)'
+              ? 'var(--color-success-text)'
               : isUpcoming
               ? 'var(--color-text-subtle)'
               : 'var(--color-text)',
@@ -370,7 +370,7 @@ function SessionCard({
                 fontFamily: 'var(--font-sans)',
                 fontSize: 12,
                 fontWeight: 600,
-                color: 'white',
+                color: 'var(--color-primary-foreground)',
                 lineHeight: '16px',
               }}
             >

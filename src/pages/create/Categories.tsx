@@ -106,7 +106,7 @@ export default function Categories() {
                 borderRadius: 'var(--radius-md)',
                 backgroundColor: isSelected ? 'var(--color-primary-50)' : 'var(--color-surface)',
                 border: isSelected ? '2px solid var(--color-primary)' : '2px solid transparent',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                boxShadow: 'var(--color-shadow-xs) 0px 1px 4px',
                 cursor: 'pointer',
                 transition: 'all 150ms ease',
               }}

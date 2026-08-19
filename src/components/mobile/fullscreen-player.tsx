@@ -16,7 +16,7 @@ export function FullscreenCloseButton({ onClose }: CloseButtonProps) {
         width: '44px',
         height: '44px',
         borderRadius: '50%',
-        backgroundColor: 'rgba(255,255,255,0.15)',
+        backgroundColor: 'var(--color-white-15)',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
         border: 'none',
@@ -26,7 +26,7 @@ export function FullscreenCloseButton({ onClose }: CloseButtonProps) {
         cursor: 'pointer',
       }}
     >
-      <X size={20} color="white" strokeWidth={2} />
+      <X size={20} color="var(--color-primary-foreground)" strokeWidth={1.5} />
     </button>
   )
 }

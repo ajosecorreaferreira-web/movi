@@ -150,7 +150,7 @@ export default function WorkoutList() {
             flex: 1, height: 44, display: 'flex', alignItems: 'center',
             paddingInline: 16, gap: 8,
             borderRadius: '9999px', border: '1.5px solid var(--color-border)',
-            backgroundColor: '#fff',
+            backgroundColor: 'var(--color-surface)',
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
@@ -177,7 +177,7 @@ export default function WorkoutList() {
             style={{
               height: 44, display: 'flex', alignItems: 'center', paddingInline: 16, gap: 6,
               borderRadius: '9999px', border: '1.5px solid var(--color-border)',
-              backgroundColor: '#fff', cursor: 'pointer',
+              backgroundColor: 'var(--color-surface)', cursor: 'pointer',
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
@@ -204,7 +204,7 @@ export default function WorkoutList() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 10, fontWeight: 700, color: '#fff', lineHeight: '12px' }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 10, fontWeight: 700, color: 'var(--color-primary-foreground)', lineHeight: '12px' }}>
                 {activeFilterCount}
               </span>
             </div>
@@ -234,7 +234,7 @@ export default function WorkoutList() {
               width: '100%',
               display: 'flex', flexDirection: 'column',
               borderRadius: 'var(--radius-md)', overflow: 'hidden',
-              boxShadow: isSelected ? 'var(--shadow-primary)' : '0 1px 4px rgba(0,0,0,0.08)',
+              boxShadow: isSelected ? 'var(--shadow-primary)' : 'var(--color-shadow-xs) 0px 1px 4px',
               backgroundColor: 'var(--color-surface)',
               border: isSelected ? '2px solid var(--color-primary)' : '2px solid transparent',
               cursor: 'pointer', textAlign: 'left',
@@ -298,7 +298,7 @@ export default function WorkoutList() {
             width: '100%',
             height: '52px',
             backgroundColor: 'var(--color-primary)',
-            color: 'white',
+            color: 'var(--color-primary-foreground)',
             border: 'none',
             borderRadius: 'var(--radius-full)',
             fontSize: '16px',

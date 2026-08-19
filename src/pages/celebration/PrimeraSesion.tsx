@@ -29,7 +29,7 @@ export default function PrimeraSesion() {
         width: '100%',
         maxWidth: '430px',
         margin: '0 auto',
-        backgroundColor: 'oklch(13% 0.040 50)',
+        backgroundColor: 'var(--color-celebration-bg)',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -67,7 +67,7 @@ export default function PrimeraSesion() {
         {/* Icono estrella */}
         <div style={{
           width: 100, height: 100, borderRadius: '9999px',
-          backgroundColor: '#2D1D14',
+          backgroundColor: 'var(--color-avatar-dark)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0, marginBottom: 28,
         }}>
@@ -77,7 +77,7 @@ export default function PrimeraSesion() {
         </div>
 
         <h1 style={{
-          color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 36, fontWeight: 800,
+          color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: 36, fontWeight: 800,
           letterSpacing: '-0.025em', lineHeight: '42px', textAlign: 'center',
           marginBottom: 12, margin: '0 0 12px 0',
         }}>
@@ -85,23 +85,23 @@ export default function PrimeraSesion() {
         </h1>
 
         <p style={{
-          color: '#FFFFFFB3', fontFamily: 'var(--font-sans)', fontSize: 17,
+          color: 'var(--color-white-70)', fontFamily: 'var(--font-sans)', fontSize: 17,
           lineHeight: '26px', textAlign: 'center', marginBottom: 28, margin: '0 0 28px 0',
         }}>
           Ana y 2 personas te esperan mañana. Esto es solo el principio.
         </p>
 
         {/* Separador */}
-        <div style={{ width: 48, height: 2, backgroundColor: '#FFFFFF26', borderRadius: '9999px', marginBottom: 28, flexShrink: 0 }} />
+        <div style={{ width: 48, height: 2, backgroundColor: 'var(--color-white-15)', borderRadius: '9999px', marginBottom: 28, flexShrink: 0 }} />
 
         {/* Avatares */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 16 }}>
           <div style={{ position: 'relative', width: 88, height: 32, flexShrink: 0 }}>
             {[
-              { left: 0, bg: 'linear-gradient(135deg in oklab, oklab(70% 0.132 0.137) 0%, oklab(62% 0.129 0.125) 100%)', label: 'A' },
-              { left: 20, bg: 'linear-gradient(135deg in oklab, oklab(52% 0.119 0.107) 0%, oklab(45% -0.110 0.069) 100%)', label: 'M' },
-              { left: 40, bg: 'linear-gradient(135deg in oklab, oklab(68% 0.031 -0.177) 0%, oklab(58% 0.028 -0.158) 100%)', label: 'C' },
-              { left: 60, bg: '#2D1D14', label: '+2', color: '#A89C92', size: 10 },
+              { left: 0, bg: 'linear-gradient(135deg in oklab, var(--color-primary-400) 0%, var(--color-primary-600) 100%)', label: 'A' },
+              { left: 20, bg: 'linear-gradient(135deg in oklab, var(--color-secondary-400) 0%, var(--color-secondary-700) 100%)', label: 'M' },
+              { left: 40, bg: 'linear-gradient(135deg in oklab, var(--color-avatar-purple) 0%, var(--color-xp) 100%)', label: 'C' },
+              { left: 60, bg: 'var(--color-avatar-dark)', label: '+2', color: 'var(--color-white-55)', size: 10 },
             ].map((a, i) => (
               <div
                 key={i}
@@ -109,28 +109,28 @@ export default function PrimeraSesion() {
                   position: 'absolute', left: a.left, top: 0,
                   width: 32, height: 32, borderRadius: '9999px',
                   background: a.bg,
-                  border: '2px solid oklch(13% 0.040 50)',
+                  border: '2px solid var(--color-celebration-bg)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}
               >
-                <span style={{ color: a.color ?? '#fff', fontSize: a.size ?? 11, fontWeight: 700, fontFamily: 'var(--font-sans)', lineHeight: '14px', textAlign: 'center' }}>
+                <span style={{ color: a.color ?? 'var(--color-primary-foreground)', fontSize: a.size ?? 11, fontWeight: 700, fontFamily: 'var(--font-sans)', lineHeight: '14px', textAlign: 'center' }}>
                   {a.label}
                 </span>
               </div>
             ))}
           </div>
-          <span style={{ color: '#FFFFFF8C', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 500, lineHeight: '18px', textAlign: 'center' }}>
+          <span style={{ color: 'var(--color-white-55)', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 500, lineHeight: '18px', textAlign: 'center' }}>
             Ana, Marta, Carlos y tú
           </span>
         </div>
 
         {/* Recordatorio */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, backgroundColor: '#FFFFFF12', borderRadius: '9999px', padding: '8px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, backgroundColor: 'var(--color-white-08)', borderRadius: '9999px', padding: '8px 16px' }}>
           <svg width="14" height="14" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
-            <circle cx="12" cy="12" r="10" fill="none" stroke="oklch(100% 0 0 / 50%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <polyline points="12 6 12 12 16 14" fill="none" stroke="oklch(100% 0 0 / 50%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="12" cy="12" r="10" fill="none" stroke="var(--color-white-50)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="12 6 12 12 16 14" fill="none" stroke="var(--color-white-50)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span style={{ color: '#FFFFFF80', fontFamily: 'var(--font-sans)', fontSize: 13, lineHeight: '16px', textAlign: 'center' }}>
+          <span style={{ color: 'var(--color-white-50)', fontFamily: 'var(--font-sans)', fontSize: 13, lineHeight: '16px', textAlign: 'center' }}>
             Te avisamos 30 min antes para que llegues a tiempo
           </span>
         </div>
@@ -138,8 +138,8 @@ export default function PrimeraSesion() {
 
       {/* CTA */}
       <div style={{
-        flexShrink: 0, borderTop: '1px solid #FFFFFF14',
-        backgroundColor: 'oklch(13% 0.040 50)',
+        flexShrink: 0, borderTop: '1px solid var(--color-white-08)',
+        backgroundColor: 'var(--color-celebration-bg)',
         paddingInline: 24, paddingTop: 16,
         paddingBottom: 'max(36px, env(safe-area-inset-bottom))',
         position: 'relative',
@@ -151,14 +151,14 @@ export default function PrimeraSesion() {
             backgroundColor: 'var(--color-primary)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-            boxShadow: '#F96F1673 0px 4px 14px',
-            color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
+            boxShadow: 'var(--color-primary-glow) 0px 4px 14px',
+            color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
             letterSpacing: '-0.01em',
           }}
         >
           Ver mi semana
           <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="var(--color-primary-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>

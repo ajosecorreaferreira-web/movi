@@ -16,65 +16,71 @@ interface Session {
   participants: number
   status: 'now' | 'soon' | 'future'
   type: 'running' | 'functional' | 'walking' | 'yoga' | 'hiit'
+  sessionType: 'user' | 'partner' | 'first'
+  partnerName?: string
+  partnerLogo?: string
+  price?: string
+  isFree?: boolean
 }
 
 const TABS = ['Semana', 'Hoy', 'Mañana', 'Jue', 'Vie', 'Sáb']
 
 const MOCK_SESSIONS: Session[] = [
   {
+    id: 'p1',
+    title: 'F45 Las Rozas · Funcional',
+    time: 'Mañana · 7:30am',
+    distance: '1.2km',
+    level: 3,
+    space: 'F45 Las Rozas',
+    participants: 11,
+    status: 'soon',
+    type: 'functional',
+    sessionType: 'partner',
+    partnerName: 'F45',
+    partnerLogo: 'F45',
+    price: '12€',
+    isFree: true,
+  },
+  {
+    id: 'f1',
+    title: 'Funcional en el Pinar',
+    time: 'Esta semana · Nivel 2',
+    distance: '350m',
+    level: 2,
+    space: 'Pinar de Las Rozas',
+    participants: 0,
+    status: 'future',
+    type: 'functional',
+    sessionType: 'first',
+  },
+  {
     id: '1',
     title: 'Carrera por el pinar',
     time: 'Ahora · 09:15',
-    distance: '0.3 km',
+    distance: '0.3km',
     level: 3,
     space: 'Pinar de Las Rozas',
     participants: 1,
     status: 'now',
     type: 'running',
+    sessionType: 'user',
   },
   {
-    id: '2',
-    title: 'Funcional al aire libre',
-    time: '10:30',
-    distance: '0.5 km',
-    level: 2,
-    space: 'Zona calistenia',
-    participants: 3,
-    status: 'soon',
-    type: 'functional',
-  },
-  {
-    id: '3',
-    title: 'Yoga matutino',
-    time: '11:00',
-    distance: '0.8 km',
-    level: 1,
-    space: 'Pinar de Las Rozas',
-    participants: 5,
-    status: 'soon',
-    type: 'yoga',
-  },
-  {
-    id: '4',
-    title: 'HIIT explosivo',
-    time: '12:00',
-    distance: '1.2 km',
+    id: 'p2',
+    title: 'CrossFit Las Rozas · WOD',
+    time: 'Jueves · 19:00',
+    distance: '0.8km',
     level: 4,
-    space: 'Zona calistenia',
-    participants: 2,
-    status: 'future',
-    type: 'hiit',
-  },
-  {
-    id: '5',
-    title: 'Caminata grupal',
-    time: '17:00',
-    distance: '0.4 km',
-    level: 1,
-    space: 'Pinar de Las Rozas',
+    space: 'CrossFit Las Rozas',
     participants: 8,
     status: 'future',
-    type: 'walking',
+    type: 'hiit',
+    sessionType: 'partner',
+    partnerName: 'CF',
+    partnerLogo: 'CF',
+    price: 'Gratis primera clase',
+    isFree: true,
   },
 ]
 
@@ -99,15 +105,163 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
   const navigate = useNavigate()
   const Icon = TYPE_ICONS[session.type]
 
-  const borderColor = isApuntado ? 'var(--color-success)' : STATUS_BORDER_COLOR[session.status]
+  // Border color según sessionType
+  let borderColor: string
+  if (isApuntado) {
+    borderColor = 'var(--color-success)'
+  } else if (session.sessionType === 'partner') {
+    borderColor = 'var(--color-info)'
+  } else if (session.sessionType === 'first') {
+    borderColor = 'var(--color-gold)'
+  } else {
+    borderColor = STATUS_BORDER_COLOR[session.status]
+  }
+
+  // Badge top-right
+  const badge = (() => {
+    if (isApuntado) return null
+    if (session.sessionType === 'partner') {
+      return (
+        <div style={{
+          position: 'absolute', top: 12, right: 12,
+          display: 'flex', alignItems: 'center', gap: 4,
+          backgroundColor: 'var(--color-info-subtle)',
+          borderRadius: 'var(--radius-full)',
+          padding: '3px 10px',
+        }}>
+          <span style={{
+            fontSize: 12, fontWeight: 700, lineHeight: '16px',
+            color: 'var(--color-info)', fontFamily: 'var(--font-sans)',
+          }}>Partner</span>
+        </div>
+      )
+    }
+    if (session.sessionType === 'first') {
+      return (
+        <div style={{
+          position: 'absolute', top: 12, right: 12,
+          display: 'flex', alignItems: 'center', gap: 4,
+          backgroundColor: 'var(--color-warning-subtle)',
+          borderRadius: 'var(--radius-full)',
+          padding: '3px 10px',
+        }}>
+          <span style={{
+            fontSize: 12, fontWeight: 700, lineHeight: '16px',
+            color: 'var(--color-warning-text)', fontFamily: 'var(--font-sans)',
+          }}>✨ Sugerido</span>
+        </div>
+      )
+    }
+    return null
+  })()
+
+  // Icono/logo izquierdo
+  const iconEl = session.sessionType === 'partner' ? (
+    <div style={{
+      width: 36, height: 36, borderRadius: 'var(--radius-sm)',
+      backgroundColor: 'var(--color-info-subtle)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+    }}>
+      <span style={{
+        fontSize: 10, fontWeight: 700, color: 'var(--color-info)', fontFamily: 'var(--font-sans)',
+      }}>{session.partnerLogo}</span>
+    </div>
+  ) : (
+    <div style={{
+      width: 36, height: 36, borderRadius: 'var(--radius-sm)',
+      backgroundColor: 'var(--color-surface-2)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+    }}>
+      <Icon size={16} strokeWidth={1.5} color="var(--color-text-muted)" />
+    </div>
+  )
+
+  // Navegación al tocar la card
+  const handleCardTap = () => {
+    haptic('light')
+    if (session.sessionType === 'partner') {
+      navigate(`/session/partner/${session.id}`)
+    } else if (session.sessionType === 'first') {
+      navigate('/create')
+    } else {
+      navigate(isApuntado ? `/session/${session.id}/apuntado` : `/session/${session.id}`)
+    }
+  }
+
+  // Botón CTA
+  const ctaBtn = (() => {
+    if (isApuntado) return null
+    if (session.sessionType === 'partner') {
+      return (
+        <button
+          onClick={() => { haptic('medium'); navigate(`/session/partner/${session.id}`) }}
+          style={{
+            height: 36, paddingInline: '14px', borderRadius: 'var(--radius-sm)',
+            border: '1.5px solid var(--color-info)',
+            backgroundColor: 'transparent',
+            color: 'var(--color-info)',
+            fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600,
+            cursor: 'pointer',
+          }}
+        >
+          Reservar plaza
+        </button>
+      )
+    }
+    if (session.sessionType === 'first') {
+      return (
+        <button
+          onClick={() => { haptic('medium'); navigate('/create') }}
+          style={{
+            height: 36, paddingInline: '14px', borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-primary)', border: 'none',
+            color: 'var(--color-primary-foreground)',
+            fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600,
+            cursor: 'pointer', boxShadow: 'var(--shadow-primary)',
+          }}
+        >
+          Proponer esta sesión →
+        </button>
+      )
+    }
+    // sessionType === 'user'
+    if (session.status === 'now') {
+      return (
+        <button
+          onClick={() => haptic('medium')}
+          style={{
+            height: 36, paddingInline: '16px', borderRadius: 'var(--radius-sm)',
+            backgroundColor: 'var(--color-info-subtle)', border: '1px solid var(--color-info)',
+            color: 'var(--color-info-text)', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600,
+            cursor: 'pointer',
+          }}
+        >
+          Acompañarle
+        </button>
+      )
+    }
+    return (
+      <button
+        onClick={() => haptic('medium')}
+        style={{
+          height: 36, paddingInline: '14px', borderRadius: 'var(--radius-sm)',
+          backgroundColor: 'var(--color-primary)', border: 'none',
+          color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
+          fontSize: 13, fontWeight: 600,
+          cursor: 'pointer', boxShadow: 'var(--shadow-primary)',
+        }}
+      >
+        Apuntarme
+      </button>
+    )
+  })()
+
+  const hasRightBadge = !isApuntado && (session.sessionType === 'partner' || session.sessionType === 'first')
 
   return (
     <div
       id={`session-card-${session.id}`}
-      onClick={() => {
-        haptic('light')
-        navigate(isApuntado ? `/session/${session.id}/apuntado` : `/session/${session.id}`)
-      }}
+      onClick={handleCardTap}
       style={{
         backgroundColor: 'var(--color-surface)',
         borderRadius: 'var(--radius-sm)',
@@ -139,17 +293,12 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
         </div>
       )}
 
+      {/* Badge partner/first */}
+      {badge}
+
       {/* Top row */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', paddingRight: isApuntado ? 90 : 0 }}>
-        <div
-          style={{
-            width: 36, height: 36, borderRadius: 'var(--radius-sm)',
-            backgroundColor: 'var(--color-surface-2)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-          }}
-        >
-          <Icon size={16} strokeWidth={1.5} color="var(--color-text-muted)" />
-        </div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', paddingRight: (isApuntado || hasRightBadge) ? 90 : 0 }}>
+        {iconEl}
         <div style={{ flex: 1, minWidth: 0 }}>
           <p
             className="text-[15px] font-bold leading-5 tracking-[-0.01em] truncate mb-0.5"
@@ -182,6 +331,19 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
               </span>
             </div>
           )}
+          {/* Párrafo extra para sessionType 'first' */}
+          {session.sessionType === 'first' && !isApuntado && (
+            <p style={{
+              fontSize: '13px',
+              color: 'var(--color-text-muted)',
+              marginTop: '4px',
+              fontFamily: 'var(--font-sans)',
+              lineHeight: '18px',
+              fontStyle: 'italic',
+            }}>
+              Nadie lo ha propuesto aún. ¿Lo organizas tú?
+            </p>
+          )}
         </div>
       </div>
 
@@ -207,38 +369,13 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
         </div>
       </div>
 
-      {/* Actions — solo cuando no está apuntado */}
-      {!isApuntado && (
+      {/* Actions */}
+      {!isApuntado && ctaBtn && (
         <div
           style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}
           onClick={e => e.stopPropagation()}
         >
-          {session.status === 'now' ? (
-            <button
-              onClick={() => haptic('medium')}
-              className="text-[13px] font-semibold tracking-[-0.01em]"
-              style={{
-                height: 36, paddingInline: '16px', borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-info-subtle)', border: '1px solid var(--color-info)',
-                color: 'var(--color-info-text)', fontFamily: 'var(--font-sans)', cursor: 'pointer',
-              }}
-            >
-              Acompañarle
-            </button>
-          ) : (
-            <button
-              onClick={() => haptic('medium')}
-              className="text-[13px] font-semibold tracking-[-0.01em]"
-              style={{
-                height: 36, paddingInline: '14px', borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-primary)', border: 'none',
-                color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
-                cursor: 'pointer', boxShadow: 'var(--shadow-primary)',
-              }}
-            >
-              Apuntarme
-            </button>
-          )}
+          {ctaBtn}
         </div>
       )}
     </div>
@@ -314,9 +451,9 @@ export default function Home() {
           <div style={{
             position: 'fixed', top: 64, left: '50%', transform: 'translateX(-50%)',
             zIndex: 50, maxWidth: 320, width: 'calc(100% - 70px)',
-            backgroundColor: '#fff',
+            backgroundColor: 'var(--color-surface)',
             borderLeft: '3px solid var(--color-success)',
-            borderRadius: 10, boxShadow: '#0000001F 0px 4px 16px',
+            borderRadius: 10, boxShadow: 'var(--color-shadow-xs) 0px 4px 16px',
             display: 'flex', alignItems: 'center', gap: 10,
             padding: '12px 16px',
           }}>
@@ -472,7 +609,7 @@ export default function Home() {
                     borderRadius: 'var(--radius-full)',
                     backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
                     border: 'none', cursor: 'pointer',
-                    color: activeTab === i ? 'white' : 'var(--color-text-muted)',
+                    color: activeTab === i ? 'var(--color-primary-foreground)' : 'var(--color-text-muted)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: activeTab === i ? 600 : 500,
                     transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
@@ -529,7 +666,7 @@ export default function Home() {
             width: '100%',
             height: '52px',
             backgroundColor: 'var(--color-primary)',
-            color: 'white',
+            color: 'var(--color-primary-foreground)',
             border: 'none',
             borderRadius: 'var(--radius-full)',
             fontSize: '16px',
@@ -558,8 +695,9 @@ export default function Home() {
             navigate('/program/proposal?type=group')
           } else if (feeling === 'ok') {
             navigate('/program/proposal?type=solo')
+          } else if (feeling === 'notforme' || feeling === 'alone') {
+            navigate('/program/propose')
           }
-          // 'notforme' → solo cierra el sheet
         }}
       />
     </>

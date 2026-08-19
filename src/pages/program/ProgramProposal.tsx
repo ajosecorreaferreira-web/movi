@@ -47,7 +47,7 @@ export default function ProgramProposal() {
         width: '100%',
         maxWidth: '430px',
         margin: '0 auto',
-        backgroundColor: 'rgba(28,13,6,0.55)',
+        backgroundColor: 'var(--color-overlay-warm)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -187,7 +187,7 @@ export default function ProgramProposal() {
               <span
                 style={{
                   backgroundColor: 'var(--color-primary)',
-                  color: 'white',
+                  color: 'var(--color-primary-foreground)',
                   borderRadius: 'var(--radius-full)',
                   padding: '6px 14px',
                   fontFamily: 'var(--font-sans)',

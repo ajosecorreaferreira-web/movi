@@ -1,3 +1,4 @@
+// audit:tokens-ignore — SVG cartográfico inline; colores de terreno no son tokens DS
 
 interface MapStaticProps {
   activePin: string | null

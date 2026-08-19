@@ -23,7 +23,7 @@ function Pill({ label, active, onClick }: { label: string; active: boolean; onCl
         borderRadius: '9999px', cursor: 'pointer',
         backgroundColor: active ? 'var(--color-primary)' : 'transparent',
         border: `1.5px solid ${active ? 'var(--color-primary)' : 'var(--color-border)'}`,
-        color: active ? '#fff' : 'var(--color-text)',
+        color: active ? 'var(--color-primary-foreground)' : 'var(--color-text)',
         fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, lineHeight: '18px',
         transition: 'all 150ms ease',
       }}
@@ -70,7 +70,7 @@ export default function FilterSheet({ isOpen, onClose, onApply, initialFilters }
       <div
         onClick={onClose}
         style={{
-          position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)',
+          position: 'fixed', inset: 0, backgroundColor: 'var(--color-overlay-modal)',
           zIndex: 40,
         }}
       />
@@ -177,7 +177,7 @@ export default function FilterSheet({ isOpen, onClose, onApply, initialFilters }
                   }}
                 >
                   {local.ordenar === o && (
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#fff' }} />
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: 'var(--color-primary-foreground)' }} />
                   )}
                 </div>
                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 500, color: 'var(--color-text)', lineHeight: '18px' }}>
@@ -197,7 +197,7 @@ export default function FilterSheet({ isOpen, onClose, onApply, initialFilters }
               backgroundColor: 'var(--color-primary)',
               border: 'none', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700, color: '#fff',
+              fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700, color: 'var(--color-primary-foreground)',
               letterSpacing: '-0.01em',
             }}
           >

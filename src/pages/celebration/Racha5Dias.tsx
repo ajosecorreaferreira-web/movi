@@ -27,7 +27,7 @@ export default function Racha5Dias() {
         width: '100%',
         maxWidth: '430px',
         margin: '0 auto',
-        backgroundColor: 'oklch(13% 0.040 50)',
+        backgroundColor: 'var(--color-celebration-bg)',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -52,65 +52,65 @@ export default function Racha5Dias() {
       {/* Contenido */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingInline: 32, paddingBottom: 16, position: 'relative' }}>
         {/* Icono rayo */}
-        <div style={{ width: 100, height: 100, borderRadius: '9999px', backgroundColor: '#2D1D14', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginBottom: 28 }}>
+        <div style={{ width: 100, height: 100, borderRadius: '9999px', backgroundColor: 'var(--color-avatar-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginBottom: 28 }}>
           <svg width="52" height="52" viewBox="0 0 24 24">
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="var(--color-primary)" />
           </svg>
         </div>
 
-        <h1 style={{ color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '42px', textAlign: 'center', margin: '0 0 12px 0' }}>
+        <h1 style={{ color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '42px', textAlign: 'center', margin: '0 0 12px 0' }}>
           5 días seguidos
         </h1>
 
-        <p style={{ color: '#FFFFFFB3', fontFamily: 'var(--font-sans)', fontSize: 17, lineHeight: '26px', textAlign: 'center', margin: '0 0 28px 0' }}>
+        <p style={{ color: 'var(--color-white-70)', fontFamily: 'var(--font-sans)', fontSize: 17, lineHeight: '26px', textAlign: 'center', margin: '0 0 28px 0' }}>
           Esto ya es un hábito.<br />Tu cuerpo y tu entorno lo saben.
         </p>
 
-        <div style={{ width: 48, height: 2, backgroundColor: '#FFFFFF26', borderRadius: '9999px', marginBottom: 28, flexShrink: 0 }} />
+        <div style={{ width: 48, height: 2, backgroundColor: 'var(--color-white-15)', borderRadius: '9999px', marginBottom: 28, flexShrink: 0 }} />
 
         {/* Stats */}
         <div style={{ display: 'flex', width: '100%', marginBottom: 28 }}>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingInline: 8, borderRight: '1px solid #FFFFFF1F' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingInline: 8, borderRight: '1px solid var(--color-white-12)' }}>
             <span style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)', fontSize: 28, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '34px', textAlign: 'center' }}>5</span>
-            <span style={{ color: '#FFFFFF80', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, letterSpacing: '0.05em', lineHeight: '16px', textAlign: 'center', textTransform: 'uppercase' }}>Días racha</span>
+            <span style={{ color: 'var(--color-white-50)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, letterSpacing: '0.05em', lineHeight: '16px', textAlign: 'center', textTransform: 'uppercase' }}>Días racha</span>
           </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingInline: 8, borderRight: '1px solid #FFFFFF1F' }}>
-            <span style={{ color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 28, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '34px', textAlign: 'center' }}>+100</span>
-            <span style={{ color: '#FFFFFF80', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, letterSpacing: '0.05em', lineHeight: '16px', textAlign: 'center', textTransform: 'uppercase' }}>Pts ganados</span>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingInline: 8, borderRight: '1px solid var(--color-white-12)' }}>
+            <span style={{ color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: 28, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '34px', textAlign: 'center' }}>+100</span>
+            <span style={{ color: 'var(--color-white-50)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, letterSpacing: '0.05em', lineHeight: '16px', textAlign: 'center', textTransform: 'uppercase' }}>Pts ganados</span>
           </div>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingInline: 8 }}>
             <span style={{ color: 'var(--color-xp)', fontFamily: 'var(--font-sans)', fontSize: 28, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: '34px', textAlign: 'center' }}>2</span>
-            <span style={{ color: '#FFFFFF80', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, letterSpacing: '0.05em', lineHeight: '16px', textAlign: 'center', textTransform: 'uppercase' }}>Nivel</span>
+            <span style={{ color: 'var(--color-white-50)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, letterSpacing: '0.05em', lineHeight: '16px', textAlign: 'center', textTransform: 'uppercase' }}>Nivel</span>
           </div>
         </div>
 
         {/* Progress card */}
-        <div style={{ backgroundColor: '#FFFFFF0F', borderRadius: 12, padding: '14px 16px', width: '100%', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ backgroundColor: 'var(--color-white-06)', borderRadius: 12, padding: '14px 16px', width: '100%', display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ color: '#FFFFFF99', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '16px' }}>Medalla 7 días</span>
+            <span style={{ color: 'var(--color-white-60)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '16px' }}>Medalla 7 días</span>
             <span style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 700, lineHeight: '16px' }}>5/7</span>
           </div>
-          <div style={{ backgroundColor: '#FFFFFF1F', borderRadius: '9999px', height: 6, overflow: 'hidden' }}>
+          <div style={{ backgroundColor: 'var(--color-white-12)', borderRadius: '9999px', height: 6, overflow: 'hidden' }}>
             <div style={{
               height: 6, width: '71%', borderRadius: '9999px',
-              background: 'linear-gradient(90deg in oklab, var(--color-primary) 0%, oklab(81% 0.103 0.123) 100%)',
+              background: 'linear-gradient(90deg in oklab, var(--color-primary) 0%, var(--color-primary-300) 100%)',
             }} />
           </div>
-          <span style={{ color: '#FFFFFF73', fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: '16px', textAlign: 'center' }}>
+          <span style={{ color: 'var(--color-white-45)', fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: '16px', textAlign: 'center' }}>
             3 días más para desbloquear la medalla de 7 días
           </span>
         </div>
       </div>
 
       {/* CTA */}
-      <div style={{ flexShrink: 0, borderTop: '1px solid #FFFFFF14', backgroundColor: 'oklch(13% 0.040 50)', paddingInline: 24, paddingTop: 16, paddingBottom: 'max(36px, env(safe-area-inset-bottom))', position: 'relative' }}>
+      <div style={{ flexShrink: 0, borderTop: '1px solid var(--color-white-08)', backgroundColor: 'var(--color-celebration-bg)', paddingInline: 24, paddingTop: 16, paddingBottom: 'max(36px, env(safe-area-inset-bottom))', position: 'relative' }}>
         <button
           onClick={() => navigate('/home')}
-          style={{ width: '100%', height: 52, borderRadius: '9999px', backgroundColor: 'var(--color-primary)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '#F96F1673 0px 4px 14px', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em' }}
+          style={{ width: '100%', height: 52, borderRadius: '9999px', backgroundColor: 'var(--color-primary)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: 'var(--color-primary-glow) 0px 4px 14px', color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em' }}
         >
           Seguir
           <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="var(--color-primary-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>

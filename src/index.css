@@ -89,7 +89,7 @@
   --color-secondary-subtle:     var(--color-secondary-50);
 
   /* Tierra caliente — neutros cálidos */
-  --color-background:   oklch(0.98 0.005 80);  /* Blanco roto cálido #F8F7F5 */
+  --color-background:   oklch(0.98 0.005 80);  /* Blanco roto cálido */
   --color-surface:      oklch(1 0 0);           /* Blanco para cards */
   --color-surface-2:    oklch(0.96 0.01 75);   /* Surface elevada */
   --color-surface-3:    oklch(0.93 0.01 75);   /* Surface más elevada */
@@ -146,6 +146,49 @@
   --color-white-70: oklch(1 0 0 / 0.70);
   --color-white-75: oklch(1 0 0 / 0.75);
   --color-white-80: oklch(1 0 0 / 0.80);
+
+  /* White alpha — gaps */
+  --color-white-06: oklch(1 0 0 / 0.06);
+  --color-white-08: oklch(1 0 0 / 0.08);
+  --color-white-12: oklch(1 0 0 / 0.12);
+  --color-white-15: oklch(1 0 0 / 0.15);
+  --color-white-20: oklch(1 0 0 / 0.20);
+  --color-white-45: oklch(1 0 0 / 0.45);
+  --color-white-55: oklch(1 0 0 / 0.55);
+  --color-white-60: oklch(1 0 0 / 0.60);
+
+  /* Gold extended */
+  --color-gold-40: oklch(0.78 0.16 85 / 0.40);
+  --color-gold-foreground: oklch(0.30 0.09 80);
+
+  /* Primary glow */
+  --color-primary-glow:    oklch(0.70 0.19 46 / 0.45);
+  --color-primary-glow-sm: oklch(0.70 0.19 46 / 0.40);
+
+  /* Shadow scale */
+  --color-shadow-xs:      oklch(0 0 0 / 0.08);
+  --color-shadow-sm:      oklch(0 0 0 / 0.20);
+  --color-shadow-md:      oklch(0 0 0 / 0.25);
+  --color-shadow-overlay: oklch(0 0 0 / 0.60);
+
+  /* Overlays */
+  --color-overlay-modal: oklch(0 0 0 / 0.40);
+  --color-overlay-warm:  oklch(0.08 0.03 50 / 0.55);
+
+  /* Media */
+  --color-video-bg: oklch(0.12 0 0);
+
+  /* Success extended */
+  --color-success-border: oklch(0.52 0.15 148 / 0.25);
+  --color-success-glow:   oklch(0.52 0.15 148 / 0.15);
+
+  /* Avatar palette */
+  --color-avatar-purple: oklch(0.58 0.18 280);
+  --color-avatar-green:  oklch(0.42 0.15 148);
+  --color-avatar-red:    oklch(0.50 0.20 25);
+
+  /* Info extended */
+  --color-info-glow: oklch(0.55 0.15 240 / 0.35);
 
   /* ── MAP TERRAIN (Pinar de Las Rozas) ── */
   --color-map-base:       oklch(0.94 0.01 70);   /* Suelo / terreno base */

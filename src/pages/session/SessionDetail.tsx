@@ -86,12 +86,12 @@ export default function SessionDetail() {
           <div
             style={{
               width: 64, height: 64, borderRadius: '9999px', flexShrink: 0,
-              background: 'linear-gradient(135deg in oklab, oklab(75% 0.120 0.134) 0%, oklab(62% 0.129 0.125) 100%)',
+              background: 'linear-gradient(135deg in oklab, var(--color-primary-400) 0%, var(--color-primary-600) 100%)',
               border: '2px solid var(--color-primary)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
             }}
           >
-            <span style={{ color: '#fff', fontSize: 24, fontWeight: 700, fontFamily: 'var(--font-sans)', lineHeight: '30px' }}>AG</span>
+            <span style={{ color: 'var(--color-primary-foreground)', fontSize: 24, fontWeight: 700, fontFamily: 'var(--font-sans)', lineHeight: '30px' }}>AG</span>
           </div>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, paddingTop: 2 }}>
             <span style={{ color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700, lineHeight: '20px' }}>
@@ -137,9 +137,9 @@ export default function SessionDetail() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{ position: 'relative', width: 80, height: 32, flexShrink: 0 }}>
             {[
-              { left: 0, bg: '#7474EF', label: 'A', color: '#fff' },
-              { left: 20, bg: '#017F31', label: 'M', color: '#fff' },
-              { left: 40, bg: '#BD413F', label: 'C', color: '#fff' },
+              { left: 0, bg: 'var(--color-avatar-purple)', label: 'A', color: 'var(--color-primary-foreground)' },
+              { left: 20, bg: 'var(--color-avatar-green)', label: 'M', color: 'var(--color-primary-foreground)' },
+              { left: 40, bg: 'var(--color-avatar-red)', label: 'C', color: 'var(--color-primary-foreground)' },
               { left: 60, bg: 'var(--color-surface-2)', label: '+1', color: 'var(--color-text-muted)' },
             ].map((a, i) => (
               <div
@@ -147,7 +147,7 @@ export default function SessionDetail() {
                 style={{
                   position: 'absolute', left: a.left, top: 0,
                   width: 32, height: 32, borderRadius: '9999px',
-                  backgroundColor: a.bg, border: '2px solid #fff',
+                  backgroundColor: a.bg, border: '2px solid var(--color-surface)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}
               >
@@ -255,24 +255,24 @@ export default function SessionDetail() {
           aria-label="Ver en mapa"
           style={{
             width: '100%', height: 100, position: 'relative',
-            backgroundColor: '#F0EDE6', border: 'none', cursor: 'pointer',
+            backgroundColor: 'var(--color-map-base)', border: 'none', cursor: 'pointer',
             padding: 0, overflow: 'hidden', display: 'block',
           }}
         >
-          <div style={{ position: 'absolute', left: 40, top: 8, width: 200, height: 70, backgroundColor: '#A9D1A0', opacity: 0.7, borderRadius: '40px 60px 50px 45px' }} />
-          <div style={{ position: 'absolute', left: 80, top: 20, width: 120, height: 50, backgroundColor: '#78B681', opacity: 0.5, borderRadius: '30px 40px 35px 30px' }} />
-          <div style={{ position: 'absolute', left: 0, top: 50, width: '100%', height: 6, backgroundColor: '#C0A994', opacity: 0.6 }} />
+          <div style={{ position: 'absolute', left: 40, top: 8, width: 200, height: 70, backgroundColor: 'var(--color-map-pinar)', opacity: 0.7, borderRadius: '40px 60px 50px 45px' }} />
+          <div style={{ position: 'absolute', left: 80, top: 20, width: 120, height: 50, backgroundColor: 'var(--color-map-pinar)', opacity: 0.5, borderRadius: '30px 40px 35px 30px' }} />
+          <div style={{ position: 'absolute', left: 0, top: 50, width: '100%', height: 6, backgroundColor: 'var(--color-map-path)', opacity: 0.6 }} />
           <div style={{
             position: 'absolute', left: 160, top: 20,
             width: 22, height: 22, backgroundColor: 'var(--color-primary)',
             borderRadius: '9999px 9999px 9999px 0',
             transform: 'rotate(-45deg)',
-            boxShadow: '#F96F1666 0px 2px 6px',
+            boxShadow: 'var(--color-primary-glow-sm) 0px 2px 6px',
           }} />
           <div style={{
             position: 'absolute', bottom: 10, right: 16,
-            backgroundColor: '#fff', borderRadius: '9999px',
-            boxShadow: '#0000001F 0px 1px 4px',
+            backgroundColor: 'var(--color-surface)', borderRadius: '9999px',
+            boxShadow: 'var(--color-shadow-xs) 0px 1px 4px',
             padding: '4px 10px', display: 'flex', alignItems: 'center', gap: 4,
           }}>
             <span style={{ color: 'var(--color-primary-text)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '16px' }}>Ver en mapa</span>
@@ -308,7 +308,7 @@ export default function SessionDetail() {
                 <path d="M2 9h4M2 15h4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M20 9h2M20 15h2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: '#fff', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <polyline points="17 1 21 5 17 9" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M3 11V9a4 4 0 0 1 4-4h14" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -317,7 +317,7 @@ export default function SessionDetail() {
                 </svg>
                 <span style={{ color: 'var(--color-primary-text)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '18px' }}>Cross training</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: '#fff', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <circle cx="12" cy="5" r="1" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="m9 20 3-6 3 6" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -335,7 +335,7 @@ export default function SessionDetail() {
                 <path d="M4 20h16" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M10 6V4h4v2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: '#fff', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <path d="M6 5v14M18 5v14" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M2 9h4M2 15h4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -343,7 +343,7 @@ export default function SessionDetail() {
                 </svg>
                 <span style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '18px' }}>Equip. básico</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: '#fff', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <circle cx="9" cy="7" r="4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -396,7 +396,7 @@ export default function SessionDetail() {
           style={{
             width: '100%', height: 52,
             backgroundColor: 'var(--color-primary)',
-            color: 'white',
+            color: 'var(--color-primary-foreground)',
             border: 'none',
             borderRadius: 'var(--radius-full)',
             fontSize: 16, fontWeight: 700,
@@ -408,7 +408,7 @@ export default function SessionDetail() {
         >
           Apuntarme a esta sesión
           <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="var(--color-primary-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>

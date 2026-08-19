@@ -59,7 +59,7 @@ function ExerciseTimelineView({ block }: ExerciseListProps) {
         >
           <div
             style={{
-              width: '100%', height: 160, backgroundColor: '#1A1A1A',
+              width: '100%', height: 160, backgroundColor: 'var(--color-video-bg)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               position: 'relative',
             }}
@@ -67,22 +67,22 @@ function ExerciseTimelineView({ block }: ExerciseListProps) {
             <div
               style={{
                 width: 44, height: 44, borderRadius: '50%',
-                backgroundColor: 'rgba(255,255,255,0.15)',
+                backgroundColor: 'var(--color-white-15)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24">
-                <polygon points="5 3 19 12 5 21 5 3" fill="#fff" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <polygon points="5 3 19 12 5 21 5 3" fill="var(--color-primary-foreground)" stroke="var(--color-primary-foreground)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <div
               style={{
                 position: 'absolute', bottom: 8, right: 8,
-                backgroundColor: 'rgba(0,0,0,0.6)', borderRadius: 4,
+                backgroundColor: 'var(--color-shadow-overlay)', borderRadius: 4,
                 padding: '2px 6px',
               }}
             >
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: '#fff', fontWeight: 600 }}>15s</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-primary-foreground)', fontWeight: 600 }}>15s</span>
             </div>
           </div>
           <div style={{ padding: '10px 12px' }}>
@@ -201,15 +201,15 @@ export default function WorkoutDetailCreate() {
       <div style={{ flex: 1, overflowY: 'auto', paddingBottom: 100 }}>
 
         {/* Hero */}
-        <div style={{ width: '100%', height: 180, backgroundColor: '#D4E6C3', position: 'relative', flexShrink: 0 }}>
+        <div style={{ width: '100%', height: 180, backgroundColor: 'var(--color-map-pinar)', position: 'relative', flexShrink: 0 }}>
           <div
             style={{
               position: 'absolute', bottom: 0, left: 0, right: 0, height: 80,
-              background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%)',
+              background: 'linear-gradient(180deg, transparent 0%, var(--color-shadow-overlay) 100%)',
             }}
           />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 16px 16px' }}>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 20, fontWeight: 700, color: '#fff', lineHeight: '24px' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 20, fontWeight: 700, color: 'var(--color-primary-foreground)', lineHeight: '24px' }}>
               Funcional avanzado
             </span>
           </div>
@@ -265,7 +265,7 @@ export default function WorkoutDetailCreate() {
               >
                 <span style={{ fontSize: isActive ? 16 : 15, lineHeight: 1 }}>{block.emoji}</span>
                 {isActive && (
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: '#fff', lineHeight: '16px', whiteSpace: 'nowrap' }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--color-primary-foreground)', lineHeight: '16px', whiteSpace: 'nowrap' }}>
                     {block.name}
                   </span>
                 )}
@@ -386,9 +386,9 @@ export default function WorkoutDetailCreate() {
             backgroundColor: 'var(--color-primary)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
+            color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700,
             letterSpacing: '-0.01em',
-            boxShadow: '#F96F1659 0px 4px 14px',
+            boxShadow: 'var(--color-primary-glow-sm) 0px 4px 14px',
           }}
         >
           Seleccionar este entrenamiento →
