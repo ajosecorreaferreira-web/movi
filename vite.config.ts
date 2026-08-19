@@ -21,6 +21,8 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/api\//],
+        skipWaiting: true,
+        clientsClaim: true,
       },
       manifest: {
         name: 'Movi',
