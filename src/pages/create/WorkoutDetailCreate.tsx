@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { MOCK_WORKOUT_BLOCKS, type WorkoutBlock } from '../workout/workoutData'
 
 interface ExerciseListProps {
@@ -102,6 +102,19 @@ function ExerciseTimelineView({ block }: ExerciseListProps) {
 
 export default function WorkoutDetailCreate() {
   const navigate = useNavigate()
+  const { id: workoutId } = useParams<{ id: string }>()
+  const location = useLocation()
+  const { fromCreate, workout } = (location.state ?? {}) as { fromCreate?: boolean; workout?: Record<string, unknown> }
+
+  const ctaText = fromCreate ? 'Seleccionar este entrenamiento →' : 'Empezar entrenamiento →'
+  const handleCTA = () => {
+    if (fromCreate) {
+      navigate('/create', { state: { selectedWorkout: workout } })
+    } else {
+      navigate(`/workout/${workoutId ?? '1'}`)
+    }
+  }
+
   const [activeBlock, setActiveBlock] = useState('warmup')
   const [expandedBlocks, setExpandedBlocks] = useState<Set<string>>(new Set(['warmup']))
   const [viewMode, setViewMode] = useState<'list' | 'timeline'>('list')
@@ -380,7 +393,7 @@ export default function WorkoutDetailCreate() {
         }}
       >
         <button
-          onClick={() => navigate('/create', { state: { selectedWorkout: { name: 'Funcional avanzado', duration: 25, intensity: 'Moderado', zone: 'Cuerpo completo' } } })}
+          onClick={handleCTA}
           style={{
             width: '100%', height: 52, borderRadius: '9999px',
             backgroundColor: 'var(--color-primary)',
@@ -391,7 +404,7 @@ export default function WorkoutDetailCreate() {
             boxShadow: 'var(--color-primary-glow-sm) 0px 4px 14px',
           }}
         >
-          Seleccionar este entrenamiento →
+          {ctaText}
         </button>
       </div>
     </div>

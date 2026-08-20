@@ -1,6 +1,21 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Footprints, Wind, Zap, Flame, Trophy, MapPin, CalendarDays } from 'lucide-react'
+
+interface WorkoutSuggestion {
+  name: string
+  duration: number
+  intensity: string
+  bodyPart: string
+}
+
+const WORKOUTS_BY_LEVEL: Record<number, WorkoutSuggestion> = {
+  1: { name: 'Caminata funcional', duration: 20, intensity: 'Suave', bodyPart: 'Cuerpo completo' },
+  2: { name: 'Funcional básico', duration: 25, intensity: 'Moderado', bodyPart: 'Cuerpo completo' },
+  3: { name: 'Funcional avanzado', duration: 30, intensity: 'Moderado-alto', bodyPart: 'Cuerpo completo' },
+  4: { name: 'HIIT Hyrox', duration: 45, intensity: 'Alto', bodyPart: 'Cuerpo completo + resistencia' },
+  5: { name: 'CrossFit híbrido', duration: 60, intensity: 'Muy alto', bodyPart: 'Fuerza + cardio' },
+}
 
 const LEVELS = [
   { id: 1 as const, name: 'Activo', Icon: Footprints },
@@ -58,7 +73,13 @@ function ToggleSwitch({ value, onChange, label }: ToggleSwitchProps) {
 
 export default function CreateSession() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const workoutFromSelection = location.state?.selectedWorkout as WorkoutSuggestion | undefined
+
   const [selectedLevel, setSelectedLevel] = useState<LevelId>(3)
+  const [selectedWorkout, setSelectedWorkout] = useState<WorkoutSuggestion>(
+    workoutFromSelection ?? WORKOUTS_BY_LEVEL[3]
+  )
   const [options, setOptions] = useState<Options>({
     ninos: false,
     perro: false,
@@ -67,7 +88,20 @@ export default function CreateSession() {
     familiar: false,
   })
 
+  useEffect(() => {
+    if (workoutFromSelection) {
+      setSelectedWorkout(workoutFromSelection)
+    }
+  }, [workoutFromSelection])
+
   const activeLevel = LEVELS.find(l => l.id === selectedLevel)!
+
+  const handleLevelChange = (level: number) => {
+    setSelectedLevel(level as LevelId)
+    if (!workoutFromSelection) {
+      setSelectedWorkout(WORKOUTS_BY_LEVEL[level])
+    }
+  }
 
   const toggleOption = (key: keyof Options) => {
     setOptions(prev => ({ ...prev, [key]: !prev[key] }))
@@ -147,7 +181,7 @@ export default function CreateSession() {
               return (
                 <button
                   key={id}
-                  onClick={() => setSelectedLevel(id)}
+                  onClick={() => handleLevelChange(id)}
                   aria-label={name}
                   style={{
                     width: 56, height: 56, borderRadius: '9999px', flexShrink: 0,
@@ -182,12 +216,14 @@ export default function CreateSession() {
 
         {/* Card entrenamiento sugerido */}
         <div
+          onClick={() => navigate('/create/workout-detail/1')}
           style={{
             backgroundColor: 'var(--color-surface)',
             borderRadius: 'var(--radius-md)',
             boxShadow: 'var(--color-shadow-xs) 0px 1px 4px',
             padding: 16,
             position: 'relative',
+            cursor: 'pointer',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
@@ -208,16 +244,16 @@ export default function CreateSession() {
             {/* Columna texto */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingRight: 40 }}>
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 700, color: 'var(--color-text)', lineHeight: '18px' }}>
-                Funcional avanzado
+                {selectedWorkout.name}
               </span>
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--color-text-muted)', lineHeight: '16px', marginTop: 4 }}>
-                25 min · Moderado
+                {selectedWorkout.duration} min · {selectedWorkout.intensity}
               </span>
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--color-text-muted)', lineHeight: '16px' }}>
-                Cuerpo completo
+                {selectedWorkout.bodyPart}
               </span>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 500, color: 'var(--color-primary)', lineHeight: '16px', marginTop: 4 }}>
-                Basado en tu semana
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, color: 'var(--color-primary)', lineHeight: '16px', marginTop: 8 }}>
+                Ver detalle del entrenamiento →
               </span>
             </div>
           </div>

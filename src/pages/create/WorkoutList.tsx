@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import FilterSheet from './FilterSheet'
 
 interface Workout {
@@ -7,15 +7,17 @@ interface Workout {
   name: string
   duration: number
   level: number
+  intensity: string
+  bodyPart: string
 }
 
 const MOCK_WORKOUTS: Workout[] = [
-  { id: '1', name: 'Funcional avanzado', duration: 25, level: 3 },
-  { id: '2', name: 'HIIT explosivo', duration: 20, level: 4 },
-  { id: '3', name: 'Fuerza básica', duration: 30, level: 2 },
-  { id: '4', name: 'Yoga matutino', duration: 45, level: 1 },
-  { id: '5', name: 'Funcional suave', duration: 20, level: 2 },
-  { id: '6', name: 'Core y glúteos', duration: 25, level: 3 },
+  { id: '1', name: 'Funcional avanzado', duration: 25, level: 3, intensity: 'Moderado', bodyPart: 'Cuerpo completo' },
+  { id: '2', name: 'HIIT explosivo', duration: 20, level: 4, intensity: 'Alto', bodyPart: 'Cardio + core' },
+  { id: '3', name: 'Fuerza básica', duration: 30, level: 2, intensity: 'Moderado', bodyPart: 'Tren superior' },
+  { id: '4', name: 'Yoga matutino', duration: 45, level: 1, intensity: 'Suave', bodyPart: 'Flexibilidad' },
+  { id: '5', name: 'Funcional suave', duration: 20, level: 2, intensity: 'Suave', bodyPart: 'Cuerpo completo' },
+  { id: '6', name: 'Core y glúteos', duration: 25, level: 3, intensity: 'Moderado', bodyPart: 'Core + glúteos' },
 ]
 
 const CATEGORY_NAMES: Record<string, string> = {
@@ -56,11 +58,12 @@ function LevelDots({ level }: { level: number }) {
 
 export default function WorkoutList() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { category } = useParams<{ category: string }>()
   const categoryName = CATEGORY_NAMES[category ?? ''] ?? category ?? 'Entrenamientos'
 
   const [search, setSearch] = useState('')
-  const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null)
+  const selectedWorkout = (location.state?.selectedWorkout ?? null) as Workout | null
   const [showFilters, setShowFilters] = useState(false)
   const [activeFilters, setActiveFilters] = useState<Filters>({
     duracion: null,
@@ -225,11 +228,13 @@ export default function WorkoutList() {
         }}
       >
         {filtered.map(workout => {
-          const isSelected = selectedWorkout === workout.id
+          const isSelected = selectedWorkout?.id === workout.id
           return (
           <button
             key={workout.id}
-            onClick={() => setSelectedWorkout(isSelected ? null : workout.id)}
+            onClick={() => navigate(`/create/workout-detail/${workout.id}`, {
+              state: { fromCreate: true, workout }
+            })}
             style={{
               width: '100%',
               display: 'flex', flexDirection: 'column',
@@ -293,7 +298,10 @@ export default function WorkoutList() {
         }}
       >
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (!selectedWorkout) return
+            navigate('/create', { state: { selectedWorkout } })
+          }}
           style={{
             width: '100%',
             height: '52px',
