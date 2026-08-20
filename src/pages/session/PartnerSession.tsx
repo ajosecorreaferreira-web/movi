@@ -47,7 +47,6 @@ const MOCK_PARTNER_SESSIONS: Record<string, PartnerSessionData> = {
       'Alta intensidad',
       'Cuerpo completo',
       'Equipamiento completo',
-      'Clase guiada',
     ],
   },
   p2: {
@@ -58,13 +57,13 @@ const MOCK_PARTNER_SESSIONS: Record<string, PartnerSessionData> = {
     rating: 4.9,
     reviews: 89,
     description:
-      'WOD diario en un box equipado. Primera clase completamente gratuita para usuarios de Movi.',
+      'WOD diario con coaches certificados. Primera clase completamente gratis para usuarios de Movi.',
     participants: 8,
     totalSpots: 12,
-    priceFirst: 'Gratis con Movi',
+    priceFirst: 'Gratis primera clase',
     priceNormal: '15€/clase',
-    priceBonus: '99€ bono 10 clases',
-    location: 'Calle del Deporte 5, Las Rozas',
+    priceBonus: '120€ bono 10 clases',
+    location: 'Polígono Las Rozas, Nave 12',
     distance: '0.8km',
     time: 'Jueves · 19:00',
     walkTime: '10 min andando',
@@ -73,7 +72,6 @@ const MOCK_PARTNER_SESSIONS: Record<string, PartnerSessionData> = {
       'Alta intensidad',
       'Fuerza + cardio',
       'Equipamiento completo',
-      'Clase guiada',
     ],
   },
 }

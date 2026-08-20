@@ -125,14 +125,13 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
       return (
         <div style={{
           position: 'absolute', top: 12, right: 12,
-          display: 'flex', alignItems: 'center', gap: 4,
-          backgroundColor: 'var(--color-info-subtle)',
+          backgroundColor: 'var(--color-info)',
           borderRadius: 'var(--radius-full)',
           padding: '3px 10px',
         }}>
           <span style={{
-            fontSize: 12, fontWeight: 700, lineHeight: '16px',
-            color: 'var(--color-info)', fontFamily: 'var(--font-sans)',
+            fontSize: 11, fontWeight: 600, lineHeight: '16px',
+            color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
           }}>Partner</span>
         </div>
       )
@@ -141,15 +140,14 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
       return (
         <div style={{
           position: 'absolute', top: 12, right: 12,
-          display: 'flex', alignItems: 'center', gap: 4,
-          backgroundColor: 'var(--color-warning-subtle)',
+          backgroundColor: 'var(--color-gold)',
           borderRadius: 'var(--radius-full)',
           padding: '3px 10px',
         }}>
           <span style={{
-            fontSize: 12, fontWeight: 700, lineHeight: '16px',
-            color: 'var(--color-warning-text)', fontFamily: 'var(--font-sans)',
-          }}>✨ Sugerido</span>
+            fontSize: 11, fontWeight: 600, lineHeight: '16px',
+            color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
+          }}>✨ Sugerido por Movi</span>
         </div>
       )
     }
