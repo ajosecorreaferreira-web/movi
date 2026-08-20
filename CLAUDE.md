@@ -239,6 +239,25 @@ La app genera momentos compartibles — foto de grupo al terminar sesión con fr
 - ⏳ Integración calendarios
 - ⏳ movi-admin (panel desktop — después del MVP)
 
+## Estado actualizado — Agosto 2026
+
+### Completado desde el último update:
+- ✅ Flujo completo apuntarse — sessionStore, celebración, badge Home
+- ✅ Partners y cold start — F45, CrossFit, "Sé el primero"
+- ✅ PartnerSession → PartnerReserved — flujo sin confirmación intermedia
+- ✅ Menú hamburguesa con modo demo — simular feeling, reset, ver programa
+- ✅ Programa 3 semanas — FeelingSheet, propuesta, timeline, banner Home
+- ✅ Audit:tokens limpio — 0 errores fuera de MapStatic (excepción cartográfica)
+- ✅ Agent Teams activado — CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+- ✅ Tokens Paper sincronizados — hex reemplazados por var(--color-*)
+
+### Pendiente próxima sesión:
+- ⏳ Verificar flujo partner en móvil (Reservar plaza → PartnerReserved)
+- ⏳ Supabase — base de datos real
+- ⏳ Auth Google/Apple
+- ⏳ Notificaciones push reales
+- ⏳ movi-admin (panel desktop)
+
 ---
 
 ## Bugs conocidos y lecciones aprendidas
