@@ -3,6 +3,7 @@ import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu, ChevronRight } f
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
 import { MapStatic } from '@/components/home/MapStatic'
+import { HamburgerMenu } from '@/components/home/HamburgerMenu'
 import { useProgramStore } from '@/stores/programStore'
 import { useSessionStore } from '@/stores/sessionStore'
 import { FeelingSheet } from '@/components/program/FeelingSheet'
@@ -387,6 +388,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [activePin, setActivePin] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [, setSearchParams] = useSearchParams()
   const [showToast, setShowToast] = useState<boolean>(
     () => !!new URLSearchParams(window.location.search).get('apuntado')
@@ -487,6 +489,7 @@ export default function Home() {
           {/* Hamburguesa — izquierda */}
           <button
             aria-label="Menú"
+            onClick={() => setMenuOpen(true)}
             style={{
               width: 40, height: 40, borderRadius: 'var(--radius-full)',
               backgroundColor: 'transparent', border: 'none',
@@ -644,6 +647,8 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       {/* FAB — fuera del wrapper con transform para que position: fixed funcione */}
       <div
