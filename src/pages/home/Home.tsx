@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
 import { MapStatic } from '@/components/home/MapStatic'
 import { useProgramStore } from '@/stores/programStore'
+import { useSessionStore } from '@/stores/sessionStore'
 import { FeelingSheet } from '@/components/program/FeelingSheet'
 
 interface Session {
@@ -389,12 +390,10 @@ export default function Home() {
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [activePin, setActivePin] = useState<string | null>(null)
   const [, setSearchParams] = useSearchParams()
-  const [apuntadoSessionId] = useState<string | null>(
-    () => new URLSearchParams(window.location.search).get('apuntado')
-  )
   const [showToast, setShowToast] = useState<boolean>(
     () => !!new URLSearchParams(window.location.search).get('apuntado')
   )
+  const { apuntadoIds } = useSessionStore()
 
   /* Programa activo */
   const { program, showFeelingSheet, setShowFeelingSheet } = useProgramStore()
@@ -403,11 +402,11 @@ export default function Home() {
   )
 
   useEffect(() => {
-    if (!apuntadoSessionId) return
+    if (!showToast) return
     setSearchParams({}, { replace: true })
     const timer = setTimeout(() => setShowToast(false), 4000)
     return () => clearTimeout(timer)
-  }, [apuntadoSessionId, setSearchParams])
+  }, [showToast, setSearchParams])
 
   useEffect(() => {
     let lastY = 0
@@ -617,7 +616,7 @@ export default function Home() {
                   }}
                 >
                   {tab}
-                  {i === 2 && apuntadoSessionId && (
+                  {i === 2 && apuntadoIds.length > 0 && (
                     <div style={{
                       position: 'absolute', top: -3, right: -3,
                       width: 8, height: 8, borderRadius: '9999px',
@@ -643,7 +642,7 @@ export default function Home() {
           }}
         >
           {MOCK_SESSIONS.map(session => (
-            <SessionCard key={session.id} session={session} isApuntado={session.id === apuntadoSessionId} />
+            <SessionCard key={session.id} session={session} isApuntado={apuntadoIds.includes(session.id)} />
           ))}
         </div>
       </div>

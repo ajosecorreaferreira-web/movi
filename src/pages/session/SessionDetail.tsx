@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
+import { useSessionStore } from '@/stores/sessionStore'
 
 const MAPS_URL = 'https://www.google.com/maps/search/Pinar+de+Las+Rozas+Madrid'
 
@@ -7,10 +8,23 @@ export default function SessionDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { haptic } = useHaptics()
+  const { apuntarse, desapuntarse, isApuntado, isFirstSession } = useSessionStore()
+  const apuntado = isApuntado(id ?? '')
 
-  const handleApuntarme = () => {
+  const handleApuntarse = () => {
     haptic('medium')
-    navigate(`/celebration/first-session?from=${id}`)
+    const firstTime = isFirstSession
+    apuntarse(id ?? '')
+    if (firstTime) {
+      navigate(`/celebration/first-session?from=${id}`)
+    } else {
+      navigate(`/home?apuntado=${id}`)
+    }
+  }
+
+  const handleDesapuntarse = () => {
+    haptic('light')
+    desapuntarse(id ?? '')
   }
 
   return (
@@ -391,26 +405,48 @@ export default function SessionDetail() {
           zIndex: 50,
         }}
       >
-        <button
-          onClick={handleApuntarme}
-          style={{
-            width: '100%', height: 52,
-            backgroundColor: 'var(--color-primary)',
-            color: 'var(--color-primary-foreground)',
-            border: 'none',
-            borderRadius: 'var(--radius-full)',
-            fontSize: 16, fontWeight: 700,
-            fontFamily: 'var(--font-sans)',
-            cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-            boxShadow: 'var(--shadow-primary)',
-          }}
-        >
-          Apuntarme a esta sesión
-          <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="var(--color-primary-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
+        {apuntado ? (
+          <button
+            onClick={handleDesapuntarse}
+            style={{
+              width: '100%', height: 52,
+              backgroundColor: 'var(--color-surface)',
+              color: 'var(--color-success)',
+              border: '2px solid var(--color-success)',
+              borderRadius: 'var(--radius-full)',
+              fontSize: 16, fontWeight: 700,
+              fontFamily: 'var(--font-sans)',
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12" fill="none" stroke="var(--color-success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Apuntado
+          </button>
+        ) : (
+          <button
+            onClick={handleApuntarse}
+            style={{
+              width: '100%', height: 52,
+              backgroundColor: 'var(--color-primary)',
+              color: 'var(--color-primary-foreground)',
+              border: 'none',
+              borderRadius: 'var(--radius-full)',
+              fontSize: 16, fontWeight: 700,
+              fontFamily: 'var(--font-sans)',
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              boxShadow: 'var(--shadow-primary)',
+            }}
+          >
+            Apuntarme a esta sesión
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="var(--color-primary-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   )
