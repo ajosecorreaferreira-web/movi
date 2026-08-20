@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft, MoreHorizontal } from 'lucide-react'
 import { useHaptics } from '@/hooks/useHaptics'
+import { useSessionStore } from '@/stores/sessionStore'
 
 interface PartnerSessionData {
   id: string
@@ -86,6 +87,7 @@ export default function PartnerSession() {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const { haptic } = useHaptics()
+  const { reservarPartner } = useSessionStore()
   const session = MOCK_PARTNER_SESSIONS[id ?? 'p1'] ?? MOCK_PARTNER_SESSIONS['p1']
   const availableSpots = session.totalSpots - session.participants
 
@@ -546,10 +548,20 @@ export default function PartnerSession() {
           zIndex: 50,
         }}
       >
+        <p style={{
+          textAlign: 'center',
+          fontSize: '12px',
+          color: 'var(--color-text-muted)',
+          fontFamily: 'var(--font-sans)',
+          marginBottom: '8px',
+        }}>
+          ℹ️ Cancelación gratuita hasta 2h antes
+        </p>
         <button
           onClick={() => {
+            reservarPartner(id!)
             haptic('medium')
-            navigate('/home')
+            navigate(`/celebration/partner-reserved/${id}`)
           }}
           style={{
             width: '100%',

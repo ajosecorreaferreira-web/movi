@@ -102,7 +102,7 @@ const STATUS_BORDER_COLOR: Record<Session['status'], string> = {
 
 const LEVEL_LABELS = ['', 'Activo', 'En marcha', 'En forma', 'Potencia', 'Élite']
 
-function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: boolean }) {
+function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Session; isApuntado?: boolean; isPartnerReserved?: boolean }) {
   const { haptic } = useHaptics()
   const navigate = useNavigate()
   const Icon = TYPE_ICONS[session.type]
@@ -133,7 +133,7 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
           <span style={{
             fontSize: 11, fontWeight: 600, lineHeight: '16px',
             color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
-          }}>Partner</span>
+          }}>{isPartnerReserved ? '✓ Reservado' : 'Partner'}</span>
         </div>
       )
     }
@@ -190,7 +190,7 @@ function SessionCard({ session, isApuntado }: { session: Session; isApuntado?: b
 
   // Botón CTA
   const ctaBtn = (() => {
-    if (isApuntado) return null
+    if (isApuntado || isPartnerReserved) return null
     if (session.sessionType === 'partner') {
       return (
         <button
@@ -393,7 +393,7 @@ export default function Home() {
   const [showToast, setShowToast] = useState<boolean>(
     () => !!new URLSearchParams(window.location.search).get('apuntado')
   )
-  const { apuntadoIds } = useSessionStore()
+  const { apuntadoIds, partnerReservedIds } = useSessionStore()
 
   /* Programa activo */
   const { program, showFeelingSheet, setShowFeelingSheet } = useProgramStore()
@@ -643,7 +643,12 @@ export default function Home() {
           }}
         >
           {MOCK_SESSIONS.map(session => (
-            <SessionCard key={session.id} session={session} isApuntado={apuntadoIds.includes(session.id)} />
+            <SessionCard
+              key={session.id}
+              session={session}
+              isApuntado={apuntadoIds.includes(session.id)}
+              isPartnerReserved={partnerReservedIds.includes(session.id)}
+            />
           ))}
         </div>
       </div>

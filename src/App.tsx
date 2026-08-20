@@ -6,6 +6,7 @@ import OnboardingComplete from '@/pages/onboarding/OnboardingComplete'
 import Home from '@/pages/home/Home'
 import SessionDetail from '@/pages/session/SessionDetail'
 import SessionDetailApuntado from '@/pages/session/SessionDetailApuntado'
+import PartnerSession from '@/pages/session/PartnerSession'
 import PrimeraSesion from '@/pages/celebration/PrimeraSesion'
 import PrimeraCompletada from '@/pages/celebration/PrimeraCompletada'
 import Racha5Dias from '@/pages/celebration/Racha5Dias'
@@ -18,6 +19,8 @@ import SessionPublished from '@/pages/celebration/SessionPublished'
 import ProgramProposal from '@/pages/program/ProgramProposal'
 import ProgramTimeline from '@/pages/program/ProgramTimeline'
 import ProgramStart from '@/pages/celebration/ProgramStart'
+import ProposeSession from '@/pages/program/ProposeSession'
+import PartnerReserved from '@/pages/celebration/PartnerReserved'
 
 function App() {
   return (
@@ -31,6 +34,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/session/:id" element={<SessionDetail />} />
           <Route path="/session/:id/apuntado" element={<SessionDetailApuntado />} />
+          <Route path="/session/partner/:id" element={<PartnerSession />} />
           <Route path="/celebration/first-session" element={<PrimeraSesion />} />
           <Route path="/celebration/first-completed" element={<PrimeraCompletada />} />
           <Route path="/celebration/streak-5" element={<Racha5Dias />} />
@@ -42,8 +46,10 @@ function App() {
           <Route path="/celebration/session-published" element={<SessionPublished />} />
           {/* Flujo programa 3 semanas */}
           <Route path="/program/proposal" element={<ProgramProposal />} />
+          <Route path="/program/propose" element={<ProposeSession />} />
           <Route path="/program" element={<ProgramTimeline />} />
           <Route path="/celebration/program-start" element={<ProgramStart />} />
+          <Route path="/celebration/partner-reserved/:id" element={<PartnerReserved />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
