@@ -109,6 +109,16 @@ export function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
           />
 
           <DemoButton
+            icon={<RefreshCw size={16} />}
+            label="Actualizar app"
+            description="Fuerza actualización del SW"
+            onClick={() => {
+              onClose()
+              window.location.reload()
+            }}
+          />
+
+          <DemoButton
             icon={<Trash2 size={16} />}
             label="Reset demo"
             description="Borra sesiones y programa"
