@@ -424,13 +424,10 @@ export default function Home() {
     <>
       <div
         style={{
-          minHeight: '100dvh',
-          backgroundColor: 'var(--color-background)',
           width: '100%',
           maxWidth: '430px',
           margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
+          backgroundColor: 'var(--color-background)',
           colorScheme: 'light',
         }}
       >
@@ -648,7 +645,6 @@ export default function Home() {
         {/* Lista de sesiones */}
         <div
           style={{
-            flex: 1,
             padding: '16px 16px 88px',
             display: 'flex',
             flexDirection: 'column',
