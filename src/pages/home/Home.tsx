@@ -435,6 +435,7 @@ export default function Home() {
       <div
         {...pullHandlers}
         style={{
+          touchAction: 'pan-y',
           width: '100%',
           maxWidth: '430px',
           margin: '0 auto',

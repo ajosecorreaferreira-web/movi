@@ -477,6 +477,11 @@ body {
     to { transform: rotate(360deg); }
   }
 
+  html, body, #root {
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+  }
+
   html, body {
     margin: 0 !important;
     padding: 0 !important;

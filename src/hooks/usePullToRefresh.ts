@@ -20,8 +20,10 @@ export function usePullToRefresh({ onRefresh, threshold = 80 }: UsePullToRefresh
 
   const onTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isPulling.current || startY.current === null) return
+
     if (window.scrollY > 0) {
       isPulling.current = false
+      setPullDistance(0)
       return
     }
 
@@ -32,7 +34,9 @@ export function usePullToRefresh({ onRefresh, threshold = 80 }: UsePullToRefresh
     setPullDistance(distance)
     setIsReady(distance >= threshold)
 
-    if (delta > 10) e.preventDefault()
+    if (delta > 20 && window.scrollY === 0) {
+      e.preventDefault()
+    }
   }, [threshold])
 
   const onTouchEnd = useCallback(async () => {
