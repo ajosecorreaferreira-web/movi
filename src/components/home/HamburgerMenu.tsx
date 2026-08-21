@@ -10,7 +10,7 @@ interface HamburgerMenuProps {
 
 export function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
   const navigate = useNavigate()
-  const { setShowFeelingSheet, clearProgram } = useProgramStore()
+  const { setShowFeelingSheet, clearProgram, program, createProgramWithPartner } = useProgramStore()
   const { apuntadoIds } = useSessionStore()
 
   void apuntadoIds
@@ -91,8 +91,9 @@ export function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
             label="Simular sesión completada"
             description="Activa el feeling sheet"
             onClick={() => {
+              if (!program) createProgramWithPartner('Ana')
               onClose()
-              setTimeout(() => setShowFeelingSheet(true), 300)
+              setTimeout(() => setShowFeelingSheet(true), 400)
             }}
           />
 
@@ -100,7 +101,11 @@ export function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
             icon={<RefreshCw size={16} />}
             label="Ver programa activo"
             description="Navega al timeline"
-            onClick={() => { onClose(); navigate('/program') }}
+            onClick={() => {
+              if (!program) createProgramWithPartner('Ana')
+              onClose()
+              setTimeout(() => navigate('/program'), 300)
+            }}
           />
 
           <DemoButton

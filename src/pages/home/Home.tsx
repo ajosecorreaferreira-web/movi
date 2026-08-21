@@ -23,68 +23,41 @@ interface Session {
   partnerLogo?: string
   price?: string
   isFree?: boolean
+  day?: 'today' | 'tomorrow' | 'thu' | 'fri' | 'sat' | 'sun'
 }
 
 const TABS = ['Semana', 'Hoy', 'Mañana', 'Jue', 'Vie', 'Sáb']
 
-const MOCK_SESSIONS: Session[] = [
-  {
-    id: 'p1',
-    title: 'F45 Las Rozas · Funcional',
-    time: 'Mañana · 7:30am',
-    distance: '1.2km',
-    level: 3,
-    space: 'F45 Las Rozas',
-    participants: 11,
-    status: 'soon',
-    type: 'functional',
-    sessionType: 'partner',
-    partnerName: 'F45',
-    partnerLogo: 'F45',
-    price: '12€',
-    isFree: true,
-  },
-  {
-    id: 'f1',
-    title: 'Funcional en el Pinar',
-    time: 'Esta semana · Nivel 2',
-    distance: '350m',
-    level: 2,
-    space: 'Pinar de Las Rozas',
-    participants: 0,
-    status: 'future',
-    type: 'functional',
-    sessionType: 'first',
-  },
-  {
-    id: '1',
-    title: 'Carrera por el pinar',
-    time: 'Ahora · 09:15',
-    distance: '0.3km',
-    level: 3,
-    space: 'Pinar de Las Rozas',
-    participants: 1,
-    status: 'now',
-    type: 'running',
-    sessionType: 'user',
-  },
-  {
-    id: 'p2',
-    title: 'CrossFit Las Rozas · WOD',
-    time: 'Jueves · 19:00',
-    distance: '0.8km',
-    level: 4,
-    space: 'CrossFit Las Rozas',
-    participants: 8,
-    status: 'future',
-    type: 'hiit',
-    sessionType: 'partner',
-    partnerName: 'CF',
-    partnerLogo: 'CF',
-    price: 'Gratis primera clase',
-    isFree: true,
-  },
+const ALL_SESSIONS: Session[] = [
+  // HOY
+  { id: '1',  title: 'Carrera por el pinar',         time: 'Ahora · 09:15',      distance: '0.3km', level: 3, space: 'Pinar de Las Rozas',        participants: 1,  status: 'now',    type: 'running',    sessionType: 'user',                                                              day: 'today' },
+  { id: 'p1', title: 'F45 Las Rozas · Funcional',    time: 'Mañana · 7:30am',    distance: '1.2km', level: 3, space: 'F45 Las Rozas',              participants: 11, status: 'soon',   type: 'functional', sessionType: 'partner', partnerName: 'F45',  partnerLogo: 'F45',  price: '12€',               isFree: true,  day: 'today' },
+  { id: '2',  title: 'Funcional al aire libre',       time: '10:30',              distance: '0.5km', level: 2, space: 'Zona calistenia',            participants: 3,  status: 'soon',   type: 'functional', sessionType: 'user',                                                              day: 'today' },
+  { id: 'f1', title: 'Funcional en el Pinar',         time: 'Esta semana · Nivel 2', distance: '350m', level: 2, space: 'Pinar de Las Rozas',       participants: 0,  status: 'future', type: 'functional', sessionType: 'first',                                                             day: 'today' },
+  // MAÑANA
+  { id: '3',  title: 'Yoga matutino con Laura',       time: '8:00am',             distance: '0.8km', level: 1, space: 'Pinar de Las Rozas',        participants: 5,  status: 'future', type: 'yoga',       sessionType: 'user',                                                              day: 'tomorrow' },
+  { id: 'p2', title: 'CrossFit Las Rozas · WOD',     time: '19:00',              distance: '0.8km', level: 4, space: 'CrossFit Las Rozas',         participants: 8,  status: 'future', type: 'hiit',       sessionType: 'partner', partnerName: 'CF',   partnerLogo: 'CF',   price: 'Gratis primera clase', isFree: true,  day: 'tomorrow' },
+  { id: '4',  title: 'Caminata con perros 🐕',        time: '10:00am',            distance: '1.1km', level: 1, space: 'Monte del Pilar',           participants: 4,  status: 'future', type: 'walking',    sessionType: 'user',                                                              day: 'tomorrow' },
+  { id: 'p3', title: 'Zumba · Polideportivo Las Rozas', time: '11:00am',         distance: '1.5km', level: 2, space: 'Polideportivo Las Rozas',    participants: 15, status: 'future', type: 'yoga',       sessionType: 'partner', partnerName: 'Pol',  partnerLogo: 'Pol',  price: '5€',               isFree: false, day: 'tomorrow' },
+  // JUEVES
+  { id: '5',  title: 'HIIT explosivo',                time: '7:30am',             distance: '1.2km', level: 4, space: 'Zona calistenia',            participants: 2,  status: 'future', type: 'hiit',       sessionType: 'user',                                                              day: 'thu' },
+  { id: 'p4', title: 'Natación · Club Las Rozas',    time: '8:00am',             distance: '2km',   level: 2, space: 'Piscina Municipal',          participants: 6,  status: 'future', type: 'functional', sessionType: 'partner', partnerName: 'Nata', partnerLogo: 'Nata', price: '4€',               isFree: false, day: 'thu' },
+  // VIERNES
+  { id: '6',  title: 'Bici por el pinar',             time: '9:00am',             distance: '0.5km', level: 2, space: 'Pinar de Las Rozas',        participants: 3,  status: 'future', type: 'functional', sessionType: 'user',                                                              day: 'fri' },
+  { id: 'p5', title: 'Danza aérea · Studio Move',    time: '18:00',              distance: '1.8km', level: 2, space: 'Studio Move Las Rozas',      participants: 8,  status: 'future', type: 'yoga',       sessionType: 'partner', partnerName: 'Move', partnerLogo: 'Move', price: '10€',              isFree: false, day: 'fri' },
+  // SÁBADO
+  { id: '7',  title: 'Funcional familiar 👨‍👧',        time: '10:00am',            distance: '0.3km', level: 1, space: 'Pinar de Las Rozas',        participants: 6,  status: 'future', type: 'functional', sessionType: 'user',                                                              day: 'sat' },
+  { id: 'p6', title: 'Yoga con niños · La Vaguada',  time: '11:00am',            distance: '2.2km', level: 1, space: 'La Vaguada',                participants: 10, status: 'future', type: 'yoga',       sessionType: 'partner', partnerName: 'Yoga', partnerLogo: 'Yoga', price: '8€',               isFree: false, day: 'sat' },
 ]
+
+const TAB_TO_DAY: Record<string, string[]> = {
+  'Semana': ['today', 'tomorrow', 'thu', 'fri', 'sat', 'sun'],
+  'Hoy':    ['today'],
+  'Mañana': ['tomorrow'],
+  'Jue':    ['thu'],
+  'Vie':    ['fri'],
+  'Sáb':    ['sat'],
+}
 
 const TYPE_ICONS = {
   running:    Zap,
@@ -389,11 +362,26 @@ export default function Home() {
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [activePin, setActivePin] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showPublishedToast, setShowPublishedToast] = useState(false)
   const [, setSearchParams] = useSearchParams()
   const [showToast, setShowToast] = useState<boolean>(
     () => !!new URLSearchParams(window.location.search).get('apuntado')
   )
   const { apuntadoIds, partnerReservedIds } = useSessionStore()
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('published') === 'true') {
+      setShowPublishedToast(true)
+      window.history.replaceState({}, '', '/home')
+      const t = setTimeout(() => setShowPublishedToast(false), 4000)
+      return () => clearTimeout(t)
+    }
+  }, [])
+
+  const filteredSessions = ALL_SESSIONS.filter(s =>
+    TAB_TO_DAY[TABS[activeTab]]?.includes(s.day ?? '')
+  )
 
   /* Programa activo */
   const { program, showFeelingSheet, setShowFeelingSheet } = useProgramStore()
@@ -445,6 +433,30 @@ export default function Home() {
           colorScheme: 'light',
         }}
       >
+        {/* Toast sesión publicada */}
+        {showPublishedToast && (
+          <div style={{
+            position: 'fixed',
+            top: 'max(16px, env(safe-area-inset-top))',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 'calc(100% - 48px)',
+            maxWidth: '342px',
+            backgroundColor: 'white',
+            borderLeft: '3px solid var(--color-primary)',
+            borderRadius: 'var(--radius-sm)',
+            padding: '12px 16px',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+            zIndex: 100,
+            fontSize: '14px',
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 600,
+            color: 'var(--color-text)',
+          }}>
+            🗺️ <strong>¡Sesión publicada!</strong> Ya aparece en el mapa.
+          </div>
+        )}
+
         {/* Toast apuntado */}
         {showToast && (
           <div style={{
@@ -585,6 +597,7 @@ export default function Home() {
             activePin={activePin}
             onPinTap={handlePinTap}
             collapsed={mapCollapsed}
+            showPublishedPin={showPublishedToast}
           />
 
           {/* Tabs de días */}
@@ -642,7 +655,7 @@ export default function Home() {
             backgroundColor: 'var(--color-background)',
           }}
         >
-          {MOCK_SESSIONS.map(session => (
+          {filteredSessions.map(session => (
             <SessionCard
               key={session.id}
               session={session}

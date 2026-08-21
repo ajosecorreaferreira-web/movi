@@ -4,9 +4,10 @@ interface MapStaticProps {
   activePin: string | null
   onPinTap: (id: string) => void
   collapsed: boolean
+  showPublishedPin?: boolean
 }
 
-export function MapStatic({ activePin, onPinTap, collapsed }: MapStaticProps) {
+export function MapStatic({ activePin, onPinTap, collapsed, showPublishedPin }: MapStaticProps) {
   return (
     <div style={{
       position: 'relative',
@@ -111,6 +112,32 @@ export function MapStatic({ activePin, onPinTap, collapsed }: MapStaticProps) {
       }}>
         5
       </div>
+
+      {/* Pin sesión publicada — parpadea 4s */}
+      {showPublishedPin && (
+        <div style={{
+          position: 'absolute', top: '45%', left: '45%',
+          transform: 'translate(-50%,-50%)',
+          zIndex: 15, pointerEvents: 'none',
+          animation: 'pulse-pin 1s ease-in-out infinite',
+        }}>
+          <style>{`
+            @keyframes pulse-pin {
+              0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+              50% { transform: translate(-50%,-50%) scale(1.25); opacity: 0.7; }
+            }
+          `}</style>
+          <div style={{
+            width: 40, height: 40, borderRadius: '50%',
+            backgroundColor: 'var(--color-primary)',
+            border: '3px solid white',
+            boxShadow: '0 0 0 6px rgba(249,111,22,0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <span style={{ fontSize: 18 }}>⭐</span>
+          </div>
+        </div>
+      )}
 
       {/* Indicador posición usuario */}
       <div style={{

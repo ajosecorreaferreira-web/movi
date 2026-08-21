@@ -195,7 +195,7 @@ export default function SessionPublished() {
         }}
       >
         <button
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/home?published=true')}
           style={{
             width: '100%', height: 52, borderRadius: '9999px',
             backgroundColor: 'var(--color-primary)',
