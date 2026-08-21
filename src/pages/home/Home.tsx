@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu, ChevronRight } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
@@ -358,7 +358,7 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
 export default function Home() {
   const { haptic } = useHaptics()
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState('Semana')
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [activePin, setActivePin] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -379,9 +379,10 @@ export default function Home() {
     }
   }, [])
 
-  const filteredSessions = ALL_SESSIONS.filter(s =>
-    TAB_TO_DAY[TABS[activeTab]]?.includes(s.day ?? '')
-  )
+  const filteredSessions = useMemo(() => {
+    const days = TAB_TO_DAY[activeTab] || ['today']
+    return ALL_SESSIONS.filter(s => days.includes(s.day || 'today'))
+  }, [activeTab])
 
   /* Programa activo */
   const { program, showFeelingSheet, setShowFeelingSheet } = useProgramStore()
@@ -612,25 +613,25 @@ export default function Home() {
                 paddingBlock: 8,
               }}
             >
-              {TABS.map((tab, i) => (
+              {TABS.map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => { haptic('light'); setActiveTab(i) }}
+                  onClick={() => { haptic('light'); setActiveTab(tab) }}
                   className="text-[13px] leading-[18px] tracking-[-0.01em]"
                   style={{
                     flexShrink: 0, height: 28, paddingInline: 12,
                     borderRadius: 'var(--radius-full)',
-                    backgroundColor: activeTab === i ? 'var(--color-primary)' : 'transparent',
+                    backgroundColor: activeTab === tab ? 'var(--color-primary)' : 'transparent',
                     border: 'none', cursor: 'pointer',
-                    color: activeTab === i ? 'var(--color-primary-foreground)' : 'var(--color-text-muted)',
+                    color: activeTab === tab ? 'var(--color-primary-foreground)' : 'var(--color-text-muted)',
                     fontFamily: 'var(--font-sans)',
-                    fontWeight: activeTab === i ? 600 : 500,
+                    fontWeight: activeTab === tab ? 600 : 500,
                     transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
                     position: 'relative',
                   }}
                 >
                   {tab}
-                  {i === 2 && apuntadoIds.length > 0 && (
+                  {tab === 'Mañana' && apuntadoIds.length > 0 && (
                     <div style={{
                       position: 'absolute', top: -3, right: -3,
                       width: 8, height: 8, borderRadius: '9999px',
