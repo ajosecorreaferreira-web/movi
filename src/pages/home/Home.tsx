@@ -398,20 +398,11 @@ export default function Home() {
   }, [showToast, setSearchParams])
 
   useEffect(() => {
-    let lastY = 0
-    let rafId: number
     const handleScroll = () => {
-      cancelAnimationFrame(rafId)
-      rafId = requestAnimationFrame(() => {
-        const y = window.scrollY
-        if (Math.abs(y - lastY) > 8) {
-          setMapCollapsed(y > 80)
-          lastY = y
-        }
-      })
+      setMapCollapsed(window.scrollY > 80)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => { window.removeEventListener('scroll', handleScroll); cancelAnimationFrame(rafId) }
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const handlePinTap = (sessionId: string) => {
@@ -540,105 +531,115 @@ export default function Home() {
           </button>
         </header>
 
-        {/* Mapa + tabs — sticky bajo el header */}
+        {/* Banner programa activo — flujo normal, scrollea con la página */}
+        {program && nextSession && (
+          <div
+            onClick={() => { haptic('light'); navigate('/program') }}
+            style={{
+              backgroundColor: 'var(--color-primary-50)',
+              borderBottom: '1px solid var(--color-primary-200)',
+              height: 44,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingInline: 16,
+              cursor: 'pointer',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 13,
+                color: 'var(--color-primary-text)',
+                lineHeight: '16px',
+              }}
+            >
+              📅 Tu programa · Próxima: {nextSession.date} · {nextSession.time}
+            </span>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 13,
+                fontWeight: 700,
+                color: 'var(--color-primary)',
+                lineHeight: '16px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              Ver <ChevronRight size={14} strokeWidth={1.5} color="var(--color-primary)" />
+            </span>
+          </div>
+        )}
+
+        {/* Mapa — colapsa a 0px al hacer scroll, desaparece completamente */}
+        <div
+          style={{
+            height: mapCollapsed ? '0px' : '240px',
+            overflow: 'hidden',
+            transition: 'height 300ms ease',
+            transform: 'translate3d(0,0,0)',
+            WebkitTransform: 'translate3d(0,0,0)',
+          }}
+        >
+          <MapStatic
+            activePin={activePin}
+            onPinTap={handlePinTap}
+            collapsed={false}
+            showPublishedPin={showPublishedToast}
+          />
+        </div>
+
+        {/* Tabs — sticky independiente, siempre a top:56px bajo el header */}
         <div
           style={{
             position: 'sticky',
             top: 56,
-            zIndex: 30,
-            backgroundColor: 'var(--color-surface)',
+            zIndex: 40,
+            backgroundColor: 'var(--color-background)',
+            borderBottom: '1px solid var(--color-border)',
+            transform: 'translate3d(0,0,0)',
+            WebkitTransform: 'translate3d(0,0,0)',
           }}
         >
-          {/* Banner programa activo — exacto al diseño Paper */}
-          {program && nextSession && (
-            <div
-              onClick={() => { haptic('light'); navigate('/program') }}
-              style={{
-                backgroundColor: 'var(--color-primary-50)',
-                borderBottom: '1px solid var(--color-primary-200)',
-                height: 44,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingInline: 16,
-                cursor: 'pointer',
-                flexShrink: 0,
-              }}
-            >
-              <span
+          <div
+            style={{
+              display: 'flex',
+              gap: 4,
+              overflowX: 'auto',
+              scrollbarWidth: 'none',
+              paddingInline: 16,
+              paddingBlock: 8,
+            }}
+          >
+            {TABS.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => { haptic('light'); setActiveTab(tab) }}
+                className="text-[13px] leading-[18px] tracking-[-0.01em]"
                 style={{
+                  flexShrink: 0, height: 28, paddingInline: 12,
+                  borderRadius: 'var(--radius-full)',
+                  backgroundColor: activeTab === tab ? 'var(--color-primary)' : 'transparent',
+                  border: 'none', cursor: 'pointer',
+                  color: activeTab === tab ? 'var(--color-primary-foreground)' : 'var(--color-text-muted)',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: 13,
-                  color: 'var(--color-primary-text)',
-                  lineHeight: '16px',
+                  fontWeight: activeTab === tab ? 600 : 500,
+                  transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
+                  position: 'relative',
                 }}
               >
-                📅 Tu programa · Próxima: {nextSession.date} · {nextSession.time}
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: 'var(--color-primary)',
-                  lineHeight: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                Ver <ChevronRight size={14} strokeWidth={1.5} color="var(--color-primary)" />
-              </span>
-            </div>
-          )}
-
-          <MapStatic
-            activePin={activePin}
-            onPinTap={handlePinTap}
-            collapsed={mapCollapsed}
-            showPublishedPin={showPublishedToast}
-          />
-
-          {/* Tabs de días */}
-          <div style={{ borderBottom: '1px solid var(--color-border)' }}>
-            <div
-              style={{
-                display: 'flex',
-                gap: 4,
-                overflowX: 'auto',
-                scrollbarWidth: 'none',
-                paddingInline: 16,
-                paddingBlock: 8,
-              }}
-            >
-              {TABS.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => { haptic('light'); setActiveTab(tab) }}
-                  className="text-[13px] leading-[18px] tracking-[-0.01em]"
-                  style={{
-                    flexShrink: 0, height: 28, paddingInline: 12,
-                    borderRadius: 'var(--radius-full)',
-                    backgroundColor: activeTab === tab ? 'var(--color-primary)' : 'transparent',
-                    border: 'none', cursor: 'pointer',
-                    color: activeTab === tab ? 'var(--color-primary-foreground)' : 'var(--color-text-muted)',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: activeTab === tab ? 600 : 500,
-                    transition: 'background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
-                    position: 'relative',
-                  }}
-                >
-                  {tab}
-                  {tab === 'Mañana' && apuntadoIds.length > 0 && (
-                    <div style={{
-                      position: 'absolute', top: -3, right: -3,
-                      width: 8, height: 8, borderRadius: '9999px',
-                      backgroundColor: 'var(--color-success)',
-                      border: '1.5px solid var(--color-surface)',
-                    }} />
-                  )}
-                </button>
-              ))}
-            </div>
+                {tab}
+                {tab === 'Mañana' && apuntadoIds.length > 0 && (
+                  <div style={{
+                    position: 'absolute', top: -3, right: -3,
+                    width: 8, height: 8, borderRadius: '9999px',
+                    backgroundColor: 'var(--color-success)',
+                    border: '1.5px solid var(--color-surface)',
+                  }} />
+                )}
+              </button>
+            ))}
           </div>
         </div>
 

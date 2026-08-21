@@ -27,7 +27,7 @@ export default defineConfig({
       manifest: {
         name: 'Movi',
         short_name: 'Movi',
-        description: 'Entrena con gente. Combate la soledad a través del deporte.',
+        description: 'Movi v1.2 — deporte social',
         theme_color: '#F96F16',
         background_color: '#F8F7F5',
         display: 'standalone',
