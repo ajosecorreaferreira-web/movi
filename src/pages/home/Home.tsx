@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu, ChevronRight } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
@@ -7,6 +7,8 @@ import { HamburgerMenu } from '@/components/home/HamburgerMenu'
 import { useProgramStore } from '@/stores/programStore'
 import { useSessionStore } from '@/stores/sessionStore'
 import { FeelingSheet } from '@/components/program/FeelingSheet'
+import { usePullToRefresh } from '@/hooks/usePullToRefresh'
+import { PullRefreshIndicator } from '@/components/home/PullRefreshIndicator'
 
 interface Session {
   id: string
@@ -358,6 +360,18 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
 export default function Home() {
   const { haptic } = useHaptics()
   const navigate = useNavigate()
+
+  const handleRefresh = useCallback(async () => {
+    haptic('light')
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    haptic('success')
+  }, [haptic])
+
+  const { pullDistance, isRefreshing, isReady, handlers: pullHandlers } = usePullToRefresh({
+    onRefresh: handleRefresh,
+    threshold: 80,
+  })
+
   const [activeTab, setActiveTab] = useState('Semana')
   const [mapCollapsed, setMapCollapsed] = useState(false)
   const [activePin, setActivePin] = useState<string | null>(null)
@@ -413,7 +427,13 @@ export default function Home() {
 
   return (
     <>
+      <PullRefreshIndicator
+        pullDistance={pullDistance}
+        isRefreshing={isRefreshing}
+        isReady={isReady}
+      />
       <div
+        {...pullHandlers}
         style={{
           width: '100%',
           maxWidth: '430px',

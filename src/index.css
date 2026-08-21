@@ -473,6 +473,10 @@ body {
 }
 
 @layer base {
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
   html, body {
     margin: 0 !important;
     padding: 0 !important;
