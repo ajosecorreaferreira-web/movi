@@ -322,7 +322,7 @@ export default function SessionDetail() {
                 <path d="M2 9h4M2 15h4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M20 9h2M20 15h2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '4px 8px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <polyline points="17 1 21 5 17 9" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M3 11V9a4 4 0 0 1 4-4h14" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -331,7 +331,7 @@ export default function SessionDetail() {
                 </svg>
                 <span style={{ color: 'var(--color-primary-text)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '18px' }}>Cross training</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '4px 8px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <circle cx="12" cy="5" r="1" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="m9 20 3-6 3 6" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -349,7 +349,7 @@ export default function SessionDetail() {
                 <path d="M4 20h16" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M10 6V4h4v2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '4px 8px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <path d="M6 5v14M18 5v14" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M2 9h4M2 15h4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -357,7 +357,7 @@ export default function SessionDetail() {
                 </svg>
                 <span style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '18px' }}>Equip. básico</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '4px 8px' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <circle cx="9" cy="7" r="4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

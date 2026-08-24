@@ -103,7 +103,7 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
           position: 'absolute', top: 12, right: 12,
           backgroundColor: 'var(--color-info)',
           borderRadius: 'var(--radius-full)',
-          padding: '2px 8px',
+          padding: '4px 8px',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <span style={{
@@ -120,7 +120,7 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
           position: 'absolute', top: 12, right: 12,
           backgroundColor: 'var(--color-gold)',
           borderRadius: 'var(--radius-full)',
-          padding: '2px 8px',
+          padding: '4px 8px',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <span style={{
@@ -261,7 +261,7 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
           display: 'flex', alignItems: 'center', gap: 4,
           backgroundColor: 'var(--color-success-subtle)',
           borderRadius: 'var(--radius-full)',
-          padding: '3px 10px',
+          padding: '4px 8px',
         }}>
           <svg width="11" height="11" viewBox="0 0 24 24">
             <polyline points="20 6 9 17 4 12" fill="none" stroke="var(--color-success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -341,7 +341,7 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
             {session.participants} {session.participants === 1 ? 'persona' : 'personas'}
           </span>
         </div>
-        <div style={{ marginLeft: 'auto', backgroundColor: 'var(--color-surface-2)', borderRadius: 'var(--radius-full)', padding: '2px 8px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ marginLeft: 'auto', backgroundColor: 'var(--color-surface-2)', borderRadius: 'var(--radius-full)', padding: '4px 8px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
           <span style={{ fontSize: 11, fontWeight: 500, lineHeight: 1, color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap' }}>
             {LEVEL_LABELS[session.level]}
           </span>

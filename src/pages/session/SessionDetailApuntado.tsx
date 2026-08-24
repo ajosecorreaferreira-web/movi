@@ -65,7 +65,7 @@ export default function SessionDetailApuntado() {
             backgroundColor: 'var(--color-success-subtle)',
             border: '1px solid var(--color-success-border)',
             borderRadius: '9999px',
-            padding: '3px 8px', flexShrink: 0,
+            padding: '4px 8px', flexShrink: 0,
           }}>
             <svg width="10" height="10" viewBox="0 0 24 24">
               <polyline points="20 6 9 17 4 12" fill="none" stroke="var(--color-success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -229,10 +229,10 @@ export default function SessionDetailApuntado() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" style={{ flexShrink: 0 }}><path d="M6 5v14M18 5v14" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M2 9h4M2 15h4" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M20 9h2M20 15h2" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '4px 8px' }}>
               <span style={{ color: 'var(--color-primary-text)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '18px' }}>Cross training</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '3px 10px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: 'var(--color-surface)', borderRadius: '9999px', padding: '4px 8px' }}>
               <span style={{ color: 'var(--color-primary-text)', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, lineHeight: '18px' }}>Cuerpo completo</span>
             </div>
           </div>

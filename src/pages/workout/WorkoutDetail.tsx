@@ -33,7 +33,7 @@ function ExerciseListView({ block }: ExerciseListProps) {
               {ex.reps !== null ? `x${ex.reps} repeticiones` : ex.duration}
             </span>
             <div style={{ display: 'inline-flex', marginTop: 4 }}>
-              <div style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '9999px', backgroundColor: 'var(--color-surface-2)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '4px 8px', borderRadius: '9999px', backgroundColor: 'var(--color-surface-2)' }}>
                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 600, color: 'var(--color-text-muted)', lineHeight: '14px' }}>
                   Nivel {block.id === 'warmup' ? (i < 2 ? 2 : 1) : block.rounds}
                 </span>

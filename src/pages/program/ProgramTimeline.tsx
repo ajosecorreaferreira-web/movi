@@ -105,7 +105,7 @@ export default function ProgramTimeline() {
             backgroundColor: 'var(--color-surface-2)',
             borderRadius: 'var(--radius-full)',
             paddingBlock: 4,
-            paddingInline: 10,
+            paddingInline: 8,
             marginRight: 8,
             flexShrink: 0,
           }}
@@ -359,8 +359,8 @@ function SessionCard({
             style={{
               backgroundColor: 'var(--color-primary)',
               borderRadius: 'var(--radius-full)',
-              paddingBlock: 3,
-              paddingInline: 10,
+              paddingBlock: 4,
+              paddingInline: 8,
               flexShrink: 0,
             }}
           >
