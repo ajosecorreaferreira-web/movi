@@ -408,7 +408,7 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   font-weight: var(--font-regular);
-  min-height: 100dvh;
+  height: 100%;
 }
 
 /* Reducir motion para accesibilidad */
@@ -478,8 +478,8 @@ body {
   }
 
   html, body, #root {
-    overscroll-behavior-y: contain;
-    touch-action: pan-y;
+    height: 100%;
+    overflow: hidden;
   }
 
   html, body {
@@ -493,7 +493,7 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
-    min-height: 100dvh !important;
+    height: 100% !important;
   }
 
   body {

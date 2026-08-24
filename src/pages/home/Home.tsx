@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { Bell, MapPin, Users, Zap, Dumbbell, Wind, Flame, Menu, ChevronRight } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useHaptics } from '@/hooks/useHaptics'
@@ -367,9 +367,11 @@ export default function Home() {
     haptic('success')
   }, [haptic])
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
   const { pullDistance, isRefreshing, isReady, handlers: pullHandlers } = usePullToRefresh({
     onRefresh: handleRefresh,
     threshold: 80,
+    scrollContainerRef,
   })
 
   const [activeTab, setActiveTab] = useState('Semana')
@@ -411,18 +413,17 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [showToast, setSearchParams])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setMapCollapsed(window.scrollY > 80)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const handlePinTap = (sessionId: string) => {
     setActivePin(prev => prev === sessionId ? null : sessionId)
     const cardEl = document.getElementById(`session-card-${sessionId}`)
-    cardEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const container = scrollContainerRef.current
+    if (cardEl && container) {
+      const offset = cardEl.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop
+      container.scrollTo({ top: offset, behavior: 'smooth' })
+    } else {
+      cardEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 
   return (
@@ -433,12 +434,14 @@ export default function Home() {
         isReady={isReady}
       />
       <div
-        {...pullHandlers}
         style={{
-          touchAction: 'pan-y',
           width: '100%',
           maxWidth: '430px',
           margin: '0 auto',
+          height: '100dvh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
           backgroundColor: 'var(--color-background)',
           colorScheme: 'light',
         }}
@@ -491,10 +494,9 @@ export default function Home() {
         {/* Header — sticky, GPU layer aislado */}
         <header
           style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 50,
+            flexShrink: 0,
             height: 56,
+            zIndex: 50,
             backgroundColor: 'var(--color-background)',
             borderBottom: '1px solid var(--color-border)',
             display: 'flex',
@@ -552,50 +554,10 @@ export default function Home() {
           </button>
         </header>
 
-        {/* Banner programa activo — flujo normal, scrollea con la página */}
-        {program && nextSession && (
-          <div
-            onClick={() => { haptic('light'); navigate('/program') }}
-            style={{
-              backgroundColor: 'var(--color-primary-50)',
-              borderBottom: '1px solid var(--color-primary-200)',
-              height: 44,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingInline: 16,
-              cursor: 'pointer',
-            }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: 13,
-                color: 'var(--color-primary-text)',
-                lineHeight: '16px',
-              }}
-            >
-              📅 Tu programa · Próxima: {nextSession.date} · {nextSession.time}
-            </span>
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: 13,
-                fontWeight: 700,
-                color: 'var(--color-primary)',
-                lineHeight: '16px',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              Ver <ChevronRight size={14} strokeWidth={1.5} color="var(--color-primary)" />
-            </span>
-          </div>
-        )}
-
-        {/* Mapa — colapsa a 0px al hacer scroll, desaparece completamente */}
+        {/* Mapa — flexShrink: 0, colapsa a 0px al hacer scroll */}
         <div
           style={{
+            flexShrink: 0,
             height: mapCollapsed ? '0px' : '240px',
             overflow: 'hidden',
             transition: 'height 300ms ease',
@@ -611,11 +573,10 @@ export default function Home() {
           />
         </div>
 
-        {/* Tabs — sticky independiente, siempre a top:56px bajo el header */}
+        {/* Tabs — flexShrink: 0, no sticky */}
         <div
           style={{
-            position: 'sticky',
-            top: 56,
+            flexShrink: 0,
             zIndex: 40,
             backgroundColor: 'var(--color-background)',
             borderBottom: '1px solid var(--color-border)',
@@ -664,24 +625,81 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Lista de sesiones */}
+        {/* Scroll container — flex: 1, overflowY scroll */}
         <div
+          ref={scrollContainerRef}
+          {...pullHandlers}
           style={{
-            padding: '16px 16px 88px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 10,
-            backgroundColor: 'var(--color-background)',
+            flex: 1,
+            overflowY: 'scroll',
+            touchAction: 'pan-y',
+            overscrollBehaviorY: 'contain',
+          }}
+          onScroll={(e) => {
+            const scrollTop = e.currentTarget.scrollTop
+            setMapCollapsed(scrollTop > 80)
           }}
         >
-          {filteredSessions.map(session => (
-            <SessionCard
-              key={session.id}
-              session={session}
-              isApuntado={apuntadoIds.includes(session.id)}
-              isPartnerReserved={partnerReservedIds.includes(session.id)}
-            />
-          ))}
+          {/* Banner programa activo */}
+          {program && nextSession && (
+            <div
+              onClick={() => { haptic('light'); navigate('/program') }}
+              style={{
+                backgroundColor: 'var(--color-primary-50)',
+                borderBottom: '1px solid var(--color-primary-200)',
+                height: 44,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingInline: 16,
+                cursor: 'pointer',
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 13,
+                  color: 'var(--color-primary-text)',
+                  lineHeight: '16px',
+                }}
+              >
+                📅 Tu programa · Próxima: {nextSession.date} · {nextSession.time}
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: 'var(--color-primary)',
+                  lineHeight: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                Ver <ChevronRight size={14} strokeWidth={1.5} color="var(--color-primary)" />
+              </span>
+            </div>
+          )}
+
+          {/* Lista de sesiones */}
+          <div
+            style={{
+              padding: '16px 16px 88px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
+              backgroundColor: 'var(--color-background)',
+            }}
+          >
+            {filteredSessions.map(session => (
+              <SessionCard
+                key={session.id}
+                session={session}
+                isApuntado={apuntadoIds.includes(session.id)}
+                isPartnerReserved={partnerReservedIds.includes(session.id)}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
