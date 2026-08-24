@@ -110,7 +110,8 @@ export default function CreateSession() {
   return (
     <div
       style={{
-        minHeight: '100dvh',
+        height: '100dvh',
+        overflow: 'hidden',
         width: '100%',
         maxWidth: '430px',
         margin: '0 auto',
@@ -132,9 +133,6 @@ export default function CreateSession() {
           paddingInline: 8,
           paddingTop: 'max(0px, env(safe-area-inset-top))',
           flexShrink: 0,
-          position: 'sticky',
-          top: 0,
-          zIndex: 30,
         }}
       >
         <button
@@ -162,7 +160,7 @@ export default function CreateSession() {
       </header>
 
       {/* Scrollable content */}
-      <div style={{ flex: 1, overflowY: 'auto', paddingTop: 24, paddingInline: 24, paddingBottom: 100 }}>
+      <div style={{ flex: 1, overflowY: 'scroll', WebkitOverflowScrolling: 'touch', paddingTop: 24, paddingInline: 24, paddingBottom: 100 }}>
 
         {/* Sección nivel */}
         <div>

@@ -95,20 +95,21 @@ export default function PartnerSession() {
     <>
       <div
         style={{
-          minHeight: '100dvh',
+          height: '100dvh',
+          overflow: 'hidden',
           width: '100%',
           maxWidth: '430px',
           margin: '0 auto',
           backgroundColor: 'var(--color-background)',
           colorScheme: 'light',
-          paddingBottom: '88px',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        {/* Header sticky */}
+        {/* Header */}
         <header
           style={{
-            position: 'sticky',
-            top: 0,
+            flexShrink: 0,
             zIndex: 50,
             height: 56,
             backgroundColor: 'var(--color-surface)',
@@ -118,7 +119,6 @@ export default function PartnerSession() {
             justifyContent: 'space-between',
             paddingInline: 8,
             paddingTop: 'max(0px, env(safe-area-inset-top))',
-            transform: 'translate3d(0,0,0)',
           }}
         >
           <button
@@ -161,6 +161,8 @@ export default function PartnerSession() {
             <MoreHorizontal size={20} strokeWidth={1.5} color="var(--color-text)" />
           </button>
         </header>
+
+        <div style={{ flex: 1, overflowY: 'scroll', WebkitOverflowScrolling: 'touch', paddingBottom: 'max(88px, env(safe-area-inset-bottom))' }}>
 
         {/* Bloque info centro */}
         <div
@@ -533,6 +535,8 @@ export default function PartnerSession() {
           >
             Ver entrenamiento →
           </button>
+        </div>
+
         </div>
       </div>
 

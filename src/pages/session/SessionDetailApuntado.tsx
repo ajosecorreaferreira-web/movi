@@ -15,7 +15,8 @@ export default function SessionDetailApuntado() {
   return (
     <div
       style={{
-        minHeight: '100dvh',
+        height: '100dvh',
+        overflow: 'hidden',
         backgroundColor: 'var(--color-background)',
         width: '100%',
         maxWidth: '430px',
@@ -37,9 +38,6 @@ export default function SessionDetailApuntado() {
           paddingInline: 8,
           paddingTop: 'max(0px, env(safe-area-inset-top))',
           flexShrink: 0,
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
         }}
       >
         <button
@@ -92,6 +90,8 @@ export default function SessionDetailApuntado() {
           </svg>
         </button>
       </header>
+
+      <div style={{ flex: 1, overflowY: 'scroll', WebkitOverflowScrolling: 'touch', paddingBottom: 'max(88px, env(safe-area-inset-bottom))' }}>
 
       {/* Organizador */}
       <div style={{ backgroundColor: 'var(--color-surface)', padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -250,8 +250,7 @@ export default function SessionDetailApuntado() {
         </div>
       </div>
 
-      {/* Spacer para que el CTA flotante no tape el último elemento */}
-      <div style={{ height: 88 }} />
+      </div>
 
       {/* CTA flotante pill — outline verde */}
       <div

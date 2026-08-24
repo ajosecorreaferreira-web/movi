@@ -103,11 +103,13 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
           position: 'absolute', top: 12, right: 12,
           backgroundColor: 'var(--color-info)',
           borderRadius: 'var(--radius-full)',
-          padding: '3px 10px',
+          padding: '2px 8px',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <span style={{
-            fontSize: 11, fontWeight: 600, lineHeight: '16px',
+            fontSize: 11, fontWeight: 600, lineHeight: 1,
             color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
+            whiteSpace: 'nowrap',
           }}>{isPartnerReserved ? '✓ Reservado' : 'Partner'}</span>
         </div>
       )
@@ -118,11 +120,13 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
           position: 'absolute', top: 12, right: 12,
           backgroundColor: 'var(--color-gold)',
           borderRadius: 'var(--radius-full)',
-          padding: '3px 10px',
+          padding: '2px 8px',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <span style={{
-            fontSize: 11, fontWeight: 600, lineHeight: '16px',
+            fontSize: 11, fontWeight: 600, lineHeight: 1,
             color: 'var(--color-primary-foreground)', fontFamily: 'var(--font-sans)',
+            whiteSpace: 'nowrap',
           }}>✨ Sugerido por Movi</span>
         </div>
       )
@@ -337,8 +341,8 @@ function SessionCard({ session, isApuntado, isPartnerReserved }: { session: Sess
             {session.participants} {session.participants === 1 ? 'persona' : 'personas'}
           </span>
         </div>
-        <div style={{ marginLeft: 'auto', backgroundColor: 'var(--color-surface-2)', borderRadius: 'var(--radius-full)', padding: '2px 8px', flexShrink: 0 }}>
-          <span className="text-[11px] font-medium leading-4" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}>
+        <div style={{ marginLeft: 'auto', backgroundColor: 'var(--color-surface-2)', borderRadius: 'var(--radius-full)', padding: '2px 8px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ fontSize: 11, fontWeight: 500, lineHeight: 1, color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap' }}>
             {LEVEL_LABELS[session.level]}
           </span>
         </div>
@@ -637,7 +641,8 @@ export default function Home() {
           }}
           onScroll={(e) => {
             const scrollTop = e.currentTarget.scrollTop
-            setMapCollapsed(scrollTop > 80)
+            if (scrollTop > 100 && !mapCollapsed) setMapCollapsed(true)
+            if (scrollTop < 20 && mapCollapsed) setMapCollapsed(false)
           }}
         >
           {/* Banner programa activo */}
@@ -689,6 +694,7 @@ export default function Home() {
               flexDirection: 'column',
               gap: 10,
               backgroundColor: 'var(--color-background)',
+              minHeight: 'calc(100dvh - 56px - 44px)',
             }}
           >
             {filteredSessions.map(session => (
@@ -699,6 +705,24 @@ export default function Home() {
                 isPartnerReserved={partnerReservedIds.includes(session.id)}
               />
             ))}
+            {filteredSessions.length === 0 && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+                padding: '48px 24px',
+                color: 'var(--color-text-muted)',
+                fontSize: '15px',
+                textAlign: 'center',
+                fontFamily: 'var(--font-sans)',
+              }}>
+                <span style={{ fontSize: '32px', marginBottom: '12px' }}>🌲</span>
+                <p>No hay sesiones este día</p>
+                <p style={{ fontSize: '13px', marginTop: '4px' }}>¡Propón la primera!</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

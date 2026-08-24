@@ -39,7 +39,8 @@ export default function ProgramTimeline() {
   return (
     <div
       style={{
-        minHeight: '100dvh',
+        height: '100dvh',
+        overflow: 'hidden',
         width: '100%',
         maxWidth: '430px',
         margin: '0 auto',
@@ -49,11 +50,10 @@ export default function ProgramTimeline() {
         colorScheme: 'light',
       }}
     >
-      {/* Header sticky */}
+      {/* Header */}
       <header
         style={{
-          position: 'sticky',
-          top: 0,
+          flexShrink: 0,
           zIndex: 50,
           height: 56,
           backgroundColor: 'var(--color-surface)',
@@ -63,8 +63,6 @@ export default function ProgramTimeline() {
           justifyContent: 'space-between',
           paddingInline: 8,
           paddingTop: 'max(0px, env(safe-area-inset-top))',
-          transform: 'translate3d(0,0,0)',
-          flexShrink: 0,
         }}
       >
         {/* Botón volver */}
@@ -151,7 +149,8 @@ export default function ProgramTimeline() {
       <div
         style={{
           flex: 1,
-          overflowY: 'auto',
+          overflowY: 'scroll',
+          WebkitOverflowScrolling: 'touch',
           paddingInline: 16,
           paddingTop: 4,
           paddingBottom: 16,
