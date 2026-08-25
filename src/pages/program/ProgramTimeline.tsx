@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, MoreHorizontal, Check, Users, MapPin, Dumbbell, Clock } from 'lucide-react'
@@ -7,9 +7,15 @@ import { useProgramStore } from '@/stores/programStore'
 const SEMANAS = [1, 2, 3] as const
 
 export default function ProgramTimeline() {
-  const { program } = useProgramStore()
+  const { program, createProgramWithPartner } = useProgramStore()
   const navigate = useNavigate()
   const [activeSemana, setActiveSemana] = useState(1)
+
+  useEffect(() => {
+    if (!program) {
+      createProgramWithPartner('Ana')
+    }
+  }, [])
 
   const sessionsBySemana = {
     1: program?.sessions.slice(0, 2) || [],
