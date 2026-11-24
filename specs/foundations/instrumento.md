@@ -1,6 +1,6 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.2
+**Versión:** 0.3
 **Fecha:** 2026-11-24
 **Estado:** aprobada (dirección elegida por José)
 **Origen:** exploración de tres direcciones (Instrumento · Escritorio · Glyph). Elegida: **A · Instrumento**, inspirada en los productos físicos de Teenage Engineering, **con el anillo de luces de C · Glyph**, inspirado en Nothing.
@@ -90,10 +90,12 @@ Solo existen dos: `--radio-tecla` (6 px) y `--radio-modulo` (10 px). Un contened
 
 | Rol | Fuente | Peso | Tamaños | Notas |
 |---|---|---|---|---|
-| Título | Archivo | 250 | 56 · 34 · 31 · 28 | Mayúscula inicial, como una frase. Interlineado 1–1,05 |
+| Título | Archivo | 250 | 56 · 34 · 31 · 28 | Mayúscula inicial. Interlineado 1–1,05 |
 | Cifra | Archivo | 200 a partir de 40 px · 300 a 20 px | 84 · 76 · 56 · 50 · 40 · 20 | Solo números. 300 no es «letra fina» (R8 habla de 200–250) |
 | Texto | Archivo | 400 | 14,5 · 15 · 16 | Interlineado 1,45 |
 | Etiqueta | Martian Mono | 500 | 10 · 10,5 · 11 · 13 | Mayúsculas, espaciado 0,06–0,1 em |
+
+Los títulos y el texto se escriben como en español: mayúscula inicial, el resto en minúscula. Los nombres propios, siempre con mayúscula (Ana, Pinar de Las Rozas), también cuando son el valor de una rueda. Las etiquetas en Martian Mono van siempre en mayúsculas.
 
 ### Componentes
 
@@ -104,11 +106,12 @@ Solo existen dos: `--radio-tecla` (6 px) y `--radio-modulo` (10 px). Un contened
 | Pantalla | `C · Pantalla` | Módulo OLED: cabecera en mono con LED + contador; contenido; opcionalmente perfil de intensidad | — |
 | Tecla | `C · Tecla` | Principal (tinta), secundaria (aluminio claro), con LED. Alturas 58 y 48 | reposo · pulsada · foco · desactivada |
 | Interruptor | `C · Interruptor` | Pista + bloque de tinta en 3 posiciones (más fácil · estándar · más difícil) | 3 posiciones · foco |
-| Nivel | `C · Nivel` | Tecla con luz gris + nombre del nivel | — |
+| Nivel | `C · Nivel` | Tecla con luz gris + nombre del nivel | reposo · elegido (tecla enclavada: se queda pulsada y la luz pasa a naranja) |
 | Secuenciador | `C · Secuenciador` | 16 pasos; hechos en tinta, actual en naranja con brillo, pendientes en pista | — |
 | Perfil | `C · Perfil` | Barras de intensidad por fase sobre pantalla; activas en naranja | — |
 | Etiqueta de función | `C · Etiqueta` | Cuadrado del color de la función + etiqueta mono | — |
 | Persona | `C · Persona` | Cuadrado naranja con inicial + etiqueta mono + línea de contexto | — |
+| Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px azul, radio 10) · relleno |
 | Navegación | `CM · Navegación` | 4 destinos (Cerca · Entrenar · Mi gente · Yo), etiqueta mono siempre visible, LED naranja en el activo | 4 activos |
 
 ---
@@ -165,6 +168,7 @@ Solo existen dos: `--radio-tecla` (6 px) y `--radio-modulo` (10 px). Un contened
 ## Trazabilidad
 
 - Exploración y referencia visual: lienzo «Movi · Tres direcciones» en claude.ai, página **Sistema elegido**. Copia de las tres pantallas de referencia en `design/instrumento/referencia/`. **Donde las referencias choquen con esta spec, gana la spec.**
+- Cambios de la 0.3 (2026-11-24): mayúscula inicial en títulos, nombres propios con mayúscula, nuevo `C · Campo` y estado «elegido» de `C · Nivel`, ambos salidos del flujo de Onboarding.
 - Cambios de la 0.2 (2026-11-24), tras comparar las referencias con los tokens: se añaden `--color-sobre-tiempo` y `--sombra-capuchon`, la nota de radios y el peso 300 para la cifra de 20 px. Al pintarlo en Paper, los valores de las referencias que no están en la escala se llevan al token más cercano: 26 → 28, 48 → 56, 9,5 → 10, 11,5 → 11, el texto Archivo de 12,5–14 → 14,5, `#B8B8B4` → `--color-linea`, `#D8D8D4` → `--color-pantalla-texto-2`, y los radios 8 y 12 → 10.
 - Specs relacionadas: `specs/workout-engine.md`, `specs/program/spec.md`, `specs/decisions/specs-location.md`.
 - Referencias: Teenage Engineering (OP-1 field, EP-133 K.O. II, TP-7), Nothing (Glyph Matrix).
