@@ -185,7 +185,7 @@ src/
 
 ## Contradicciones abiertas (2026-11-23)
 
-Resolver antes de construir sobre la zona afectada.
+**Superadas por `specs/foundations/instrumento.md`** (2026-11-24): la migración a Instrumento cambia fuente, tokens y pantallas, así que estas tres se resuelven con ella. No se arreglan por separado.
 
 1. **`specs/foundations/typography.md:10-11`** — dice que `--font-sans` es Geist Variable y `--font-mono` Geist Mono. Pero el código usa Plus Jakarta Sans Variable y Geist está desinstalado.
 2. **`docs/typography.md`** — sigue ofreciendo Google Fonts como "Opción 2" y pone `'Plus Jakarta Sans'` como familia. La decisión es fontsource y la familia es `'Plus Jakarta Sans Variable'`.

@@ -16,7 +16,7 @@ Crea la página y dentro, en este orden, de izquierda a derecha:
 
 - `F · Tokens` — los colores con nombre, valor y función
 - `F · Tipografía` — la escala de la spec
-- Un frame por componente de la tabla de la spec (`C · Rueda`, `C · Anillo`, `C · Pantalla`, `C · Tecla`, `C · Interruptor`, `C · Nivel`, `C · Secuenciador`, `C · Perfil`, `C · Etiqueta`, `C · Persona`, `CM · Navegación`), con todos sus estados uno al lado del otro.
+- Un frame por componente de la tabla de la spec (`C · Rueda`, `C · Anillo`, `C · Pantalla`, `C · Tecla`, `C · Interruptor`, `C · Nivel`, `C · Secuenciador`, `C · Perfil`, `C · Etiqueta`, `C · Persona`, `C · Campo`, `C · Mapa`, `C · Pestañas`, `CM · Navegación`), con todos sus estados uno al lado del otro.
 
 **Para cuando termines la fase 1 y enséñamela.** No sigas con los flujos hasta que la apruebe.
 
@@ -29,7 +29,7 @@ Cuando apruebe la fase 1. Una página por flujo, con frames `AppM · <flujo> · 
 3. **Sesión** — detalle · apuntado · sesión de partner
 4. **Entrenar** — propuesta · rueda abierta ajustando · otras opciones
 5. **Detalle de entrenamiento** — timeline único con fases y variantes
-6. **Ejecución** — voz · tarjeta · acompañado · asistido
+6. **Ejecución** — voz · tarjeta · acompañado (a la vez, cada persona con su variante; nunca por turnos, ver R14) · asistido
 7. **Programa** — ¿qué tal la sesión? · propuesta con grupo · propuesta solo · semanas con constancia · Tu grupo
 8. **Mi gente**
 9. **Celebraciones** — primera sesión · 3ª vez con la misma persona · fin del programa
@@ -49,3 +49,4 @@ El contenido sale de lo que ya existe: los frames `AppM ·` actuales, `specs/wor
 - Todo interactivo ≥ 44 × 44, etiquetas siempre visibles.
 - Nada de emoji. Nada de barra de estado dibujada.
 - El nivel siempre por su nombre.
+- En pareja y en grupo se entrena a la vez: nadie cuenta ni espera (R14).

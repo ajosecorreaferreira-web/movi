@@ -1,8 +1,9 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.4
+**Versión:** 0.5
 **Fecha:** 2026-11-24
 **Estado:** aprobada (dirección elegida por José)
+**Cambios 0.5:** el entreno en pareja es a la vez, nunca por turnos (R14). Fuera «uno trabaja, el otro cuenta» y el sonido «cambio de rol». Títulos con mayúscula inicial, no en minúsculas.
 **Origen:** exploración de tres direcciones (Instrumento · Escritorio · Glyph). Elegida: **A · Instrumento**, inspirada en los productos físicos de Teenage Engineering, **con el anillo de luces de C · Glyph**, inspirado en Nothing.
 
 ---
@@ -90,7 +91,7 @@ Solo existen dos: `--radio-tecla` (6 px) y `--radio-modulo` (10 px). Un contened
 
 | Rol | Fuente | Peso | Tamaños | Notas |
 |---|---|---|---|---|
-| Título | Archivo | 250 | 56 · 34 · 31 · 28 | Mayúscula inicial. Interlineado 1–1,05 |
+| Título | Archivo | 250 | 56 · 34 · 31 · 28 | Mayúscula inicial, como se escribe en español («Entrenar», «Funcional en pareja»). Interlineado 1–1,05 |
 | Cifra | Archivo | 200 a partir de 40 px · 300 a 20 px | 84 · 76 · 56 · 50 · 40 · 20 | Solo números. 300 no es «letra fina» (R8 habla de 200–250) |
 | Texto | Archivo | 400 | 14,5 · 15 · 16 | Interlineado 1,45 |
 | Etiqueta | Martian Mono | 500 | 10 · 10,5 · 11 · 13 | Mayúsculas, espaciado 0,06–0,1 em |
@@ -133,6 +134,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 11. **R11 — Teclas:** radio 6, alto 58 o 48. Al pulsar bajan 3 px y pierden la sombra en 60 ms.
 12. **R12 — El nivel siempre con su nombre.** Nunca números ni puntos.
 13. **R13 — El contrato SDD sigue vigente:** tokens siempre, 44 × 44 mínimo, etiquetas visibles, nada de emoji, ninguna barra de estado dibujada.
+14. **R14 — En pareja y en grupo se entrena a la vez.** Nunca por turnos ni con una persona contando o mirando. La pantalla muestra el mismo ejercicio y el mismo anillo para todos, y la variante de cada persona con su nombre («Tú · con banco», «Ana · sin banco»), nunca «más fácil». La tecla principal es «Hecho». El cierre es un bloque cooperativo.
 
 ### Sonido y vibración
 
@@ -141,17 +143,18 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 | Mover una rueda | clic seco por luz | tic corto |
 | Pulsar una tecla | «clac» mecánico | tic corto |
 | Cambio de ejercicio | dos notas que suben | doble pulso |
-| Cambio de rol | barrido del anillo | pulso largo |
+| Empieza el reto juntos (bloque cooperativo) | barrido del anillo | pulso largo |
 | Fin del entreno | acorde corto | tres pulsos |
 
 ---
 
 ## Criterios de aceptación
 
-- [ ] **C1 —** Paper tiene una página **DS · Instrumento** con un frame `F · Tokens`, uno `F · Tipografía` y un frame por componente de la tabla, con todos sus estados.
+- [ ] **C1 —** Paper tiene una página **DS · Instrumento** con un frame `F · Tokens`, uno `F · Tipografía` y un frame por componente de la tabla (Rueda, Anillo, Pantalla, Tecla, Interruptor, Nivel, Secuenciador, Perfil, Etiqueta, Persona, Campo, Mapa, Pestañas y Navegación), con todos sus estados.
 - [ ] **C2 —** Los valores de Paper coinciden exactamente con los tokens de esta spec. Ningún color, radio o tamaño inventado.
 - [ ] **C3 —** Cada flujo tiene su propia página en Paper, con frames `AppM · <flujo> · <pantalla>` de 390 × 844 ordenados en el orden del flujo y los estados debajo.
 - [ ] **C4 —** Ninguna pantalla tiene más de una tecla negra ni más de una pantalla OLED.
+- [ ] **C4b —** Ninguna pantalla de entreno en pareja o en grupo reparte papeles («trabajas», «cuenta», «cambiáis»).
 - [ ] **C5 —** Ningún texto naranja sobre aluminio.
 - [ ] **C6 —** Todo elemento interactivo mide al menos 44 × 44.
 - [ ] **C7 —** Las páginas antiguas de Paper («Movi» y «Descartados») no se han tocado.
@@ -170,8 +173,10 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 ## Trazabilidad
 
 - Exploración y referencia visual: lienzo «Movi · Tres direcciones» en claude.ai, página **Sistema elegido**. Copia de las tres pantallas de referencia en `design/instrumento/referencia/`. **Donde las referencias choquen con esta spec, gana la spec.**
+- Cambios de la 0.5 (2026-11-24): en pareja y en grupo se entrena a la vez (R14, C4b); el sonido «Cambio de rol» pasa a «Empieza el reto juntos»; C1 incluye Campo, Mapa y Pestañas. Referencia `ejecucion-acompanado.dc.html` rehecha a la vez; títulos de las referencias con mayúscula inicial.
 - Cambios de la 0.4 (2026-11-24): `C · Mapa` en el mismo lenguaje que el resto (matriz de puntos, nada de cartografía en color) y `C · Pestañas`, ambos salidos del flujo Cerca. `MapStatic.tsx` deja de ser excepción de color cuando se migre.
 - Cambios de la 0.3 (2026-11-24): mayúscula inicial en títulos, nombres propios con mayúscula, nuevo `C · Campo` y estado «elegido» de `C · Nivel`, ambos salidos del flujo de Onboarding.
 - Cambios de la 0.2 (2026-11-24), tras comparar las referencias con los tokens: se añaden `--color-sobre-tiempo` y `--sombra-capuchon`, la nota de radios y el peso 300 para la cifra de 20 px. Al pintarlo en Paper, los valores de las referencias que no están en la escala se llevan al token más cercano: 26 → 28, 48 → 56, 9,5 → 10, 11,5 → 11, el texto Archivo de 12,5–14 → 14,5, `#B8B8B4` → `--color-linea`, `#D8D8D4` → `--color-pantalla-texto-2`, y los radios 8 y 12 → 10.
-- Specs relacionadas: `specs/workout-engine.md`, `specs/program/spec.md`, `specs/decisions/specs-location.md`.
+- Specs relacionadas: `specs/workout-engine.md` (v1.1), `specs/program/spec.md` (en la rama `feat/programa`, pendiente de aprobar), `specs/decisions/specs-location.md`.
+- **Pendiente:** cuando se retome `specs/program/spec.md`, buscar en ella «alterno», «rol», «cuenta» y «trabajas» y alinearla con R14.
 - Referencias: Teenage Engineering (OP-1 field, EP-133 K.O. II, TP-7), Nothing (Glyph Matrix).

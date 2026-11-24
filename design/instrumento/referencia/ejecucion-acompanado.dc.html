@@ -33,34 +33,37 @@ button:focus-visible{outline:2px solid #2B4FD8;outline-offset:2px}
 
   <main style="flex:1;display:flex;flex-direction:column;gap:12px;padding:0 20px">
 
-    <section aria-label="Tú trabajas" style="background:#0F0E12;color:#F2F2F0;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <section aria-label="Juntos, a la vez" style="background:#0F0E12;color:#F2F2F0;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px">
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <span style="display:flex;align-items:center;gap:8px;font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.1em"><span aria-hidden="true" style="width:8px;height:8px;background:#FF5B1A;box-shadow:0 0 8px #FF5B1A"></span>TÚ · TRABAJAS</span>
-        <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:#9A9A9A;letter-spacing:0.06em">ESTÁNDAR</span>
+        <span style="display:flex;align-items:center;gap:8px;font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.1em"><span aria-hidden="true" style="width:8px;height:8px;background:#FF5B1A;box-shadow:0 0 8px #FF5B1A"></span>TÚ + ANA · A LA VEZ</span>
+        <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:#9A9A9A;letter-spacing:0.06em">POR PIERNA</span>
       </div>
       <div style="display:flex;align-items:flex-end;justify-content:space-between">
-        <h2 style="margin:0;font-weight:250;font-size:28px;line-height:1.05;letter-spacing:-0.02em">sentadilla<br>búlgara</h2>
+        <h2 style="margin:0;font-weight:250;font-size:28px;line-height:1.05;letter-spacing:-0.02em">Sentadilla<br>búlgara</h2>
         <div style="display:flex;align-items:baseline;gap:4px"><span style="font-weight:200;font-size:76px;line-height:0.8;letter-spacing:-0.04em;color:#FF5B1A">10</span><span style="font-family:'Martian Mono',monospace;font-size:10px;color:#9A9A9A">REPS</span></div>
       </div>
-      <p style="margin:0;font-size:14px;line-height:1.45;color:#CFCFCB">Pie de atrás en el banco. Baja recto y controlado.</p>
     </section>
 
-    <div role="timer" aria-label="Cambiáis en 18 segundos" style="position:relative;width:196px;height:196px;align-self:center">
+    <div role="timer" aria-label="Quedan 18 segundos del bloque" style="position:relative;width:176px;height:176px;align-self:center">
       <sc-for list="{{ring}}" as="dot" hint-placeholder-count="48">
         <span aria-hidden="true" style="position:absolute;left:{{dot.x}}px;top:{{dot.y}}px;width:{{dot.s}}px;height:{{dot.s}}px;border-radius:50%;background:{{dot.c}};box-shadow:{{dot.g}}"></span>
       </sc-for>
       <div aria-hidden="true" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-        <span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5A5A5A">CAMBIÁIS EN</span>
+        <span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5A5A5A">QUEDAN</span>
         <span style="font-weight:250;font-size:50px;line-height:1;letter-spacing:-0.03em">0:18</span>
       </div>
     </div>
 
-    <section aria-label="Ana cuenta" style="border:1px solid #CFCFCB;background:#F7F7F5;border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:flex-start">
-      <div aria-hidden="true" style="width:40px;height:40px;border-radius:6px;background:#FF5B1A;color:#111;display:flex;align-items:center;justify-content:center;font-family:'Martian Mono',monospace;font-size:14px;flex-shrink:0">A</div>
-      <div style="display:flex;flex-direction:column;gap:4px">
-        <span style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.1em">ANA · CUENTA</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.45;color:#3A3A3A">Cuenta en voz alta y avísale si la rodilla se le va hacia dentro.</p>
+    <section aria-label="Cada persona con su variante" style="border:1px solid #CFCFCB;background:#F7F7F5;border-radius:10px;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div aria-hidden="true" style="width:40px;height:40px;border-radius:6px;background:#FF5B1A;color:#111;display:flex;align-items:center;justify-content:center;font-family:'Martian Mono',monospace;font-size:12px;flex-shrink:0">TÚ</div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.1em">TÚ · CON BANCO</span><span style="font-size:14.5px;line-height:1.35;color:#3A3A3A">Pie de atrás en el banco.</span></div>
       </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div aria-hidden="true" style="width:40px;height:40px;border-radius:6px;background:#FF5B1A;color:#111;display:flex;align-items:center;justify-content:center;font-family:'Martian Mono',monospace;font-size:14px;flex-shrink:0">A</div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.1em">ANA · SIN BANCO</span><span style="font-size:14.5px;line-height:1.35;color:#3A3A3A">Zancada atrás, pies en el suelo.</span></div>
+      </div>
+      <p style="margin:0;padding-top:8px;border-top:1px solid #CFCFCB;font-size:14.5px;line-height:1.45;color:#3A3A3A">Mismo ritmo, cada cual a su nivel. Si podéis hablar mientras lo hacéis, vais bien.</p>
     </section>
 
     <p style="margin:0;display:flex;align-items:center;gap:6px;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#3A3A3A"><span aria-hidden="true" style="width:7px;height:7px;background:#E0A21C;flex-shrink:0"></span>DESPUÉS · FINISHER COOPERATIVO · 30 PASES SIN QUE CAIGA</p>
@@ -69,8 +72,8 @@ button:focus-visible{outline:2px solid #2B4FD8;outline-offset:2px}
   <div style="display:flex;gap:8px;padding:14px 20px 22px">
     <button aria-label="Pausa" style="width:64px;height:60px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 #CFCFCB"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
     <button style="flex:1;height:60px;border:0;border-radius:6px;background:#111111;color:#F7F7F5;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 3px 0 #5A5A5A">
-      <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.1em">CAMBIAMOS</span>
-      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+      <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.1em">HECHO</span>
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
     </button>
   </div>
 </div>
@@ -78,11 +81,11 @@ button:focus-visible{outline:2px solid #2B4FD8;outline-offset:2px}
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
-    const n = 48, lit = 29, box = 196, r = 88, ring = [];
+    const n = 48, lit = 29, box = 176, r = 79, ring = [];
     for (let i = 0; i < n; i++) {
       const a = (i * 360 / n) * Math.PI / 180;
       const head = i === lit - 1;
-      const s = head ? 10 : 7;
+      const s = head ? 9 : 6;
       ring.push({
         x: Math.round(box / 2 + r * Math.sin(a) - s / 2),
         y: Math.round(box / 2 - r * Math.cos(a) - s / 2),
