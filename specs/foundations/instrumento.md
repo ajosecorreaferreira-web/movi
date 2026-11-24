@@ -1,6 +1,6 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.3
+**Versión:** 0.4
 **Fecha:** 2026-11-24
 **Estado:** aprobada (dirección elegida por José)
 **Origen:** exploración de tres direcciones (Instrumento · Escritorio · Glyph). Elegida: **A · Instrumento**, inspirada en los productos físicos de Teenage Engineering, **con el anillo de luces de C · Glyph**, inspirado en Nothing.
@@ -112,6 +112,8 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 | Etiqueta de función | `C · Etiqueta` | Cuadrado del color de la función + etiqueta mono | — |
 | Persona | `C · Persona` | Cuadrado naranja con inicial + etiqueta mono + línea de contexto | — |
 | Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px azul, radio 10) · relleno |
+| Mapa | `C · Mapa` | Módulo de aluminio claro, radio 10. Zonas verdes como matriz de puntos cuadrados de 3 px cada 9 px en `--color-linea`; calles, líneas de 1 px en `--color-linea`; lugares rotulados en mono 10 `--color-tinta-3`. Tú: anillo de 2 px en `--color-tiempo`. Sesiones: luces de 8 px en tinta; la de ahora, 10 px naranja con brillo | con sesiones · sin sesiones (solo tú) |
+| Pestañas | `C · Pestañas` | Fila de etiquetas mono 10,5, mínimo 44 × 44 cada una; la activa en tinta con LED naranja de 5 px encima, el resto en `--color-tinta-3` | una activa |
 | Navegación | `CM · Navegación` | 4 destinos (Cerca · Entrenar · Mi gente · Yo), etiqueta mono siempre visible, LED naranja en el activo | 4 activos |
 
 ---
@@ -168,6 +170,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 ## Trazabilidad
 
 - Exploración y referencia visual: lienzo «Movi · Tres direcciones» en claude.ai, página **Sistema elegido**. Copia de las tres pantallas de referencia en `design/instrumento/referencia/`. **Donde las referencias choquen con esta spec, gana la spec.**
+- Cambios de la 0.4 (2026-11-24): `C · Mapa` en el mismo lenguaje que el resto (matriz de puntos, nada de cartografía en color) y `C · Pestañas`, ambos salidos del flujo Cerca. `MapStatic.tsx` deja de ser excepción de color cuando se migre.
 - Cambios de la 0.3 (2026-11-24): mayúscula inicial en títulos, nombres propios con mayúscula, nuevo `C · Campo` y estado «elegido» de `C · Nivel`, ambos salidos del flujo de Onboarding.
 - Cambios de la 0.2 (2026-11-24), tras comparar las referencias con los tokens: se añaden `--color-sobre-tiempo` y `--sombra-capuchon`, la nota de radios y el peso 300 para la cifra de 20 px. Al pintarlo en Paper, los valores de las referencias que no están en la escala se llevan al token más cercano: 26 → 28, 48 → 56, 9,5 → 10, 11,5 → 11, el texto Archivo de 12,5–14 → 14,5, `#B8B8B4` → `--color-linea`, `#D8D8D4` → `--color-pantalla-texto-2`, y los radios 8 y 12 → 10.
 - Specs relacionadas: `specs/workout-engine.md`, `specs/program/spec.md`, `specs/decisions/specs-location.md`.
