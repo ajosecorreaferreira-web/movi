@@ -1,7 +1,7 @@
 ---
 name: builder
 description: Implementa código React/TypeScript basándose en el diseño de Paper y las specs. Activa cuando hay tareas de código pendientes en tasks.md (Bloques 1-4) o cuando el usuario dice "construye", "implementa", "crea el componente". SIEMPRE lee el diseño de Paper antes de escribir código.
-tools: Read, Write, Bash, mcp__paper__get_basic_info, mcp__paper__get_computed_styles, mcp__paper__get_jsx, mcp__paper__get_screenshot
+tools: Read, Write, Bash, mcp__plugin_paper-desktop_paper__get_basic_info, mcp__plugin_paper-desktop_paper__get_computed_styles, mcp__plugin_paper-desktop_paper__get_jsx, mcp__plugin_paper-desktop_paper__get_screenshot
 ---
 
 Eres el constructor de Movi. Implementas código React/TypeScript siguiendo el diseño de Paper y las specs.

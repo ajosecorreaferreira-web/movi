@@ -88,3 +88,107 @@ MapStatic.tsx: 28 errores de colores cartográficos — excepción justificada y
 - Google Maps real (API key con billing)
 - movi-admin (panel desktop)
 - Verificar flujo partner en móvil
+
+---
+
+## Estado real del proyecto
+
+**Actualizado:** 2026-11-23
+
+| Pieza | Estado | Spec |
+|---|---|---|
+| Design system / tokens (`src/index.css`) | hecho | `specs/foundations/`, `specs/tokens/` |
+| Componentes shadcn (`src/components/ui/`) | copiados, 31 | `specs/components/` (10 de 31) |
+| Componentes mobile (`src/components/mobile/`) | hechos | `specs/components/mobile/` |
+| Flujo 1 — Onboarding | hecho | `specs/onboarding/` ✓ |
+| Flujo 2 — Apuntarse (SessionDetail + celebraciones) | hecho | **sin spec** |
+| Flujo 3 — Partners (PartnerSession, PartnerReserved) | hecho, sin verificar en móvil | **sin spec** |
+| Flujo 4 — Crear sesión (CreateSession → WorkoutDetailCreate) | hecho | **sin spec** |
+| Flujo 5 — Programa 3 semanas (FeelingSheet, ProgramTimeline v2) | hecho, FeelingSheet con cambios sin commitear | **sin spec** |
+| Flujo 6 — Home con cold start (3 tipos de card) | hecho | **sin spec** |
+| Supabase, auth, push, Google Maps real, movi-admin | pendiente | — |
+
+Todo lo que no tenga spec se considera **código heredado**: antes de cambiar su comportamiento, se escribe la spec (`/sdd:spec`).
+
+---
+
+## Tokens clave
+
+```css
+/* Fuente de verdad completa: src/index.css */
+--color-primary:      oklch(0.70 0.19 46);   /* Amanecer — naranja-ámbar */
+--color-primary-text: var(--color-primary-800); /* texto ámbar sobre blanco, AA */
+--color-background:   oklch(0.98 0.005 80);  /* blanco roto cálido */
+--color-surface:      oklch(1 0 0);          /* cards */
+--color-text:         oklch(0.18 0.03 50);
+--color-border:       oklch(0.88 0.02 75);
+--radius-md:          10px;
+--radius-lg:          16px;
+--space-4:            16px;
+--touch-target-min:   44px;
+--touch-target-ideal: 48px;
+```
+
+---
+
+## Método
+
+Este repo trabaja con **SDD (Spec-Driven Development)** mediante el plugin `sdd`:
+
+- `/sdd:method` — las seis fases y las doce reglas (contrato base)
+- `/sdd:spec` — escribir la spec antes de construir
+- `/sdd:paper` — traer un frame de Paper con valores exactos
+- `/sdd:build` — construir desde la spec
+- `/sdd:audit` — verificar antes del PR
+- `/sdd:ship` — rama, commit y PR con la spec enlazada
+
+**Las specs viven en `specs/` en la raíz — no en `docs/specs/`.** Ver `specs/decisions/specs-location.md`.
+**Nada se construye sin spec.** Las reglas críticas CSS de arriba son reglas propias del repo y ganan sobre las doce del método.
+
+---
+
+## Estructura
+
+```
+specs/
+├── foundations/    ← color, tipografía, spacing, radius, motion, sonido
+├── tokens/         ← referencia de tokens
+├── components/     ← una spec por componente (mobile/ aparte)
+├── <feature>/      ← requirements.md · design.md · tasks.md (p. ej. onboarding/)
+└── decisions/      ← decisiones transversales
+docs/               ← contexto de producto y marca (product, flows, voice…) — no son specs
+src/
+├── index.css       ← tokens — fuente de verdad del DS
+├── components/
+│   ├── ui/         ← shadcn copiado
+│   ├── mobile/     ← primitivas mobile propias
+│   ├── home/ program/ ← componentes de producto
+├── pages/          ← una carpeta por flujo
+└── stores/         ← Zustand
+```
+
+---
+
+## Convención de Paper
+
+| Prefijo | Qué es |
+|---|---|
+| `F ·` | Frames / layout |
+| `C ·` | Componentes reutilizables |
+| `CM ·` | Componentes mobile |
+| `App ·` | Pantallas de la app |
+| `AppM ·` | Pantallas mobile |
+| `IA ·` | Componentes generados / dinámicos |
+| `Landing ·` | Landing / marketing |
+
+---
+
+## Contradicciones abiertas (2026-11-23)
+
+Resolver antes de construir sobre la zona afectada.
+
+1. **`specs/foundations/typography.md:10-11`** — dice que `--font-sans` es Geist Variable y `--font-mono` Geist Mono. Pero el código usa Plus Jakarta Sans Variable y Geist está desinstalado.
+2. **`docs/typography.md`** — sigue ofreciendo Google Fonts como "Opción 2" y pone `'Plus Jakarta Sans'` como familia. La decisión es fontsource y la familia es `'Plus Jakarta Sans Variable'`.
+3. **Sección Audit de este archivo** — dice "0 errores fuera de MapStatic". La realidad (2026-11-23) es 81 errores y 62 warnings: 30 en MapStatic y 51 repartidos por las pantallas (PartnerReserved 39, ProgramTimeline 15, Home 11, SessionDetail 11…).
+
+Resueltas el 2026-11-23: tailwind en la primera línea de `index.css`, `html`/`body` en `@layer base`, fuente por fontsource, `docs/CLAUDE.md` borrado, `docs/tech-stack.md` sin versiones, tools de Paper de los agentes.

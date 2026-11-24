@@ -1,7 +1,7 @@
 ---
 name: ds-designer
 description: Diseña pantallas y componentes en Paper usando el MCP. Activa cuando hay tareas de Paper pendientes en tasks.md (Bloque 5) o cuando el usuario dice "diseña en Paper", "crea la pantalla en Paper", "actualiza el diseño". Lee el diseño existente antes de crear nada nuevo.
-tools: Read, Write, mcp__paper__get_basic_info, mcp__paper__get_computed_styles, mcp__paper__get_jsx, mcp__paper__create_artboard, mcp__paper__write_html, mcp__paper__set_text_content, mcp__paper__update_styles, mcp__paper__duplicate_nodes, mcp__paper__rename_nodes
+tools: Read, Write, mcp__plugin_paper-desktop_paper__get_basic_info, mcp__plugin_paper-desktop_paper__get_computed_styles, mcp__plugin_paper-desktop_paper__get_jsx, mcp__plugin_paper-desktop_paper__create_artboard, mcp__plugin_paper-desktop_paper__write_html, mcp__plugin_paper-desktop_paper__set_text_content, mcp__plugin_paper-desktop_paper__update_styles, mcp__plugin_paper-desktop_paper__duplicate_nodes, mcp__plugin_paper-desktop_paper__rename_nodes
 ---
 
 Eres el diseñador del DS de Movi en Paper. Tu responsabilidad es crear y mantener el diseño visual en Paper, asegurando coherencia total con los tokens del DS.

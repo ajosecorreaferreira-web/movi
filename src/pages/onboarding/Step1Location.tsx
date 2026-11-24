@@ -54,7 +54,7 @@ export default function Step1Location() {
           <div className="flex items-center justify-between mb-3">
             <span style={{
               color: 'white',
-              fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+              fontFamily: 'var(--font-sans)',
               fontSize: '22px',
               fontWeight: 800,
               letterSpacing: '-0.03em',
@@ -64,7 +64,7 @@ export default function Step1Location() {
             </span>
             <span style={{
               color: 'var(--color-white-70)',
-              fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+              fontFamily: 'var(--font-sans)',
               fontSize: '13px',
               fontWeight: 500,
               letterSpacing: '0.02em',
@@ -82,7 +82,7 @@ export default function Step1Location() {
         <div className="flex-1 flex flex-col justify-center px-6 py-8">
           <h1 style={{
             color: 'white',
-            fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+            fontFamily: 'var(--font-sans)',
             fontSize: '42px',
             fontWeight: 800,
             letterSpacing: '-0.03em',
@@ -94,7 +94,7 @@ export default function Step1Location() {
           </h1>
           <p style={{
             color: 'var(--color-white-75)',
-            fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+            fontFamily: 'var(--font-sans)',
             fontSize: '17px',
             lineHeight: '26px',
             maxWidth: '280px',
@@ -137,7 +137,7 @@ export default function Step1Location() {
                 )}
                 <span style={{
                   color: 'var(--color-primary-text)',
-                  fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                  fontFamily: 'var(--font-sans)',
                   fontSize: '16px',
                   fontWeight: 700,
                   letterSpacing: '-0.01em',
@@ -156,7 +156,7 @@ export default function Step1Location() {
                     color: 'var(--color-white-80)',
                     cursor: 'pointer',
                     display: 'inline-block',
-                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    fontFamily: 'var(--font-sans)',
                     fontSize: '14px',
                     fontWeight: 500,
                     lineHeight: '18px',
@@ -195,7 +195,7 @@ export default function Step1Location() {
                   className="flex-1 bg-transparent outline-none"
                   style={{
                     color: 'var(--color-text)',
-                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    fontFamily: 'var(--font-sans)',
                     fontSize: '16px',
                   }}
                   autoFocus
@@ -214,7 +214,7 @@ export default function Step1Location() {
                   color: 'var(--color-primary-text)',
                   cursor: manualInput.trim() ? 'pointer' : 'not-allowed',
                   display: 'flex',
-                  fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                  fontFamily: 'var(--font-sans)',
                   fontSize: '16px',
                   fontWeight: 700,
                   height: '56px',
@@ -235,7 +235,7 @@ export default function Step1Location() {
                     color: 'var(--color-white-80)',
                     cursor: 'pointer',
                     display: 'inline-block',
-                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    fontFamily: 'var(--font-sans)',
                     fontSize: '14px',
                     fontWeight: 500,
                     lineHeight: '18px',
