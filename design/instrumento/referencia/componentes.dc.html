@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Instrumento · Componentes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200..700&amp;family=Martian+Mono:wght@400..600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#111}a:hover{color:#2B4FD8}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid #2B4FD8;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:1280px;height:1660px;box-sizing:border-box;background:#EEEEEC;color:#111111;font-family:'Archivo',system-ui,sans-serif;padding:48px;display:flex;flex-direction:column;gap:32px;overflow:hidden">
+
+  <header style="display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #CFCFCB;padding-bottom:18px">
+    <h1 style="margin:0;font-weight:250;font-size:48px;letter-spacing:-0.025em;line-height:1">instrumento</h1>
+    <span style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#5A5A5A">EL SISTEMA DE MOVI · A + ANILLO DE LUZ · V0.1</span>
+  </header>
+
+  <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:32px;align-items:start">
+
+    <section aria-label="Color" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:4px">
+      <h2 style="margin:0 0 10px;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">COLOR</h2>
+      <sc-for list="{{colors}}" as="c" hint-placeholder-count="11">
+        <div style="display:flex;align-items:center;gap:12px;min-height:36px">
+          <span aria-hidden="true" style="width:30px;height:30px;border-radius:{{c.radius}};background:{{c.hex}};border:1px solid #CFCFCB;flex-shrink:0"></span>
+          <span style="width:118px;font-size:14px">{{c.name}}</span>
+          <span style="width:72px;font-family:'Martian Mono',monospace;font-size:10.5px;color:#3A3A3A">{{c.hex}}</span>
+          <span style="flex:1;font-size:12.5px;color:#3A3A3A;line-height:1.3">{{c.role}}</span>
+        </div>
+      </sc-for>
+      <p style="margin:10px 0 0;font-size:13px;line-height:1.45;color:#3A3A3A">El color dice qué es cada cosa. Cuatro funciones, cuatro colores, y ninguno decorativo. El naranja nunca va como texto sobre aluminio.</p>
+    </section>
+
+    <section aria-label="Tipografía" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">TIPOGRAFÍA</h2>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-weight:250;font-size:56px;line-height:1;letter-spacing:-0.025em">funcional</span>
+        <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:#3A3A3A">TÍTULOS · ARCHIVO 250 · 56 / 34 / 28 · MINÚSCULAS</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-weight:200;font-size:76px;line-height:0.85;letter-spacing:-0.04em">25</span>
+        <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:#3A3A3A">CIFRAS · ARCHIVO 200 · SOLO GRANDES</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:15px;line-height:1.45">El martes hiciste fuerza, y mañana vas con Ana. Este se hace mejor de dos en dos.</span>
+        <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:#3A3A3A">TEXTO · ARCHIVO 400 · 14,5–16 · INTERLINEADO 1,45</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.08em">CON QUIÉN · 25 MIN · VUELTA 2/3</span>
+        <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:#3A3A3A">ETIQUETAS · MARTIAN MONO 500 · 10–13 · MAYÚSCULAS</span>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">Letra fina solo a partir de 28 px. En el modo asistido, el texto sube a 20 y las etiquetas a 14.</p>
+    </section>
+
+    <section aria-label="Rueda" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">RUEDA · PRUÉBALA</h2>
+      <div style="display:flex;gap:20px;align-items:center">
+        <div aria-hidden="true" style="position:relative;width:168px;height:168px;flex-shrink:0">
+          <sc-for list="{{knobDots}}" as="dot" hint-placeholder-count="19">
+            <span style="position:absolute;left:{{dot.x}}px;top:{{dot.y}}px;width:7px;height:7px;border-radius:50%;background:{{dot.c}};box-shadow:{{dot.g}};transition:background 120ms"></span>
+          </sc-for>
+          <div style="position:absolute;inset:26px;border-radius:50%;background:#2B4FD8;box-shadow:inset 0 -5px 0 rgba(0,0,0,.28),0 4px 0 #CFCFCB"></div>
+          <div style="position:absolute;left:82px;top:34px;width:4px;height:26px;border-radius:2px;background:#FFFFFF;transform-origin:2px 50px;transform:rotate({{knobDeg}}deg);transition:transform 160ms cubic-bezier(.34,1.56,.64,1)"></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+          <div role="status" style="background:#0F0E12;color:#F2F2F0;border-radius:8px;padding:10px 12px;display:flex;align-items:baseline;justify-content:space-between">
+            <span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#9A9A9A">TIEMPO</span>
+            <span><span style="font-weight:200;font-size:40px;line-height:1">{{minutes}}</span><span style="font-family:'Martian Mono',monospace;font-size:10px;margin-left:3px;color:#9A9A9A">MIN</span></span>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button onClick="{{dec}}" aria-label="Menos tiempo" style="flex:1;height:48px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;cursor:pointer;font-family:'Martian Mono',monospace;font-size:18px;box-shadow:0 3px 0 #CFCFCB">−</button>
+            <button onClick="{{inc}}" aria-label="Más tiempo" style="flex:1;height:48px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;cursor:pointer;font-family:'Martian Mono',monospace;font-size:18px;box-shadow:0 3px 0 #CFCFCB">+</button>
+          </div>
+        </div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">La escala es de luces: las encendidas son el valor y la naranja, la posición. Se mueve arrastrando en vertical, con − y + o con las flechas del teclado. Nunca girando en círculo.</p>
+      <p style="margin:0;font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.04em;color:#3A3A3A">TAMAÑOS · L 168 · M 76 · CAPUCHÓN = COLOR DE SU FUNCIÓN</p>
+    </section>
+
+    <section aria-label="Anillo" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">ANILLO · CUENTA ATRÁS</h2>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div role="img" aria-label="Cuenta atrás sobre aluminio: 18 segundos" style="position:relative;width:160px;height:160px;flex-shrink:0">
+          <sc-for list="{{ringLight}}" as="dot" hint-placeholder-count="48">
+            <span style="position:absolute;left:{{dot.x}}px;top:{{dot.y}}px;width:{{dot.s}}px;height:{{dot.s}}px;border-radius:50%;background:{{dot.c}};box-shadow:{{dot.g}}"></span>
+          </sc-for>
+          <span aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:250;font-size:40px;letter-spacing:-0.03em">0:18</span>
+        </div>
+        <div role="img" aria-label="Cuenta atrás sobre pantalla: 18 segundos" style="position:relative;width:120px;height:120px;border-radius:12px;background:#0F0E12;flex-shrink:0">
+          <sc-for list="{{ringDark}}" as="dot" hint-placeholder-count="36">
+            <span style="position:absolute;left:{{dot.x}}px;top:{{dot.y}}px;width:{{dot.s}}px;height:{{dot.s}}px;border-radius:50%;background:{{dot.c}};box-shadow:{{dot.g}}"></span>
+          </sc-for>
+          <span aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:250;font-size:26px;color:#F2F2F0">0:18</span>
+        </div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">Se apaga una luz por segundo; la naranja marca el ahora. Sobre aluminio, luces negras; sobre pantalla, blancas. Con movimiento reducido no hay barrido: solo cambia el número.</p>
+    </section>
+
+    <section aria-label="Teclas" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">TECLAS · PRUEBA LA DE VOZ</h2>
+      <button style="height:58px;border:0;border-radius:6px;background:#111111;color:#F7F7F5;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 3px 0 #5A5A5A">
+        <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.1em">EMPEZAR</span>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>
+      </button>
+      <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:8px">
+        <button style="height:48px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;cursor:pointer;font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.08em;box-shadow:0 3px 0 #CFCFCB">OTRO</button>
+        <button onClick="{{toggleVoice}}" aria-pressed="{{voiceOn}}" style="height:48px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.08em;box-shadow:0 3px 0 #CFCFCB">
+          <span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:{{ledColor}};box-shadow:{{ledGlow}}"></span>VOZ
+        </button>
+        <div aria-hidden="true" style="height:48px;margin-top:3px;border:1px solid #CFCFCB;border-radius:6px;background:#E4E4E0;display:flex;align-items:center;justify-content:center;font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#3A3A3A">PULSADA</div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">Una sola tecla negra por pantalla: es la acción principal. Al pulsar, la tecla baja 3 px y pierde la sombra. Alturas: 58 y 48.</p>
+    </section>
+
+    <section aria-label="Interruptor y nivel" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">INTERRUPTOR · PRUÉBALO</h2>
+      <div role="radiogroup" aria-label="Variante" style="position:relative;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));background:#D6D6D2;border-radius:8px;padding:4px;height:56px;box-sizing:border-box">
+        <div aria-hidden="true" style="position:absolute;top:4px;bottom:4px;left:{{thumbLeft}};width:calc((100% - 8px) / 3);border-radius:6px;background:#111111;transition:left 180ms cubic-bezier(.34,1.56,.64,1)"></div>
+        <sc-for list="{{variants}}" as="v" hint-placeholder-count="3">
+          <button role="radio" aria-checked="{{v.on}}" onClick="{{v.pick}}" style="position:relative;border:0;background:none;cursor:pointer;font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:{{v.color}}">{{v.label}}</button>
+        </sc-for>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">La variante de cada ejercicio. Sustituye a «Nivel 1, 2, 3» por ejercicio.</p>
+      <h2 style="margin:6px 0 0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">NIVEL</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:#9A9A96"></span>EN FORMA</span>
+        <span style="display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:#9A9A96"></span>ACTIVO</span>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">El nivel siempre por su nombre. Nunca números ni puntos.</p>
+    </section>
+
+    <section aria-label="Pantalla" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">PANTALLA</h2>
+      <div style="background:#0F0E12;color:#F2F2F0;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#9A9A9A"><span style="display:flex;align-items:center;gap:7px"><span aria-hidden="true" style="width:6px;height:6px;background:#FF5B1A;box-shadow:0 0 6px #FF5B1A"></span>PROPUESTA DE HOY</span><span>01/03</span></div>
+        <span style="font-weight:250;font-size:26px;line-height:1.05">funcional en pareja</span>
+        <div role="img" aria-label="Perfil de intensidad" style="display:flex;align-items:flex-end;gap:3px;height:36px">
+          <div style="flex:1;height:22%;background:#5A5A5E"></div><div style="flex:1;height:32%;background:#5A5A5E"></div><div style="flex:1;height:58%;background:#FF5B1A"></div><div style="flex:1;height:72%;background:#FF5B1A"></div><div style="flex:1;height:64%;background:#FF5B1A"></div><div style="flex:1;height:82%;background:#FF5B1A"></div><div style="flex:1;height:100%;background:#FF5B1A"></div><div style="flex:1;height:38%;background:#5A5A5E"></div><div style="flex:1;height:20%;background:#5A5A5E"></div>
+        </div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">Lo que «dice la máquina» va en pantalla: la propuesta y el ejercicio actual. Como mucho, una por vista.</p>
+    </section>
+
+    <section aria-label="Secuenciador y etiquetas" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">SECUENCIADOR</h2>
+      <div role="img" aria-label="Progreso: paso 7 de 16" style="display:grid;grid-template-columns:repeat(16, minmax(0, 1fr));gap:3px">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="16"><div style="height:12px;background:{{s.c}};box-shadow:{{s.g}}"></div></sc-for>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">El progreso del entreno, paso a paso. El paso actual se ilumina.</p>
+      <h2 style="margin:6px 0 0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">ETIQUETAS DE FUNCIÓN</h2>
+      <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:8px;font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em">
+        <span style="display:flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:8px;height:8px;background:#2B4FD8"></span>TIEMPO</span>
+        <span style="display:flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:8px;height:8px;background:#E0A21C"></span>DÓNDE</span>
+        <span style="display:flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:8px;height:8px;background:#9A9A96"></span>NIVEL</span>
+        <span style="display:flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:8px;height:8px;background:#FF5B1A"></span>CON QUIÉN</span>
+      </div>
+    </section>
+
+    <section aria-label="Persona y navegación" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">PERSONA</h2>
+      <div style="border:1px solid #CFCFCB;background:#EEEEEC;border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start">
+        <div aria-hidden="true" style="width:40px;height:40px;border-radius:6px;background:#FF5B1A;display:flex;align-items:center;justify-content:center;font-family:'Martian Mono',monospace;font-size:14px;flex-shrink:0">A</div>
+        <div style="display:flex;flex-direction:column;gap:3px"><span style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.1em">ANA · 5 VECES JUNTOS</span><span style="font-size:14px;color:#3A3A3A">Martes y jueves · Pinar</span></div>
+      </div>
+      <h2 style="margin:6px 0 0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">NAVEGACIÓN</h2>
+      <nav aria-label="Ejemplo de navegación" style="height:64px;display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));border:1px solid #CFCFCB;border-radius:8px;background:#F7F7F5">
+        <span style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#5A5A5A"><span aria-hidden="true" style="width:6px;height:6px"></span><span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.08em">CERCA</span></span>
+        <span style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px"><span aria-hidden="true" style="width:6px;height:6px;background:#FF5B1A;box-shadow:0 0 6px #FF5B1A"></span><span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.08em;font-weight:600">ENTRENAR</span></span>
+        <span style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#5A5A5A"><span aria-hidden="true" style="width:6px;height:6px"></span><span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.08em">MI GENTE</span></span>
+        <span style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#5A5A5A"><span aria-hidden="true" style="width:6px;height:6px"></span><span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.08em">YO</span></span>
+      </nav>
+      <p style="margin:0;font-size:13px;line-height:1.45;color:#3A3A3A">El LED naranja marca dónde estás. La etiqueta se lee siempre.</p>
+    </section>
+  </div>
+
+  <section aria-label="Sonido y vibración" style="background:#F7F7F5;border:1px solid #CFCFCB;border-radius:10px;padding:20px;display:grid;grid-template-columns:2fr 1fr;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">SONIDO Y VIBRACIÓN</h2>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;font-size:14px;border-top:1px solid #CFCFCB">
+        <span style="padding:9px 0;border-bottom:1px solid #CFCFCB;font-family:'Martian Mono',monospace;font-size:10px;color:#3A3A3A">MOMENTO</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB;font-family:'Martian Mono',monospace;font-size:10px;color:#3A3A3A">SONIDO</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB;font-family:'Martian Mono',monospace;font-size:10px;color:#3A3A3A">VIBRACIÓN</span>
+        <span style="padding:9px 0;border-bottom:1px solid #CFCFCB">Mover una rueda</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">clic seco por luz</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">tic corto</span>
+        <span style="padding:9px 0;border-bottom:1px solid #CFCFCB">Pulsar una tecla</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">«clac» mecánico</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">tic corto</span>
+        <span style="padding:9px 0;border-bottom:1px solid #CFCFCB">Cambio de ejercicio</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">dos notas que suben</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">doble pulso</span>
+        <span style="padding:9px 0;border-bottom:1px solid #CFCFCB">Cambio de rol</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">barrido del anillo</span><span style="padding:9px 0;border-bottom:1px solid #CFCFCB">pulso largo</span>
+        <span style="padding:9px 0">Fin del entreno</span><span style="padding:9px 0">acorde corto</span><span style="padding:9px 0">tres pulsos</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-family:'Martian Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.1em">REGLAS</h2>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.4">
+        <li>Todo opcional y con un solo interruptor de silencio.</li>
+        <li>Cortos: 150 ms como máximo, salvo el final.</li>
+        <li>Nunca la única señal: siempre hay luz o texto.</li>
+        <li>En iPhone una PWA no puede vibrar.</li>
+        <li>Si el móvil está en silencio, Movi también.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1660}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 3, variant: 1, voice: true };
+  }
+  ring360(n, box, r, lit, on, off, dotSize, headSize) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const a = (i * 360 / n) * Math.PI / 180;
+      const head = i === lit - 1;
+      const s = head ? headSize : dotSize;
+      out.push({
+        x: Math.round(box / 2 + r * Math.sin(a) - s / 2),
+        y: Math.round(box / 2 - r * Math.cos(a) - s / 2),
+        s,
+        c: head ? '#FF5B1A' : (i < lit ? on : off),
+        g: head ? '0 0 8px #FF5B1A' : 'none'
+      });
+    }
+    return out;
+  }
+  renderVals() {
+    const minutesList = [10, 15, 20, 25, 30, 45];
+    const step = this.state.step;
+    const n = 19, box = 168, r = 76;
+    const lit = Math.round((step / (minutesList.length - 1)) * (n - 1));
+    const knobDots = [];
+    for (let i = 0; i < n; i++) {
+      const a = (-135 + i * (270 / (n - 1))) * Math.PI / 180;
+      const head = i === lit;
+      knobDots.push({
+        x: Math.round(box / 2 + r * Math.sin(a) - 3.5),
+        y: Math.round(box / 2 - r * Math.cos(a) - 3.5),
+        c: head ? '#FF5B1A' : (i < lit ? '#111111' : '#CFCFCB'),
+        g: head ? '0 0 6px #FF5B1A' : 'none'
+      });
+    }
+    const steps = [];
+    for (let i = 0; i < 16; i++) {
+      steps.push({ c: i < 6 ? '#111111' : (i === 6 ? '#FF5B1A' : '#D6D6D2'), g: i === 6 ? '0 0 6px #FF5B1A' : 'none' });
+    }
+    const labels = ['MÁS FÁCIL', 'ESTÁNDAR', 'MÁS DIFÍCIL'];
+    const variant = this.state.variant;
+    return {
+      colors: [
+        { name: 'Aluminio', hex: '#EEEEEC', role: 'Fondo', radius: '6px' },
+        { name: 'Aluminio claro', hex: '#F7F7F5', role: 'Teclas y módulos', radius: '6px' },
+        { name: 'Línea', hex: '#CFCFCB', role: 'Bordes de 1 px', radius: '6px' },
+        { name: 'Tinta', hex: '#111111', role: 'Texto y tecla principal', radius: '6px' },
+        { name: 'Tinta 2', hex: '#3A3A3A', role: 'Texto secundario', radius: '6px' },
+        { name: 'Tinta 3', hex: '#5A5A5A', role: 'Etiquetas', radius: '6px' },
+        { name: 'Pantalla', hex: '#0F0E12', role: 'Pantallas OLED', radius: '6px' },
+        { name: 'Azul', hex: '#2B4FD8', role: 'Tiempo · texto encima blanco', radius: '50%' },
+        { name: 'Ocre', hex: '#E0A21C', role: 'Lugar · texto encima tinta', radius: '50%' },
+        { name: 'Gris', hex: '#9A9A96', role: 'Nivel · texto encima tinta', radius: '50%' },
+        { name: 'Naranja', hex: '#FF5B1A', role: 'Personas y ahora · texto encima tinta', radius: '50%' }
+      ],
+      minutes: minutesList[step],
+      knobDots,
+      knobDeg: -135 + lit * (270 / (n - 1)),
+      dec: () => this.setState({ step: Math.max(0, step - 1) }),
+      inc: () => this.setState({ step: Math.min(minutesList.length - 1, step + 1) }),
+      ringLight: this.ring360(48, 160, 72, 29, '#111111', '#CFCFCB', 6, 9),
+      ringDark: this.ring360(36, 120, 48, 22, '#F2F2F0', '#2E2E32', 5, 8),
+      voiceOn: this.state.voice ? 'true' : 'false',
+      ledColor: this.state.voice ? '#FF5B1A' : '#B8B8B4',
+      ledGlow: this.state.voice ? '0 0 8px #FF5B1A' : 'none',
+      toggleVoice: () => this.setState({ voice: !this.state.voice }),
+      thumbLeft: 'calc(4px + ' + variant + ' * (100% - 8px) / 3)',
+      variants: labels.map((label, i) => ({
+        label,
+        on: i === variant ? 'true' : 'false',
+        color: i === variant ? '#F7F7F5' : '#3A3A3A',
+        pick: () => this.setState({ variant: i })
+      })),
+      steps
+    };
+  }
+}
+</script>
+</body>
+</html>
