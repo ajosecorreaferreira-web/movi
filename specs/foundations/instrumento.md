@@ -90,7 +90,7 @@ Solo existen dos: `--radio-tecla` (6 px) y `--radio-modulo` (10 px). Un contened
 
 | Rol | Fuente | Peso | Tamaños | Notas |
 |---|---|---|---|---|
-| Título | Archivo | 250 | 56 · 34 · 31 · 28 | Minúsculas. Interlineado 1–1,05 |
+| Título | Archivo | 250 | 56 · 34 · 31 · 28 | Mayúscula inicial, como una frase. Interlineado 1–1,05 |
 | Cifra | Archivo | 200 a partir de 40 px · 300 a 20 px | 84 · 76 · 56 · 50 · 40 · 20 | Solo números. 300 no es «letra fina» (R8 habla de 200–250) |
 | Texto | Archivo | 400 | 14,5 · 15 · 16 | Interlineado 1,45 |
 | Etiqueta | Martian Mono | 500 | 10 · 10,5 · 11 · 13 | Mayúsculas, espaciado 0,06–0,1 em |
