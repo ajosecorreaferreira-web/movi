@@ -1,8 +1,9 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.10
+**Versión:** 0.11
 **Fecha:** 2026-11-26
 **Estado:** aprobada (dirección elegida por José)
+**Cambios 0.11:** foco de `C · Campo` en tinta; la señal de encuentro también vibra.
 **Cambios 0.10:** la onda para la sesión y el muñeco para cada ejercicio. Nuevo `C · Onda`; la tarjeta de plan pasa a una sola figura quieta (adiós a la partitura); tarjeta de ejercicio con una repetición y parada; `C · Señal de encuentro` para el flujo 2; reglas R20 a R24.
 **Cambios 0.9:** tarjeta de plan con figuras y partitura de la sesión; vista principal por ejercicio en la figura de luces; Cerca abre el mapa con «VER EN MAPA».
 **Cambios 0.8:** regla R19 (tecla enclavada) y ajustes tras pintar la primera interacción: franja de horas como un solo control, tarjeta de plan sin opacidad, Punto Movi antes y después de apuntarte, capa de lugar en el mapa, reputación de persona nueva.
@@ -118,7 +119,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 | Perfil | `C · Perfil` | Barras de intensidad por fase sobre pantalla; activas en naranja | — |
 | Etiqueta de función | `C · Etiqueta` | Cuadrado del color de la función + etiqueta mono | — |
 | Persona | `C · Persona` | Cuadrado naranja con inicial + etiqueta mono + línea de contexto | — |
-| Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px azul, radio 10) · relleno |
+| Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px en `--color-tinta`, radio 10) · relleno |
 | Mapa | `C · Mapa` | Módulo de aluminio claro, radio 10. Zonas verdes como matriz de puntos cuadrados de 3 px cada 9 px en `--color-linea`; calles, líneas de 1 px en `--color-linea`; lugares rotulados en mono 10 `--color-tinta-3`. Capa de lugar: los puntos Movi, cuadrados en `--color-lugar`. Tú: anillo de 2 px en `--color-tinta` (el azul es tiempo). Sesiones: luces de 8 px en tinta; la de ahora, 10 px naranja con brillo. Antes de apuntarte, cada sesión se pinta en el centro de su zona, nunca en el punto exacto. Cerca no lleva mapa: se abre con la tecla «VER EN MAPA». | con sesiones · sin sesiones (puntos Movi y tecla «PROPONER UN PLAN AQUÍ») |
 | Pestañas | `C · Pestañas` | Fila de etiquetas mono 10,5, mínimo 44 × 44 cada una; la activa en tinta con LED naranja de 5 px encima, el resto en `--color-tinta-3`. Solo para navegar dentro de una sección (Mi semana); en Cerca manda `C · Selector de cuándo` | una activa |
 | Grabadora | `C · Grabadora` | Anillo de 40 luces que gira como un carrete mientras graba; cuenta atrás en el centro (máximo 0:20); pantalla OLED con la onda y LED REC; teclas Escuchar · Recortar · Borrar · Regrabar; tecla principal Grabar → Parar → Guardar saludo / Enviar a Ana → Seguir («Guardado» y «Enviado» se dicen en la pantalla, no en la tecla) | listo · grabando · grabado · reproduciendo · recortando · guardado |
@@ -132,7 +133,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 | Sello | `C · Sello` | Cuadrado de función + nombre del sello en mono + recuento («PUNTUAL ×12»). Solo sellos positivos | un sello con su recuento |
 | Reputación | `C · Reputación` | Lo único público del perfil: verificada, sesiones hechas, personas que repiten y sellos. Nunca medias, estrellas ni comentarios. A una persona nueva no se le muestran ceros: «NUEVA EN MOVI» y «Verificada» | con historial · nueva en Movi |
 | Chat | `CM · Chat` | Chat ligado a una quedada aceptada: burbujas de texto y de audio, respuestas rápidas en teclas, tarjeta de quedada (día, hora y punto Movi) y aviso si alguien intenta compartir el teléfono | burbuja de texto · burbuja de audio · respuesta rápida · tarjeta de quedada (propuesta, aceptada, otra hora) · aviso al compartir el teléfono |
-| Señal de encuentro | `C · Señal de encuentro` | Para reconocerse sin haberse visto la cara. Cuando las dos personas pulsan «Estoy aquí», los dos móviles encienden el mismo patrón en el anillo de 40 luces y suena el mismo acorde. Debajo, la pista opcional que deja cada una («Llevo un carrito azul») | esperando a la otra persona · las dos aquí (patrón compartido) · con pista |
+| Señal de encuentro | `C · Señal de encuentro` | Para reconocerse sin haberse visto la cara. Cuando las dos personas pulsan «Estoy aquí», los dos móviles encienden el mismo patrón en el anillo de 40 luces, suena el mismo acorde y vibran con el mismo ritmo (`navigator.vibrate` con el patrón de la quedada; también con movimiento reducido; donde no se puede vibrar, R10). Debajo, la pista opcional que deja cada una («Llevo un carrito azul») | esperando a la otra persona · las dos aquí (patrón compartido) · con pista |
 | Navegación | `CM · Navegación` | 4 destinos (Cerca · Entrenar · Mi gente · Yo), etiqueta mono siempre visible, LED naranja en el activo | 4 activos |
 
 ---

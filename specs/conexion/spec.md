@@ -1,7 +1,8 @@
 # conexion.md — La primera vez y la siguiente
 
-**Versión:** 0.6
+**Versión:** 0.7
 **Fecha:** 2026-11-26
+**Cambios 0.7:** la ubicación en directo es para tu persona de confianza, nunca para la otra persona (R28); el plantón se registra solo (R28); menú «···» con Bloquear y Algo no fue bien en todas las pantallas con otra persona (R7); la señal de encuentro también vibra (R26).
 **Cambios 0.6:** la llamada previa es solo de voz (R5); el teléfono y el correo no salen hasta después de la primera quedada con un «repetiría» de las dos (R6); la ubicación en directo, apagada de partida (R28); en la cuenta, el aviso legal con enlaces. El encuentro (flujo 2): «Ya voy», ubicación en directo opcional, señal de encuentro, «Hemos terminado» y qué pasa si alguien no llega (R28). Foto sin verificar a tiempo: la quedada se pospone, no se cancela (R27). En la cuenta, primero la tecla de la plataforma.
 **Cambios 0.5:** registro sin barreras: cuenta con Google, Apple o correo con enlace mágico, sin teléfono. La verificación la revisa el equipo y ninguna otra persona ve el selfie; tres estados. Nadie ve la cara de otra persona antes de conocerse: se reconocen con la señal de encuentro (R26).
 **Cambios 0.4:** el registro queda en nivel, teléfono y selfie (solo en pareja); la zona se cambia desde la cabecera de Cerca. La primera vez termina antes de anochecer. Respuestas rápidas del chat nuevas. Sin reconocimiento facial automático.
@@ -41,9 +42,9 @@ Es la pantalla que decide si Movi funciona. **Objetivo: que en menos de 2 minuto
 
 1. **Antes:** el chat se abre al aceptar la quedada, con su tarjeta, las respuestas rápidas y, si las dos quieren, la llamada de voz previa, en directo y sin grabar (R5). «¿Otro día?» manda la tarjeta de otra hora; la otra persona la acepta o propone otra.
 2. **El día antes:** recordatorio con el punto exacto y el campo para dejar tu pista («Llevo un carrito azul»).
-3. **Al salir:** «Ya voy» activa el aviso de inicio. La ubicación en directo está apagada de partida: el interruptor se ve y se enciende a mano; si se enciende, solo la ve la otra persona, durante 1 hora como mucho.
+3. **Al salir:** «Ya voy» manda el aviso de inicio. La otra persona solo ve el tiempo que te falta («DE CAMINO · 3 MIN»), nunca tu posición ni un mapa. Si quieres, «Compartir con alguien de confianza» abre el menú de compartir del móvil con un enlace a tu ubicación en directo que caduca en 1 hora o con «Hemos terminado». Apagado por defecto.
 4. **Al llegar:** «Estoy aquí» en el punto exacto. Cuando las dos lo pulsan, la señal de encuentro (R26).
-5. **Al terminar:** «Hemos terminado» manda el aviso de fin, apaga la ubicación y lleva a «Después de entrenar».
+5. **Al terminar:** «Hemos terminado» manda el aviso de fin, apaga el enlace y avisa a tu persona de confianza de que todo fue bien («Se apaga tu ubicación y avisamos a quien elegiste de que todo fue bien.»). Después, «Después de entrenar».
 
 ---
 
@@ -147,6 +148,16 @@ type Chat = {
   estado: 'activo' | 'archivado'         // se archiva si no hay sí mutuo
 }
 
+// El día de la quedada (flujo 2)
+type Encuentro = {
+  quedadaId: string
+  yaVoy?: string                          // hora del aviso de inicio; la otra persona solo ve los minutos que faltan
+  estoyAqui?: string                      // hora; con las dos, la señal de encuentro
+  confianza?: { enlaceCaduca: string }    // enlace de ubicación en directo; no se guarda el contacto
+  plantonRegistrado?: boolean             // solo si la otra persona no pulsó «Estoy aquí»
+  terminado?: string                      // «Hemos terminado»: aviso de fin y aviso a la persona de confianza
+}
+
 // Valoraciones: tres capas separadas
 type Valoracion = {
   respuesta: 'repetiria' | 'otra_persona' | 'no_era_lo_mio'   // privada
@@ -174,7 +185,7 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 4. **R4 —** Antes de la primera vez suena el saludo de la otra persona, si lo tiene.
 5. **R5 —** La llamada previa es opcional, en directo, no se graba y es solo de voz («Llamada de voz»): la cara, en persona (R26).
 6. **R6 —** Antes de conocerse, el teléfono y el correo no se comparten: un mensaje que los lleve no sale, y el chat lo explica («Este mensaje no sale»). Se pueden compartir solo después de la primera quedada y si las dos personas han respondido «repetiría».
-7. **R7 —** Bloquear y avisar de un problema están a un toque en cualquier pantalla con otra persona.
+7. **R7 —** Bloquear y «Algo no fue bien» están a un toque en cualquier pantalla con otra persona: el menú «···» arriba a la derecha.
 8. **R8 —** Repetir requiere un sí de las dos personas. Un «no» nunca se comunica.
 9. **R9 —** Tras tres «no era lo mío» seguidos, se propone otro formato.
 10. **R10 —** La numerología, si aparece, lleva la etiqueta «sin base científica» y nunca entra en el emparejamiento.
@@ -193,9 +204,9 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 23. **R23 —** La primera pantalla al abrir la app muestra planes concretos (hoy, mañana, esta semana), nunca un formulario ni un tutorial.
 24. **R24 —** Si no hay planes cerca esta semana, se ofrece crear uno en un punto Movi o unirse a una sesión municipal gratuita, nunca una pantalla vacía.
 25. **R25 —** Cada paso del registro y de la ficha se responde con una tecla o una rueda, con su sonido y su respuesta inmediata; ningún campo de texto salvo el correo, si no se entra con Google o Apple.
-26. **R26 —** Ninguna persona ve la cara de otra antes de conocerse. Se reconocen con la señal de encuentro: cuando las dos pulsan «Estoy aquí», los dos móviles encienden el mismo patrón en el anillo de 40 luces y suena el mismo acorde, con la pista opcional que deja cada una («Llevo un carrito azul»). Ver `C · Señal de encuentro` en `specs/foundations/instrumento.md`.
+26. **R26 —** Ninguna persona ve la cara de otra antes de conocerse. Se reconocen con la señal de encuentro: cuando las dos pulsan «Estoy aquí», los dos móviles encienden el mismo patrón en el anillo de 40 luces, suena el mismo acorde y vibran con el mismo ritmo (`navigator.vibrate` con el patrón de la quedada; con movimiento reducido también vibran; donde no se puede vibrar, quedan la luz y el acorde). Debajo, la pista opcional que deja cada una («Llevo un carrito azul»). Ver `C · Señal de encuentro` en `specs/foundations/instrumento.md`.
 27. **R27 —** Foto sin verificar a tiempo. El equipo revisa las fotos en 2 horas como máximo, en horario diurno. Si a 2 horas de una quedada en pareja la foto sigue sin verificar, la quedada pasa a `pospuesta_verificacion`: no se cancela. Las dos personas reciben un aviso sin culpa, «Aún estamos verificando la foto. Os proponemos otro día.», con la tarjeta de otra hora. Si hay un plan de grupo cerca a esa hora, se les ofrece como alternativa; nunca se cambia solo. Si alguien se apunta a un plan en pareja con menos de 2 horas de margen, se le avisa antes de apuntarse: «Para quedar hoy en pareja necesitamos verificarte antes de las HH:MM».
-28. **R28 —** Llegar y terminar. «Ya voy» activa el aviso de inicio. La ubicación en directo es opcional, está apagada de partida (privacidad por defecto) y, si se enciende a mano, dura 1 hora como mucho. Si la otra persona no llega, primero «Avisar a Ana» (respuesta rápida); a los 10 minutos aparece «Algo no fue bien», por el canal privado (R7). «Hemos terminado» manda el aviso de fin y apaga la ubicación.
+28. **R28 —** Llegar y terminar. «Ya voy» manda el aviso de inicio; la otra persona solo ve cuánto te falta, nunca tu posición ni un mapa. El mapa en directo es solo para tu persona de confianza: «Compartir con alguien de confianza» abre el menú de compartir del móvil con un enlace que caduca en 1 hora o con «Hemos terminado». Apagado por defecto y sin guardar su teléfono ni su contacto. Si la otra persona no llega, primero «Avisar a Ana» (respuesta rápida). El plantón se registra solo cuando la otra persona no pulsa «Estoy aquí»: nadie tiene que denunciarlo. A los 10 minutos, la tecla principal es «¿Otro día?»; «Algo no fue bien» queda como enlace de texto, para comportamientos, por el canal privado (R7). «Hemos terminado» manda el aviso de fin, apaga el enlace y avisa a la persona de confianza de que todo fue bien.
 
 ---
 
