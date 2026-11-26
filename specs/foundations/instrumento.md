@@ -1,8 +1,9 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.11
+**Versión:** 0.12
 **Fecha:** 2026-11-26
 **Estado:** aprobada (dirección elegida por José)
+**Cambios 0.12:** regla general de foco (R25): borde o anillo de 2 px en tinta en todo el sistema; Rueda, Tecla, Interruptor y Campo alineados.
 **Cambios 0.11:** foco de `C · Campo` en tinta; la señal de encuentro también vibra.
 **Cambios 0.10:** la onda para la sesión y el muñeco para cada ejercicio. Nuevo `C · Onda`; la tarjeta de plan pasa a una sola figura quieta (adiós a la partitura); tarjeta de ejercicio con una repetición y parada; `C · Señal de encuentro` para el flujo 2; reglas R20 a R24.
 **Cambios 0.9:** tarjeta de plan con figuras y partitura de la sesión; vista principal por ejercicio en la figura de luces; Cerca abre el mapa con «VER EN MAPA».
@@ -109,17 +110,17 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 
 | Componente | Prefijo Paper | Anatomía | Estados |
 |---|---|---|---|
-| Rueda | `C · Rueda` | Anillo de luces (270°, 15–19 luces) + capuchón del color de su función + aguja + valor + etiqueta de función | reposo · foco · ajustando · desactivada |
+| Rueda | `C · Rueda` | Anillo de luces (270°, 15–19 luces) + capuchón del color de su función + aguja + valor + etiqueta de función | reposo · foco (anillo de 2 px en `--color-tinta`, R25) · ajustando · desactivada |
 | Anillo | `C · Anillo` | Luces en círculo (360°, 36–48); encendidas = tiempo que queda; la naranja = ahora. Cifra en el centro | sobre aluminio · sobre pantalla · movimiento reducido |
 | Pantalla | `C · Pantalla` | Módulo OLED: cabecera en mono con LED + contador; contenido; opcionalmente perfil de intensidad | — |
-| Tecla | `C · Tecla` | Principal (tinta), secundaria (aluminio claro), con LED. Alturas 58 y 48 | reposo · pulsada · foco · desactivada |
-| Interruptor | `C · Interruptor` | Pista + bloque de tinta en 3 posiciones (más fácil · estándar · más difícil) | 3 posiciones · foco |
+| Tecla | `C · Tecla` | Principal (tinta), secundaria (aluminio claro), con LED. Alturas 58 y 48 | reposo · pulsada · foco (anillo de 2 px en `--color-tinta`, radio 10, concéntrico; R25) · desactivada |
+| Interruptor | `C · Interruptor` | Pista + bloque de tinta en 3 posiciones (más fácil · estándar · más difícil) | 3 posiciones · foco (borde de 2 px en `--color-tinta`, R25) |
 | Nivel | `C · Nivel` | Tecla con luz gris + nombre del nivel | reposo · elegido (tecla enclavada: se queda pulsada y la luz pasa a naranja) |
 | Secuenciador | `C · Secuenciador` | 16 pasos; hechos en tinta, actual en naranja con brillo, pendientes en pista | — |
 | Perfil | `C · Perfil` | Barras de intensidad por fase sobre pantalla; activas en naranja | — |
 | Etiqueta de función | `C · Etiqueta` | Cuadrado del color de la función + etiqueta mono | — |
 | Persona | `C · Persona` | Cuadrado naranja con inicial + etiqueta mono + línea de contexto | — |
-| Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px en `--color-tinta`, radio 10) · relleno |
+| Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px en `--color-tinta`, radio 10; R25) · relleno |
 | Mapa | `C · Mapa` | Módulo de aluminio claro, radio 10. Zonas verdes como matriz de puntos cuadrados de 3 px cada 9 px en `--color-linea`; calles, líneas de 1 px en `--color-linea`; lugares rotulados en mono 10 `--color-tinta-3`. Capa de lugar: los puntos Movi, cuadrados en `--color-lugar`. Tú: anillo de 2 px en `--color-tinta` (el azul es tiempo). Sesiones: luces de 8 px en tinta; la de ahora, 10 px naranja con brillo. Antes de apuntarte, cada sesión se pinta en el centro de su zona, nunca en el punto exacto. Cerca no lleva mapa: se abre con la tecla «VER EN MAPA». | con sesiones · sin sesiones (puntos Movi y tecla «PROPONER UN PLAN AQUÍ») |
 | Pestañas | `C · Pestañas` | Fila de etiquetas mono 10,5, mínimo 44 × 44 cada una; la activa en tinta con LED naranja de 5 px encima, el resto en `--color-tinta-3`. Solo para navegar dentro de una sección (Mi semana); en Cerca manda `C · Selector de cuándo` | una activa |
 | Grabadora | `C · Grabadora` | Anillo de 40 luces que gira como un carrete mientras graba; cuenta atrás en el centro (máximo 0:20); pantalla OLED con la onda y LED REC; teclas Escuchar · Recortar · Borrar · Regrabar; tecla principal Grabar → Parar → Guardar saludo / Enviar a Ana → Seguir («Guardado» y «Enviado» se dicen en la pantalla, no en la tecla) | listo · grabando · grabado · reproduciendo · recortando · guardado |
@@ -164,6 +165,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 22. **R22 — Una pantalla, un dibujo.** La onda y el muñeco nunca comparten la misma pantalla negra.
 23. **R23 — Nada se mueve solo más de 5 s.** Lo que dura más se mueve porque la persona lo ha pedido o porque está entrenando (el bucle va con la serie y se para con PAUSA o al terminarla).
 24. **R24 — Movimiento reducido.** Con `prefers-reduced-motion`, todo queda en su fotograma clave y el cabezal de la onda salta de tramo en tramo.
+25. **R25 — Foco.** En todo el sistema, el foco es un borde o un anillo de 2 px en `--color-tinta`, sobre aluminio, y en `--color-pantalla-texto` sobre pantalla. Nunca en azul: el azul es solo tiempo (R17 de Instrumento).
 
 ### Sonido y vibración
 
