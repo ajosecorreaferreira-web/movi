@@ -132,7 +132,7 @@ type PrimeraVez = {
   avisoInicio: boolean
   avisoFin: boolean
   ubicacionEnDirecto?: boolean           // 1 hora, el día de la quedada
-  videollamadaPrevia: boolean
+  llamadaVozPrevia: boolean           // solo de voz, en directo, sin grabar (R5)
 }
 
 // Chat: solo a partir de una quedada aceptada
