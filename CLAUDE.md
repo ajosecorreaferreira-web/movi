@@ -143,6 +143,7 @@ Este repo trabaja con **SDD (Spec-Driven Development)** mediante el plugin `sdd`
 - `/sdd:ship` — rama, commit y PR con la spec enlazada
 
 **Las specs viven en `specs/` en la raíz — no en `docs/specs/`.** Ver `specs/decisions/specs-location.md`.
+**Al citar una regla, di siempre de qué spec es** («R19 de Instrumento», «R19 de conexión»). Las reglas no se renumeran.
 **Nada se construye sin spec.** Las reglas críticas CSS de arriba son reglas propias del repo y ganan sobre las doce del método.
 
 ---
