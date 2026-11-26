@@ -1,7 +1,7 @@
 # workout-engine.md — Motor de entrenamiento de Movi
 
-**Versión:** 1.5
-**Fecha:** Agosto 2026 · **Cambios 1.5 (26 nov 2026):** la partitura se va de la interfaz y su tipo pasa a llamarse `Tramo` (con nombre): es lo que dibuja la onda de la sesión. El muñeco tiene tres modos de reproducción. **Cambios 1.4 (26 nov 2026):** `Bloque` de la partitura de la sesión (minutos, intensidad, principal) y `vistaPrincipal` en `Pose`. **Cambios 1.3 (26 nov 2026):** composición dinámica de sesiones, parámetros por respuesta, reglas de variedad, figura de luces (rotoscopia de puntos) y voz por frases. **Cambios 1.2 (24 nov 2026):** motor de planificación (perfil, biblioteca validada, reglas, plan semanal, Claude como entrenador) y límites de salud. **Cambios 1.1 (24 nov 2026):** en pareja y en grupo se entrena a la vez, nunca por turnos. Desaparece el rol alterno («uno trabaja, el otro cuenta»).
+**Versión:** 1.6
+**Fecha:** Agosto 2026 · **Cambios 1.6 (26 nov 2026):** poses provisionales marcadas. **Cambios 1.5 (26 nov 2026):** la partitura se va de la interfaz y su tipo pasa a llamarse `Tramo` (con nombre): es lo que dibuja la onda de la sesión. El muñeco tiene tres modos de reproducción. **Cambios 1.4 (26 nov 2026):** `Bloque` de la partitura de la sesión (minutos, intensidad, principal) y `vistaPrincipal` en `Pose`. **Cambios 1.3 (26 nov 2026):** composición dinámica de sesiones, parámetros por respuesta, reglas de variedad, figura de luces (rotoscopia de puntos) y voz por frases. **Cambios 1.2 (24 nov 2026):** motor de planificación (perfil, biblioteca validada, reglas, plan semanal, Claude como entrenador) y límites de salud. **Cambios 1.1 (24 nov 2026):** en pareja y en grupo se entrena a la vez, nunca por turnos. Desaparece el rol alterno («uno trabaja, el otro cuenta»).
 **Origen:** Auditoría de las 30 pantallas de Paper + benchmark de mercado
 **Estado:** Propuesta aprobada para diseño; sustituye la arquitectura actual del flujo Categorías → Lista → Filtros → Detalle
 
@@ -321,6 +321,7 @@ type Tramo = { nombre: string; minutos: number; intensidad: 1|2|3|4|5; principal
 - Cada movimiento se guarda como **puntos del cuerpo** (33, en 3D, de MediaPipe Pose Landmarker) de una repetición en bucle: 3 s en los dinámicos (2 al bajar, 1 al subir) y 4 s en los isométricos.
 - La app lo dibuja como **figura de luces** sobre la pantalla OLED: frente o lado, espejo, velocidad, la articulación clave en naranja, el error típico en el color de error y dos figuras a la vez en pareja.
 - Origen de los puntos, en este orden: material con licencia que permita extraer la pose (MuscleWiki o Gym Visual, si lo aceptan por escrito) y, si no, grabación propia (lista de rodaje). Ningún vídeo generado con IA.
+- **Poses provisionales:** remo, press, caminata, movilidad y estiramiento están dibujadas a mano en Paper hasta que salgan del rodaje; solo la sentadilla y la plancha vienen de la referencia. En Paper llevan «provisional» en el nombre de la capa.
 - La persona grabada no aparece: solo se guardan los puntos y el vídeo original se borra o se guarda en privado.
 - Se reproduce de tres maneras (R21 de Instrumento): `quieta` en la lista y en la tarjeta de plan (fotograma clave), `una_repeticion` al abrir la tarjeta de ejercicio (a su ritmo real y se para abajo; tocar la repite, cámara lenta a la mitad) y `bucle` durante el entreno, mientras dura la serie. Con movimiento reducido, siempre `quieta`.
 

@@ -1,7 +1,8 @@
 # conexion.md — La primera vez y la siguiente
 
-**Versión:** 0.5
+**Versión:** 0.6
 **Fecha:** 2026-11-26
+**Cambios 0.6:** la llamada previa es solo de voz (R5); el teléfono y el correo no salen hasta después de la primera quedada con un «repetiría» de las dos (R6); la ubicación en directo, apagada de partida (R28); en la cuenta, el aviso legal con enlaces. El encuentro (flujo 2): «Ya voy», ubicación en directo opcional, señal de encuentro, «Hemos terminado» y qué pasa si alguien no llega (R28). Foto sin verificar a tiempo: la quedada se pospone, no se cancela (R27). En la cuenta, primero la tecla de la plataforma.
 **Cambios 0.5:** registro sin barreras: cuenta con Google, Apple o correo con enlace mágico, sin teléfono. La verificación la revisa el equipo y ninguna otra persona ve el selfie; tres estados. Nadie ve la cara de otra persona antes de conocerse: se reconocen con la señal de encuentro (R26).
 **Cambios 0.4:** el registro queda en nivel, teléfono y selfie (solo en pareja); la zona se cambia desde la cabecera de Cerca. La primera vez termina antes de anochecer. Respuestas rápidas del chat nuevas. Sin reconocimiento facial automático.
 **Cambios 0.3:** gana R15. Antes de apuntarte se ve el nombre y el tipo del punto Movi y los minutos andando; el punto exacto y su foto aparecen en «Estás dentro» (pasos 3 y 5, R15 y C4).
@@ -32,9 +33,17 @@ Es la pantalla que decide si Movi funciona. **Objetivo: que en menos de 2 minuto
 1. **Abres la app y ves planes, no formularios.** «Cerca de ti» con tres planes ordenados por cercanía en el tiempo: hoy, mañana, esta semana. Cada plan muestra la hora, el sitio a cuántos minutos, quién va (iniciales y nivel) y lo que se hace, con un vídeo corto en bucle.
 2. **Una sola pregunta opcional para afinar: «¿Cuándo te viene bien?».** Arriba, los 7 días que vienen como teclas (HOY, VIE, SÁB…); debajo, las horas de 7 a 22 como un secuenciador de 16 pasos en azul, el color del tiempo. Se marca el rango tocando la hora de inicio y la de fin, o con tres atajos: mañana (7–13), tarde (14–19) y noche (20–22). Los planes que encajan suben y se cuentan al momento («VIE, SÁB · 7–10 H · 2 PLANES»), cada toque con su clic.
 3. **Tocas un plan:** ves a la gente (su saludo, si lo tiene), la ficha del entreno, y el nombre y el tipo del punto Movi con los minutos andando, más el texto «El punto exacto lo ves al apuntarte».
-4. **«Me apunto»** abre el registro, como instrumento, en tres pasos: (1) la cuenta con un toque («Continuar con Google», «Continuar con Apple» o, como alternativa, el correo con enlace mágico; sin teléfono), (2) el nivel con su tecla (al elegir pasa solo a la siguiente pantalla) y (3) solo para quedar en pareja, la verificación: «Comprobamos que eres tú», un selfie de 3 segundos con el anillo de cuenta atrás («Solo lo ve el equipo de Movi, para verificarte, y luego se borra. Nadie más lo verá nunca.»). Tras el selfie: «FOTO LISTA · LA REVISAMOS ANTES DEL VIERNES». La zona no es un paso: va en la cabecera de Cerca («LAS ROZAS · EL PINAR · CAMBIAR»).
+4. **«Me apunto»** abre el registro, como instrumento, en tres pasos: (1) la cuenta con un toque («Continuar con Google» y «Continuar con Apple», teclas iguales y primero la de la plataforma: Google en Android, Apple en iOS; o, como alternativa, el correo con enlace mágico; sin teléfono. Debajo de las teclas: «Al seguir aceptas la política de privacidad y las condiciones», con enlaces), (2) el nivel con su tecla (al elegir pasa solo a la siguiente pantalla) y (3) solo para quedar en pareja, la verificación: «Comprobamos que eres tú», un selfie de 3 segundos con el anillo de cuenta atrás («Solo lo ve el equipo de Movi, para verificarte, y luego se borra. Nadie más lo verá nunca.»). Tras el selfie: «FOTO LISTA · LA REVISAMOS ANTES DEL VIERNES». La zona no es un paso: va en la cabecera de Cerca («LAS ROZAS · EL PINAR · CAMBIAR»).
 5. **Celebración corta:** el anillo se enciende y suena el acorde: «Estás dentro. Ana te espera el viernes a las 8:00, junto al cartel de las máquinas», con la foto del punto exacto. Si la foto está en revisión: «Te avisamos cuando tu foto esté verificada».
 6. **Ahora sí, si quiere:** grabar su saludo, la ficha de compañero o «tu tipo de compañero». Todo opcional y todo con su sonido.
+
+### El encuentro (flujo 2)
+
+1. **Antes:** el chat se abre al aceptar la quedada, con su tarjeta, las respuestas rápidas y, si las dos quieren, la llamada de voz previa, en directo y sin grabar (R5). «¿Otro día?» manda la tarjeta de otra hora; la otra persona la acepta o propone otra.
+2. **El día antes:** recordatorio con el punto exacto y el campo para dejar tu pista («Llevo un carrito azul»).
+3. **Al salir:** «Ya voy» activa el aviso de inicio. La ubicación en directo está apagada de partida: el interruptor se ve y se enciende a mano; si se enciende, solo la ve la otra persona, durante 1 hora como mucho.
+4. **Al llegar:** «Estoy aquí» en el punto exacto. Cuando las dos lo pulsan, la señal de encuentro (R26).
+5. **Al terminar:** «Hemos terminado» manda el aviso de fin, apaga la ubicación y lleva a «Después de entrenar».
 
 ---
 
@@ -133,7 +142,7 @@ type Chat = {
     | { tipo: 'texto'; texto: string }
     | { tipo: 'rapido'; clave: 'llego_5' | 'estoy_aqui' | 'nos_vemos' | 'otro_dia' }   // «¿Otro día?» abre la tarjeta de otra hora
     | { tipo: 'audio'; grabacion: Grabacion }
-    | { tipo: 'tarjeta_quedada'; dia: string; hora: string; puntoId: string; estado: 'propuesta' | 'aceptada' | 'otra_hora' }
+    | { tipo: 'tarjeta_quedada'; dia: string; hora: string; puntoId: string; estado: 'propuesta' | 'aceptada' | 'otra_hora' | 'pospuesta_verificacion' }
   )[]
   estado: 'activo' | 'archivado'         // se archiva si no hay sí mutuo
 }
@@ -163,8 +172,8 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 2. **R2 —** Una pareja mixta, la primera vez, solo si las dos lo han marcado.
 3. **R3 —** El formato de la primera vez lo elige la persona: pareja (por defecto), grupo pequeño, clase o instalación municipal.
 4. **R4 —** Antes de la primera vez suena el saludo de la otra persona, si lo tiene.
-5. **R5 —** La videollamada previa es opcional, en directo y no se graba.
-6. **R6 —** El teléfono y el correo no se comparten. El chat avisa si alguien intenta escribirlos.
+5. **R5 —** La llamada previa es opcional, en directo, no se graba y es solo de voz («Llamada de voz»): la cara, en persona (R26).
+6. **R6 —** Antes de conocerse, el teléfono y el correo no se comparten: un mensaje que los lleve no sale, y el chat lo explica («Este mensaje no sale»). Se pueden compartir solo después de la primera quedada y si las dos personas han respondido «repetiría».
 7. **R7 —** Bloquear y avisar de un problema están a un toque en cualquier pantalla con otra persona.
 8. **R8 —** Repetir requiere un sí de las dos personas. Un «no» nunca se comunica.
 9. **R9 —** Tras tres «no era lo mío» seguidos, se propone otro formato.
@@ -185,6 +194,8 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 24. **R24 —** Si no hay planes cerca esta semana, se ofrece crear uno en un punto Movi o unirse a una sesión municipal gratuita, nunca una pantalla vacía.
 25. **R25 —** Cada paso del registro y de la ficha se responde con una tecla o una rueda, con su sonido y su respuesta inmediata; ningún campo de texto salvo el correo, si no se entra con Google o Apple.
 26. **R26 —** Ninguna persona ve la cara de otra antes de conocerse. Se reconocen con la señal de encuentro: cuando las dos pulsan «Estoy aquí», los dos móviles encienden el mismo patrón en el anillo de 40 luces y suena el mismo acorde, con la pista opcional que deja cada una («Llevo un carrito azul»). Ver `C · Señal de encuentro` en `specs/foundations/instrumento.md`.
+27. **R27 —** Foto sin verificar a tiempo. El equipo revisa las fotos en 2 horas como máximo, en horario diurno. Si a 2 horas de una quedada en pareja la foto sigue sin verificar, la quedada pasa a `pospuesta_verificacion`: no se cancela. Las dos personas reciben un aviso sin culpa, «Aún estamos verificando la foto. Os proponemos otro día.», con la tarjeta de otra hora. Si hay un plan de grupo cerca a esa hora, se les ofrece como alternativa; nunca se cambia solo. Si alguien se apunta a un plan en pareja con menos de 2 horas de margen, se le avisa antes de apuntarse: «Para quedar hoy en pareja necesitamos verificarte antes de las HH:MM».
+28. **R28 —** Llegar y terminar. «Ya voy» activa el aviso de inicio. La ubicación en directo es opcional, está apagada de partida (privacidad por defecto) y, si se enciende a mano, dura 1 hora como mucho. Si la otra persona no llega, primero «Avisar a Ana» (respuesta rápida); a los 10 minutos aparece «Algo no fue bien», por el canal privado (R7). «Hemos terminado» manda el aviso de fin y apaga la ubicación.
 
 ---
 
