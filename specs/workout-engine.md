@@ -1,7 +1,7 @@
 # workout-engine.md — Motor de entrenamiento de Movi
 
-**Versión:** 1.1
-**Fecha:** Agosto 2026 · **Cambios 1.1 (24 nov 2026):** en pareja y en grupo se entrena a la vez, nunca por turnos. Desaparece el rol alterno («uno trabaja, el otro cuenta»).
+**Versión:** 1.2
+**Fecha:** Agosto 2026 · **Cambios 1.2 (24 nov 2026):** motor de planificación (perfil, biblioteca validada, reglas, plan semanal, Claude como entrenador) y límites de salud. **Cambios 1.1 (24 nov 2026):** en pareja y en grupo se entrena a la vez, nunca por turnos. Desaparece el rol alterno («uno trabaja, el otro cuenta»).
 **Origen:** Auditoría de las 30 pantallas de Paper + benchmark de mercado
 **Estado:** Propuesta aprobada para diseño; sustituye la arquitectura actual del flujo Categorías → Lista → Filtros → Detalle
 
@@ -185,3 +185,77 @@ Esto sirve a los cinco perfiles mejor que 100 entrenamientos sin variantes, y el
 6. Toda propuesta de IA lleva tres cosas: una razón en una línea, un botón «cambiar» que no rompe el flujo, y un «no me convence» que alimenta la siguiente.
 7. Todo elemento interactivo: mínimo 44×44.
 8. Nunca se pinta la barra de estado del sistema.
+
+---
+
+## Motor de planificación (v1.2)
+
+**Principio:** un plan de varias semanas que sabe quién eres, dónde entrenas y con quién. Decide un motor de reglas validado por profesionales; Claude explica, conversa y ajusta dentro de esas reglas.
+
+### Piezas
+
+1. **Perfil** — franja de edad, nivel, objetivo, horario, entorno, adaptaciones y cribado previo (PAR-Q+ o equivalente).
+2. **Biblioteca validada** — cada movimiento con sus 3 variantes, guía por voz, clave, error típico y contraindicaciones. La escriben o revisan un entrenador titulado y un fisioterapeuta.
+3. **Motor de reglas** — bloques de 3 o 4 semanas con una de descarga; progresión por variante, volumen y esfuerzo percibido; bloqueos por adaptación (p. ej. sin impacto en postparto temprano); referencia semanal de la OMS para adultos: al menos 150 min de actividad moderada.
+4. **Plan de la semana** — qué, cuándo, dónde y con quién.
+5. **Claude, el entrenador** — conversa, explica el porqué y propone cambios. Todo lo que propone pasa por el motor de reglas.
+6. **«¿Cómo fue?»** — tres toques al terminar: esfuerzo, molestias, ganas de repetir. Ajusta la semana siguiente.
+7. **Profesionales** — validan biblioteca y reglas, y son la salida cuando algo duele.
+
+```ts
+type PerfilEntreno = {
+  franjaEdad: '13_17' | '18_29' | '30_39' | '40_49' | '50_64' | '65_mas'
+  nivel: 1 | 2 | 3 | 4 | 5
+  objetivo: 'moverme' | 'fuerza' | 'resistencia' | 'movilidad' | 'volver_a_moverme'
+  disponibilidad: { dia: 'lun' | 'mar' | 'mie' | 'jue' | 'vie' | 'sab' | 'dom'; franja: 'temprano' | 'media_manana' | 'tarde' | 'noche' }[]
+  adaptaciones: Adaptacion[]
+  semanasPostparto?: number
+  altaMedicaPostparto?: boolean          // declarada por la usuaria
+  cribado: { fecha: string; resultado: 'apto' | 'consultar_medico' }
+  consentimientoSalud: boolean           // RGPD, datos de categoría especial
+  consentimientoParental?: boolean       // menores de 14
+}
+
+type Bloque = { semanas: 3 | 4; descarga: boolean; foco: Entrenamiento['intencion'] }
+
+type PlanSemana = {
+  semana: string                          // ISO
+  bloque: Bloque
+  sesiones: { dia: string; hora: string; lugar: string; con?: string; entrenamientoId: string; variante: 'regresion' | 'estandar' | 'progresion' }[]
+  minutosModerados: number
+}
+
+type ComoFue = {
+  esfuerzo: 'facil' | 'justo' | 'duro'
+  molestia: 'ninguna' | 'leve' | 'dolor'
+  repetiria: 'repetiria' | 'otra_persona' | 'no_era_lo_mio'
+}
+```
+
+### Reglas duras del motor
+
+- **M1 —** Claude nunca propone un movimiento que no esté en la biblioteca validada.
+- **M2 —** Todo plan o cambio pasa por el motor de reglas antes de mostrarse; lo que el motor rechaza no se enseña.
+- **M3 —** `molestia: 'dolor'` rebaja el plan y propone consultar. Dos veces seguidas: se para y recomienda un profesional.
+- **M4 —** Sin `cribado.resultado = 'apto'` no hay plan; `consultar_medico` solo ofrece caminar suave hasta que haya alta.
+- **M5 —** Postparto sin `altaMedicaPostparto` = solo caminar y movilidad; con alta, progresión por semanas desde el parto y suelo pélvico.
+- **M6 —** En el copy, «volver a moverse», nunca «rehabilitación» ni «tratamiento». Antes de usar esas palabras hay que consultar la normativa de producto sanitario (UE).
+- **M7 —** Datos de salud solo con `consentimientoSalud`, los mínimos, y nunca para publicidad.
+- **M8 —** Con menores: sin peso, calorías ni comparación de cuerpos; menores de 14, con consentimiento parental.
+
+### Orden de construcción
+
+1. Biblioteca de 40 movimientos con sus variantes, revisada por un profesional.
+2. Reglas para dos perfiles: postparto y quien empieza de cero.
+3. Plan semanal.
+4. Entrenador conversacional.
+
+### Modelos
+
+| Tarea | Modelo |
+|---|---|
+| Diseñar biblioteca, reglas y specs | Claude Opus 5.5 (Fable 5.2 para la revisión final de seguridad) |
+| Entrenador conversacional y plan semanal en la app | Claude Sonnet 5.5 |
+| Avisos, resúmenes del «¿cómo fue?», moderación | Claude Haiku 5.5 |
+
+El modelo no hace segura la app; el motor de reglas, sí.
