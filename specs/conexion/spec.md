@@ -1,7 +1,8 @@
 # conexion.md — La primera vez y la siguiente
 
-**Versión:** 0.2
+**Versión:** 0.3
 **Fecha:** 2026-11-26
+**Cambios 0.3:** gana R15. Antes de apuntarte se ve el nombre y el tipo del punto Movi y los minutos andando; el punto exacto y su foto aparecen en «Estás dentro» (pasos 3 y 5, R15 y C4).
 **Cambios 0.2:** feedback de José.
 - Se puede ver gente sin registrarse, y solo hay 3 pasos obligatorios.
 - Puntos Movi con tipos.
@@ -28,9 +29,9 @@ Es la pantalla que decide si Movi funciona. **Objetivo: que en menos de 2 minuto
 
 1. **Abres la app y ves planes, no formularios.** «Cerca de ti» con tres planes ordenados por cercanía en el tiempo: hoy, mañana, esta semana. Cada plan muestra la hora, el sitio a cuántos minutos, quién va (iniciales y nivel) y lo que se hace, con un vídeo corto en bucle.
 2. **Una sola pregunta opcional para afinar: «¿Cuándo te viene bien?».** Arriba, los 7 días que vienen como teclas (HOY, VIE, SÁB…); debajo, las horas de 7 a 22 como un secuenciador de 16 pasos en azul, el color del tiempo. Se marca el rango tocando la hora de inicio y la de fin, o con tres atajos: mañana (7–13), tarde (14–19) y noche (20–22). Los planes que encajan suben y se cuentan al momento («VIE, SÁB · 7–10 H · 2 PLANES»), cada toque con su clic.
-3. **Tocas un plan:** ves a la gente (su saludo, si lo tiene), la ficha del entreno y el punto exacto.
+3. **Tocas un plan:** ves a la gente (su saludo, si lo tiene), la ficha del entreno, y el nombre y el tipo del punto Movi con los minutos andando, más el texto «El punto exacto lo ves al apuntarte».
 4. **«Me apunto»** abre el registro, como instrumento: zona confirmada, nivel con su tecla y, solo para quedar en pareja, el selfie con el anillo de cuenta atrás («Para que Ana te reconozca»).
-5. **Celebración corta:** el anillo se enciende y suena el acorde: «Estás dentro. Ana te espera mañana a las 8:00».
+5. **Celebración corta:** el anillo se enciende y suena el acorde: «Estás dentro. Ana te espera mañana a las 8:00, junto al cartel de las máquinas», con la foto del punto exacto.
 6. **Ahora sí, si quiere:** grabar su saludo, la ficha de compañero o «tu tipo de compañero». Todo opcional y todo con su sonido.
 
 ---
@@ -169,7 +170,7 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 12. **R12 —** El saludo dura como máximo 20 s, se puede escuchar, recortar, borrar y regrabar, se puede denunciar, y tiene alternativa en texto.
 13. **R13 —** A quien está solo, primero se le ofrece lo gratis: puntos Movi e instalaciones municipales.
 14. **R14 —** La clase en compañía es para dos: Movi empareja antes de reservar.
-15. **R15 —** Se puede ver quién entrena cerca sin registrarse: iniciales, nivel, hora y sitio aproximado. Nunca el sitio exacto ni la cara.
+15. **R15 —** Se puede ver quién entrena cerca sin registrarse: iniciales, nivel, hora y sitio aproximado. Nunca el sitio exacto ni la cara. Antes de apuntarte, del punto Movi solo se ve el nombre, el tipo y los minutos andando; el punto exacto y su foto se ven al apuntarte.
 16. **R16 —** Antes de quedar hay 2 pasos obligatorios, zona y nivel, y un tercero, el selfie de verificación, solo para quedar en pareja. El selfie se pide en ese momento y no se publica: solo lo ve la persona con la que quedas, para reconocerte.
 17. **R17 —** Después de cada sesión se hace una sola pregunta de la ficha, como mucho.
 18. **R18 —** El chat solo se abre cuando las dos personas aceptan una quedada, y se archiva si no hay un sí mutuo.
@@ -188,7 +189,7 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 - [ ] **C1 —** Se puede llegar a «Cerca» y ver sesiones sin crear cuenta.
 - [ ] **C2 —** «Me apunto» lleva a un registro de menos de 60 segundos: zona, nivel y, si es en pareja, selfie. En planes de grupo el selfie se puede saltar («Ahora no»).
 - [ ] **C3 —** Después de cada sesión hay como mucho una pregunta de la ficha; la ficha completa también se puede hacer desde «Yo».
-- [ ] **C4 —** La propuesta de primera vez muestra el saludo, el formato, el punto Movi con su foto y su punto exacto, la hora y la ficha del entreno.
+- [ ] **C4 —** La propuesta de primera vez muestra el saludo, el formato, el nombre y el tipo del punto Movi con los minutos andando, la hora y la ficha del entreno. El punto exacto y su foto aparecen al apuntarte, en «Estás dentro».
 - [ ] **C5 —** No existe ningún camino que proponga una primera vez de noche, sin verificar o fuera de un lugar seguro.
 - [ ] **C6 —** El chat tiene tarjeta de quedada, respuestas rápidas y audio opcional, y no existe antes de aceptar.
 - [ ] **C7 —** Después de entrenar: tres respuestas privadas, la compatibilidad opcional y los sellos. Nunca se revela nada de la otra persona.

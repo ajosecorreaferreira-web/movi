@@ -1,8 +1,9 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.7
+**Versión:** 0.8
 **Fecha:** 2026-11-26
 **Estado:** aprobada (dirección elegida por José)
+**Cambios 0.8:** regla R19 (tecla enclavada) y ajustes tras pintar la primera interacción: franja de horas como un solo control, tarjeta de plan sin opacidad, Punto Movi antes y después de apuntarte, capa de lugar en el mapa, reputación de persona nueva.
 **Cambios 0.7:** componentes de conexión y entreno (Selector de cuándo, Tarjeta de plan, Punto Movi, Figura de luces, Tarjeta de ejercicio, Tarjeta perforada, Sello, Reputación y Chat) y reglas R16 a R18.
 **Cambios 0.6:** componente `C · Grabadora` (saludo y mensaje en audio) y regla R15.
 **Cambios 0.5:** el entreno en pareja es a la vez, nunca por turnos (R14). Fuera «uno trabaja, el otro cuenta» y el sonido «cambio de rol». Títulos con mayúscula inicial, no en minúsculas.
@@ -64,6 +65,7 @@ Fuente de verdad. Cuando se migre el código, esto sustituye a la paleta de `src
 
   /* Estado */
   --color-error:   #B42318;  /* solo errores; siempre con icono y texto (5,7:1 sobre aluminio) */
+  --color-error-instrumento: #B42318; /* temporal en Paper; al migrar pasa a ser --color-error */
 
   /* Forma */
   --radio-tecla:   6px;
@@ -115,17 +117,17 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 | Etiqueta de función | `C · Etiqueta` | Cuadrado del color de la función + etiqueta mono | — |
 | Persona | `C · Persona` | Cuadrado naranja con inicial + etiqueta mono + línea de contexto | — |
 | Campo | `C · Campo` | Etiqueta mono encima + caja de aluminio claro, línea de 1 px, radio 6, alto 56, texto Archivo 16 | reposo · foco (anillo de 2 px azul, radio 10) · relleno |
-| Mapa | `C · Mapa` | Módulo de aluminio claro, radio 10. Zonas verdes como matriz de puntos cuadrados de 3 px cada 9 px en `--color-linea`; calles, líneas de 1 px en `--color-linea`; lugares rotulados en mono 10 `--color-tinta-3`. Tú: anillo de 2 px en `--color-tiempo`. Sesiones: luces de 8 px en tinta; la de ahora, 10 px naranja con brillo | con sesiones · sin sesiones (solo tú) |
-| Pestañas | `C · Pestañas` | Fila de etiquetas mono 10,5, mínimo 44 × 44 cada una; la activa en tinta con LED naranja de 5 px encima, el resto en `--color-tinta-3` | una activa |
-| Grabadora | `C · Grabadora` | Anillo de 40 luces que gira como un carrete mientras graba; cuenta atrás en el centro (máximo 0:20); pantalla OLED con la onda y LED REC; teclas Escuchar · Recortar · Borrar · Regrabar; tecla principal Grabar → Parar → Guardar saludo / Enviar a Ana | listo · grabando · grabado · reproduciendo · recortando · guardado |
-| Selector de cuándo | `C · Selector de cuándo` | Etiqueta «¿CUÁNDO TE VIENE BIEN?» con el resumen en vivo («VIE, SÁB · 7–10 H · 2 PLANES»); 7 teclas de día (nombre en mono + número); 16 pasos de hora, de 7 a 22, en pista, con el rango en `--color-tiempo` y brillo en los extremos; 3 atajos: Mañana 7–13 · Tarde 14–19 · Noche 20–22 | vacío · días elegidos · rango de horas · atajo (mañana, tarde o noche) |
-| Tarjeta de plan | `C · Tarjeta de plan` | Módulo de aluminio claro con sombra de tecla; a la izquierda, el bucle del entreno sobre pantalla; cuándo con cuadro de tiempo y minutos andando; título; sitio; iniciales de quien va en naranja + quién y nivel | encaja · no encaja (atenuada) |
-| Punto Movi | `C · Punto Movi` | Foto del sitio, nombre y tipo con cuadro de lugar, punto exacto de encuentro («Junto al cartel de las máquinas») y etiquetas en mono (máquinas, mayores, carrito…) | con foto, punto exacto y etiquetas |
+| Mapa | `C · Mapa` | Módulo de aluminio claro, radio 10. Zonas verdes como matriz de puntos cuadrados de 3 px cada 9 px en `--color-linea`; calles, líneas de 1 px en `--color-linea`; lugares rotulados en mono 10 `--color-tinta-3`. Capa de lugar: los puntos Movi, cuadrados en `--color-lugar`. Tú: anillo de 2 px en `--color-tinta` (el azul es tiempo). Sesiones: luces de 8 px en tinta; la de ahora, 10 px naranja con brillo. Antes de apuntarte, cada sesión se pinta en el centro de su zona, nunca en el punto exacto | con sesiones · sin sesiones (puntos Movi y tecla «PROPONER UN PLAN AQUÍ») |
+| Pestañas | `C · Pestañas` | Fila de etiquetas mono 10,5, mínimo 44 × 44 cada una; la activa en tinta con LED naranja de 5 px encima, el resto en `--color-tinta-3`. Solo para navegar dentro de una sección (Mi semana); en Cerca manda `C · Selector de cuándo` | una activa |
+| Grabadora | `C · Grabadora` | Anillo de 40 luces que gira como un carrete mientras graba; cuenta atrás en el centro (máximo 0:20); pantalla OLED con la onda y LED REC; teclas Escuchar · Recortar · Borrar · Regrabar; tecla principal Grabar → Parar → Guardar saludo / Enviar a Ana → Seguir («Guardado» y «Enviado» se dicen en la pantalla, no en la tecla) | listo · grabando · grabado · reproduciendo · recortando · guardado |
+| Selector de cuándo | `C · Selector de cuándo` | Etiqueta «¿CUÁNDO TE VIENE BIEN?» con el resumen en vivo («VIE, SÁB · 7–10 H · 2 PLANES»); 7 teclas de día (nombre en mono + número), enclavables (R19, LED azul); la franja de horas de 7 a 22 es un solo control de 44 px de alto: se arrastra para pintar el rango y un toque marca la hora más cercana; el rango en `--color-tiempo` con brillo en los extremos; 3 atajos enclavables, alternativa accesible a la franja: Mañana 7–13 · Tarde 14–19 · Noche 20–22 | vacío · días elegidos · rango de horas · atajo (mañana, tarde o noche) |
+| Tarjeta de plan | `C · Tarjeta de plan` | Módulo de aluminio claro con sombra de tecla; a la izquierda, el perfil del entreno en barras sobre pantalla; cuándo con cuadro de tiempo (HOY o el día de la semana, nunca «mañana») y minutos andando; título; sitio aproximado; iniciales de quien va en naranja + quién y nivel | encaja · no encaja (el texto pasa a `--color-tinta-3`, solo se atenúa la miniatura y lleva la etiqueta «FUERA DE TU HORARIO»; nunca opacidad sobre el texto) |
+| Punto Movi | `C · Punto Movi` | Nombre y tipo con cuadro de lugar, minutos andando y etiquetas en mono (máquinas, biosaludables, carrito…). Después de apuntarte, además: foto del sitio y punto exacto de encuentro («Junto al cartel de las máquinas») | antes de apuntarte (sin foto ni punto exacto, con «El punto exacto lo ves al apuntarte») · después de apuntarte (con foto y punto exacto) |
 | Figura de luces | `C · Figura de luces` | Sobre pantalla OLED: malla de puntos en `--color-luz-apagada-pantalla`; el cuerpo en luces de `--color-pantalla-texto`; la articulación clave en `--color-gente`; el suelo en `--color-pantalla-apagado`; cabecera con vista y contador; pie con la variante y la consigna | frente · lado · error típico · en pareja · movimiento reducido (dos fotogramas fijos) |
-| Tarjeta de ejercicio | `C · Tarjeta de ejercicio` | Cerrada: miniatura en bucle sobre pantalla + nombre + dosis en mono. Abierta: `C · Figura de luces` con teclas De frente · De lado, la variante de cada persona y cámara lenta | reposo (bucle) · abierta · cámara lenta |
+| Tarjeta de ejercicio | `C · Tarjeta de ejercicio` | Cerrada: mini figura de luces con el fotograma clave del ejercicio sobre pantalla + nombre + dosis en mono. Abierta: `C · Figura de luces` con teclas enclavables De frente · De lado (R19, LED naranja), la variante de cada persona y cámara lenta | reposo (fotograma clave) · abierta · cámara lenta |
 | Tarjeta perforada | `C · Tarjeta perforada` | Bono municipal para dos: instalación, las dos personas, 5 perforaciones (usadas en tinta, libres en línea) y la cara del QR para el acceso | 0, 3 y 5 sesiones usadas · cara del QR |
 | Sello | `C · Sello` | Cuadrado de función + nombre del sello en mono + recuento («PUNTUAL ×12»). Solo sellos positivos | un sello con su recuento |
-| Reputación | `C · Reputación` | Lo único público del perfil: verificada, sesiones hechas, personas que repiten y sellos. Nunca medias, estrellas ni comentarios | verificada · sesiones · personas que repiten · sellos |
+| Reputación | `C · Reputación` | Lo único público del perfil: verificada, sesiones hechas, personas que repiten y sellos. Nunca medias, estrellas ni comentarios. A una persona nueva no se le muestran ceros: «NUEVA EN MOVI» y «Verificada» | con historial · nueva en Movi |
 | Chat | `CM · Chat` | Chat ligado a una quedada aceptada: burbujas de texto y de audio, respuestas rápidas en teclas, tarjeta de quedada (día, hora y punto Movi) y aviso si alguien intenta compartir el teléfono | burbuja de texto · burbuja de audio · respuesta rápida · tarjeta de quedada (propuesta, aceptada, otra hora) · aviso al compartir el teléfono |
 | Navegación | `CM · Navegación` | 4 destinos (Cerca · Entrenar · Mi gente · Yo), etiqueta mono siempre visible, LED naranja en el activo | 4 activos |
 
@@ -151,6 +153,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 16. **R16 — Figura de luces.** El cuerpo, en luces de `--color-pantalla-texto`; la articulación clave, en `--color-gente`; el error típico, en `--color-error` y siempre con el texto «Así no». Siempre sobre pantalla OLED. Con `prefers-reduced-motion`, dos fotogramas fijos (arriba y abajo) en lugar del bucle.
 17. **R17 — El tiempo, en azul.** El selector de horas y cualquier rango de tiempo usan `--color-tiempo`; los días son teclas.
 18. **R18 — Nada negativo en público.** Sellos y reputación solo en positivo; los avisos de problemas van por un canal privado.
+19. **R19 — Tecla enclavada.** La tinta es solo para la acción principal: una por pantalla, con LED y flecha. Una tecla que se queda elegida (día, franja, nivel, vista) va en `--color-aluminio-pulsado`, sin sombra y con su LED encendido en el color de su función: azul para tiempo, naranja para lo demás.
 
 ### Sonido y vibración
 
@@ -192,6 +195,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 ## Trazabilidad
 
 - Exploración y referencia visual: lienzo «Movi · Tres direcciones» en claude.ai, página **Sistema elegido**. Copia de las tres pantallas de referencia en `design/instrumento/referencia/`. **Donde las referencias choquen con esta spec, gana la spec.**
+- Cambios de la 0.8 (2026-11-26): R19; Selector de cuándo, Tarjeta de plan, Punto Movi, Mapa, Pestañas, Tarjeta de ejercicio y Reputación actualizados tras la revisión de José del flujo Primera interacción. «Mañana» queda solo para la franja de 7 a 13.
 - Cambios de la 0.7 (2026-11-26): nueve componentes de la fase 1b de `ENCARGO-PAPER-v2.md` y reglas R16 (figura de luces), R17 (tiempo en azul) y R18 (nada negativo en público). Referencias nuevas: `primera-interaccion.dc.html` y `ejercicio-en-luces.dc.html`.
 - Cambios de la 0.6 (2026-11-24): nuevo `C · Grabadora` (prop `modo`: `saludo` o `mensaje`), R15 y tres filas de sonido para grabar, parar y guardar o enviar. Referencia en `design/instrumento/referencia/grabadora.dc.html`.
 - Cambios de la 0.5 (2026-11-24): en pareja y en grupo se entrena a la vez (R14, C4b); el sonido «Cambio de rol» pasa a «Empieza el reto juntos»; C1 incluye Campo, Mapa y Pestañas. Referencia `ejecucion-acompanado.dc.html` rehecha a la vez; títulos de las referencias con mayúscula inicial.
