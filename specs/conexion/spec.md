@@ -1,7 +1,9 @@
 # conexion.md — La primera vez y la siguiente
 
-**Versión:** 0.3
+**Versión:** 0.5
 **Fecha:** 2026-11-26
+**Cambios 0.5:** registro sin barreras: cuenta con Google, Apple o correo con enlace mágico, sin teléfono. La verificación la revisa el equipo y ninguna otra persona ve el selfie; tres estados. Nadie ve la cara de otra persona antes de conocerse: se reconocen con la señal de encuentro (R26).
+**Cambios 0.4:** el registro queda en nivel, teléfono y selfie (solo en pareja); la zona se cambia desde la cabecera de Cerca. La primera vez termina antes de anochecer. Respuestas rápidas del chat nuevas. Sin reconocimiento facial automático.
 **Cambios 0.3:** gana R15. Antes de apuntarte se ve el nombre y el tipo del punto Movi y los minutos andando; el punto exacto y su foto aparecen en «Estás dentro» (pasos 3 y 5, R15 y C4).
 **Cambios 0.2:** feedback de José.
 - Se puede ver gente sin registrarse, y solo hay 3 pasos obligatorios.
@@ -30,8 +32,8 @@ Es la pantalla que decide si Movi funciona. **Objetivo: que en menos de 2 minuto
 1. **Abres la app y ves planes, no formularios.** «Cerca de ti» con tres planes ordenados por cercanía en el tiempo: hoy, mañana, esta semana. Cada plan muestra la hora, el sitio a cuántos minutos, quién va (iniciales y nivel) y lo que se hace, con un vídeo corto en bucle.
 2. **Una sola pregunta opcional para afinar: «¿Cuándo te viene bien?».** Arriba, los 7 días que vienen como teclas (HOY, VIE, SÁB…); debajo, las horas de 7 a 22 como un secuenciador de 16 pasos en azul, el color del tiempo. Se marca el rango tocando la hora de inicio y la de fin, o con tres atajos: mañana (7–13), tarde (14–19) y noche (20–22). Los planes que encajan suben y se cuentan al momento («VIE, SÁB · 7–10 H · 2 PLANES»), cada toque con su clic.
 3. **Tocas un plan:** ves a la gente (su saludo, si lo tiene), la ficha del entreno, y el nombre y el tipo del punto Movi con los minutos andando, más el texto «El punto exacto lo ves al apuntarte».
-4. **«Me apunto»** abre el registro, como instrumento: zona confirmada, nivel con su tecla y, solo para quedar en pareja, el selfie con el anillo de cuenta atrás («Para que Ana te reconozca»).
-5. **Celebración corta:** el anillo se enciende y suena el acorde: «Estás dentro. Ana te espera mañana a las 8:00, junto al cartel de las máquinas», con la foto del punto exacto.
+4. **«Me apunto»** abre el registro, como instrumento, en tres pasos: (1) la cuenta con un toque («Continuar con Google», «Continuar con Apple» o, como alternativa, el correo con enlace mágico; sin teléfono), (2) el nivel con su tecla (al elegir pasa solo a la siguiente pantalla) y (3) solo para quedar en pareja, la verificación: «Comprobamos que eres tú», un selfie de 3 segundos con el anillo de cuenta atrás («Solo lo ve el equipo de Movi, para verificarte, y luego se borra. Nadie más lo verá nunca.»). Tras el selfie: «FOTO LISTA · LA REVISAMOS ANTES DEL VIERNES». La zona no es un paso: va en la cabecera de Cerca («LAS ROZAS · EL PINAR · CAMBIAR»).
+5. **Celebración corta:** el anillo se enciende y suena el acorde: «Estás dentro. Ana te espera el viernes a las 8:00, junto al cartel de las máquinas», con la foto del punto exacto. Si la foto está en revisión: «Te avisamos cuando tu foto esté verificada».
 6. **Ahora sí, si quiere:** grabar su saludo, la ficha de compañero o «tu tipo de compañero». Todo opcional y todo con su sonido.
 
 ---
@@ -56,8 +58,9 @@ Es la pantalla que decide si Movi funciona. **Objetivo: que en menos de 2 minuto
 type Registro = {
   zona: { lat: number; lng: number } | { barrio: string }
   nivel: 'activo' | 'en_marcha' | 'en_forma' | 'potencia' | 'elite'
-  verificacion: 'foto_verificada' | 'sin_verificar'   // obligatoria solo para quedar en pareja
-  telefono: string                       // nunca visible para otras personas
+  cuenta: 'google' | 'apple' | 'correo'  // el correo, con enlace mágico; nunca visible para otras personas
+  verificacion: 'sin_verificar' | 'en_revision' | 'verificada'   // obligatoria solo para quedar en pareja; fuera solo se ve «Verificada»
+  avisos: 'notificacion' | 'correo'      // el SMS queda opcional y para más adelante
 }
 
 // La ficha se completa poco a poco: una pregunta después de cada sesión
@@ -128,7 +131,7 @@ type Chat = {
   abiertoDesde: 'quedada_aceptada'
   mensajes: (
     | { tipo: 'texto'; texto: string }
-    | { tipo: 'rapido'; clave: 'llego_5' | 'estoy_aqui' | 'mover_jueves' | 'hoy_no_puedo' }
+    | { tipo: 'rapido'; clave: 'llego_5' | 'estoy_aqui' | 'nos_vemos' | 'otro_dia' }   // «¿Otro día?» abre la tarjeta de otra hora
     | { tipo: 'audio'; grabacion: Grabacion }
     | { tipo: 'tarjeta_quedada'; dia: string; hora: string; puntoId: string; estado: 'propuesta' | 'aceptada' | 'otra_hora' }
   )[]
@@ -156,7 +159,7 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 
 ## Reglas duras
 
-1. **R1 —** La primera vez es siempre de día y en un punto Movi, un local asociado o una instalación municipal. Quedar en pareja exige que las dos personas estén verificadas; en grupo con anfitrión, en una clase o en una instalación municipal, la verificación es opcional.
+1. **R1 —** La primera vez es siempre de día y en un punto Movi, un local asociado o una instalación municipal. Quedar en pareja exige que las dos personas estén verificadas; en grupo con anfitrión, en una clase o en una instalación municipal, la verificación es opcional. En la primera vez, los planes terminan antes de anochecer: el selector de horas llega hasta la puesta de sol y el atajo NOCHE no aparece hasta después de la primera sesión.
 2. **R2 —** Una pareja mixta, la primera vez, solo si las dos lo han marcado.
 3. **R3 —** El formato de la primera vez lo elige la persona: pareja (por defecto), grupo pequeño, clase o instalación municipal.
 4. **R4 —** Antes de la primera vez suena el saludo de la otra persona, si lo tiene.
@@ -171,7 +174,7 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 13. **R13 —** A quien está solo, primero se le ofrece lo gratis: puntos Movi e instalaciones municipales.
 14. **R14 —** La clase en compañía es para dos: Movi empareja antes de reservar.
 15. **R15 —** Se puede ver quién entrena cerca sin registrarse: iniciales, nivel, hora y sitio aproximado. Nunca el sitio exacto ni la cara. Antes de apuntarte, del punto Movi solo se ve el nombre, el tipo y los minutos andando; el punto exacto y su foto se ven al apuntarte.
-16. **R16 —** Antes de quedar hay 2 pasos obligatorios, zona y nivel, y un tercero, el selfie de verificación, solo para quedar en pareja. El selfie se pide en ese momento y no se publica: solo lo ve la persona con la que quedas, para reconocerte.
+16. **R16 —** Antes de quedar hay 2 pasos obligatorios, la cuenta y el nivel, y un tercero, la verificación, solo para quedar en pareja (en grupo es opcional). La zona sale de la ubicación y se cambia desde la cabecera de Cerca. El selfie no lo ve ninguna otra persona: lo revisa el equipo para confirmar que es una persona real y se borra después. Fuera solo se ve «Verificada». Es obligatoria para quedar en pareja porque sin ella el filtro «solo mujeres» no protege.
 17. **R17 —** Después de cada sesión se hace una sola pregunta de la ficha, como mucho.
 18. **R18 —** El chat solo se abre cuando las dos personas aceptan una quedada, y se archiva si no hay un sí mutuo.
 19. **R19 —** La ficha del entreno se ve antes de quedar, con vídeo corto por ejercicio y la variante de cada persona.
@@ -180,14 +183,15 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 22. **R22 —** El bono municipal es para dos personas que entran juntas: 5 sesiones en franjas de poca demanda, con la tarjeta perforada como pase.
 23. **R23 —** La primera pantalla al abrir la app muestra planes concretos (hoy, mañana, esta semana), nunca un formulario ni un tutorial.
 24. **R24 —** Si no hay planes cerca esta semana, se ofrece crear uno en un punto Movi o unirse a una sesión municipal gratuita, nunca una pantalla vacía.
-25. **R25 —** Cada paso del registro y de la ficha se responde con una tecla o una rueda, con su sonido y su respuesta inmediata; ningún campo de texto salvo el teléfono.
+25. **R25 —** Cada paso del registro y de la ficha se responde con una tecla o una rueda, con su sonido y su respuesta inmediata; ningún campo de texto salvo el correo, si no se entra con Google o Apple.
+26. **R26 —** Ninguna persona ve la cara de otra antes de conocerse. Se reconocen con la señal de encuentro: cuando las dos pulsan «Estoy aquí», los dos móviles encienden el mismo patrón en el anillo de 40 luces y suena el mismo acorde, con la pista opcional que deja cada una («Llevo un carrito azul»). Ver `C · Señal de encuentro` en `specs/foundations/instrumento.md`.
 
 ---
 
 ## Criterios de aceptación
 
 - [ ] **C1 —** Se puede llegar a «Cerca» y ver sesiones sin crear cuenta.
-- [ ] **C2 —** «Me apunto» lleva a un registro de menos de 60 segundos: zona, nivel y, si es en pareja, selfie. En planes de grupo el selfie se puede saltar («Ahora no»).
+- [ ] **C2 —** «Me apunto» lleva a un registro de menos de 60 segundos: cuenta con un toque, nivel y, si es en pareja, verificación. Ninguna pantalla pide el teléfono. En planes de grupo el selfie se puede saltar («Ahora no»).
 - [ ] **C3 —** Después de cada sesión hay como mucho una pregunta de la ficha; la ficha completa también se puede hacer desde «Yo».
 - [ ] **C4 —** La propuesta de primera vez muestra el saludo, el formato, el nombre y el tipo del punto Movi con los minutos andando, la hora y la ficha del entreno. El punto exacto y su foto aparecen al apuntarte, en «Estás dentro».
 - [ ] **C5 —** No existe ningún camino que proponga una primera vez de noche, sin verificar o fuera de un lugar seguro.
@@ -203,6 +207,8 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
 ## Fuera de alcance
 
 - **Verificación con documento de identidad.** Para el piloto basta con la foto verificada.
+- **Reconocimiento facial automático.** El selfie solo lo ve el equipo, que lo revisa a mano y lo borra después.
+- **SMS.** Los avisos llegan por notificación o por correo; el SMS queda opcional y para más adelante.
 - **Integración con los tornos municipales.** En el piloto, el personal comprueba el QR en pantalla. La integración con Deporsite depende del convenio.
 - **Pagos dentro de la app.**
 - **Grabar vídeos con IA para explicar ejercicios.** La técnica necesita vídeo real.
@@ -220,7 +226,7 @@ type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro
   - `AppM · Después de entrenar`
   - `AppM · Tarjeta perforada`
   - `AppM · Mensaje a Ana`
-  - Referencias: `design/instrumento/referencia/grabadora.dc.html`, `design/instrumento/referencia/primera-interaccion.dc.html` y `design/instrumento/referencia/ejercicio-en-luces.dc.html`
+  - Referencias: `design/instrumento/referencia/grabadora.dc.html`, `design/instrumento/referencia/primera-interaccion.dc.html` y `design/instrumento/referencia/ejercicio-en-luces.dc.html`, `design/instrumento/referencia/onda-o-puntos.html` y `design/instrumento/referencia/perfil-exploracion.html`
 - **Specs relacionadas:**
   - `specs/foundations/instrumento.md` (C · Grabadora)
   - `specs/foundations/producto.md`

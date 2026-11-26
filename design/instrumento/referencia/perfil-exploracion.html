@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfil del entreno · exploración</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --aluminio:#EEEEEC; --aluminio-claro:#F7F7F5; --linea:#CFCFCB; --pista:#D6D6D2;
+  --tinta:#111111; --tinta-2:#3A3A3A; --tinta-3:#5A5A5A;
+  --pantalla:#0F0E12; --pantalla-texto:#F2F2F0; --pantalla-texto-3:#9A9A9A; --apagado:#5A5A5E;
+  --tiempo:#2B4FD8; --lugar:#E0A21C; --gente:#FF5B1A;
+  --mono:'Martian Mono',ui-monospace,monospace; --sans:'Archivo',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--aluminio);color:var(--tinta);font-family:var(--sans);padding:40px 16px 72px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-weight:400;font-size:44px;letter-spacing:-.03em}
+.cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:1px solid var(--linea);padding-bottom:16px;flex-wrap:wrap}
+.et{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3)}
+.intro{max-width:780px;font-size:16px;line-height:1.55;color:var(--tinta-2);margin-top:20px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(358px,1fr));gap:40px 32px;margin-top:40px}
+.op h2{font-weight:500;font-size:20px;margin:6px 0 6px}
+.op p{font-size:14.5px;line-height:1.5;color:var(--tinta-2)}
+.oled{background:var(--pantalla);color:var(--pantalla-texto);border-radius:10px;padding:14px 16px 12px;margin:14px 0 12px}
+.oled .h{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--pantalla-texto-3)}
+.led{display:inline-block;width:7px;height:7px;background:var(--gente);margin-right:8px}
+.oled canvas{display:block;margin-top:12px;width:100%}
+.medidor{display:flex;gap:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--tinta-3);margin-top:8px;flex-wrap:wrap}
+.medidor b{font-weight:500;color:var(--tinta)}
+.reco{outline:2px solid var(--tinta);outline-offset:14px;border-radius:4px}
+.cierre{max-width:820px;margin-top:56px;border-top:1px solid var(--linea);padding-top:24px}
+.cierre h3{font-weight:500;font-size:20px;margin-bottom:8px}
+.cierre p{font-size:15.5px;line-height:1.55;color:var(--tinta-2);margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cab">
+    <h1>Perfil del entreno · exploración</h1>
+    <span class="et">Va dentro del plan · la tarjeta lleva la figura</span>
+  </div>
+  <p class="intro">El mismo entreno de 30 minutos (calentar 5, fuerza 15, reto 5, estirar 5) dibujado de cinco maneras. Todas con la misma regla: el tramo principal en naranja y el tiempo en azul. Y todas sirven dos veces: antes de quedar, como mapa del entreno; durante el entreno, el cabezal avanza y es tu progreso. Aquí el cabezal recorre los 30 minutos en 10 segundos.</p>
+
+  <div class="rejilla">
+    <section class="op reco">
+      <div class="et">01 · Onda · recomendado</div>
+      <h2>La sesión suena</h2>
+      <p>La pantalla del sampler del OP-1: el entreno como una onda de voz. La amplitud es la intensidad. Los marcadores son los del sampler: inicio en azul tiempo, el tramo principal entre marcas naranjas y el estirar como un fundido. Rima con la grabadora: tu saludo es una onda y tu entreno también.</p>
+      <div class="oled"><div class="h"><span><i class="led"></i>EL ENTRENO</span><span>30 MIN</span></div><canvas data-c="onda" height="170"></canvas></div>
+      <div class="medidor"><span>Explica <b>●●●●○</b></span><span>Riesgo de feria <b>●○○○○</b></span></div>
+    </section>
+
+    <section class="op">
+      <div class="et">02 · Medidor de luces</div>
+      <h2>Barras de puntos, VU retro</h2>
+      <p>Un medidor de LED: una columna por minuto, ocho luces de alto. Cuanto más duro, más luces encendidas, con su luz de pico arriba como en un medidor de nivel. Es lo más electrónico y lo más fácil de leer de un vistazo.</p>
+      <div class="oled"><div class="h"><span><i class="led"></i>EL ENTRENO</span><span>30 MIN</span></div><canvas data-c="vu" height="150"></canvas></div>
+      <div class="medidor"><span>Explica <b>●●●●○</b></span><span>Riesgo de feria <b>●●○○○</b></span></div>
+    </section>
+
+    <section class="op">
+      <div class="et">03 · Rueda</div>
+      <h2>La sesión en una vuelta</h2>
+      <p>La rueda del sistema, 270°, con una luz por minuto. El tamaño de cada luz es la intensidad y el tramo principal va en naranja. En el centro, la duración. Durante el entreno se apagan las luces que ya has hecho, como el anillo de la grabadora.</p>
+      <div class="oled"><div class="h"><span><i class="led"></i>EL ENTRENO</span><span>30 MIN</span></div><canvas data-c="rueda" height="220"></canvas></div>
+      <div class="medidor"><span>Explica <b>●●●○○</b></span><span>Riesgo de feria <b>●○○○○</b></span></div>
+    </section>
+
+    <section class="op">
+      <div class="et">04 · Cinta</div>
+      <h2>Dos carretes</h2>
+      <p>La cinta de 4 pistas: el entreno pasa de un carrete a otro. Los tramos van sobre la cinta, con su alto por intensidad. Es la más simpática y la que más cuenta el paso del tiempo, pero es también la más decorativa.</p>
+      <div class="oled"><div class="h"><span><i class="led"></i>EL ENTRENO</span><span>30 MIN</span></div><canvas data-c="cinta" height="150"></canvas></div>
+      <div class="medidor"><span>Explica <b>●●○○○</b></span><span>Riesgo de feria <b>●●●○○</b></span></div>
+    </section>
+
+    <section class="op">
+      <div class="et">05 · Línea</div>
+      <h2>Una sola línea</h2>
+      <p>Un trazo escalonado de 1,5 px, como la envolvente de un sintetizador: sube en fuerza y baja al estirar. Lo más sobrio y lo más elegante, aunque lo que menos llama.</p>
+      <div class="oled"><div class="h"><span><i class="led"></i>EL ENTRENO</span><span>30 MIN</span></div><canvas data-c="linea" height="130"></canvas></div>
+      <div class="medidor"><span>Explica <b>●●●○○</b></span><span>Riesgo de feria <b>○○○○○</b></span></div>
+    </section>
+  </div>
+
+  <div class="cierre">
+    <h3>Mi recomendación: la onda</h3>
+    <p>Es la que mejor responde a tu idea de la voz, y tiene un argumento que las otras no: el sistema ya tiene una onda, la de la grabadora. El saludo de Ana es una onda; el entreno con Ana, también. Un solo lenguaje para «lo que suena» y «lo que se hace».</p>
+    <p>No es decoración: la amplitud es la intensidad real, los marcadores son los tramos y el cabezal es tu progreso. En la lista, la tarjeta se queda con la figura quieta; la onda aparece al abrir el plan, y durante el entreno el cabezal avanza sobre ella. Con movimiento reducido, la onda se queda quieta y el cabezal salta de tramo en tramo.</p>
+    <p>Si quieres algo más seco y más electrónico, el medidor de luces es la alternativa segura.</p>
+  </div>
+</div>
+
+<script>
+const C = { luz:'#F2F2F0', luz3:'#9A9A9A', gente:'#FF5B1A', tiempo:'#2B4FD8', apagado:'#5A5A5E', fondo2:'#1D1C22', rejilla:'#26252B' };
+const TRAMOS = [ {n:'CALENTAR',min:5,int:2}, {n:'FUERZA',min:15,int:4,p:true}, {n:'RETO',min:5,int:3}, {n:'ESTIRAR',min:5,int:1} ];
+const TOTAL = 30, INICIO = 8*60;
+const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hora = (m) => { const t = INICIO + Math.round(m); return Math.floor(t/60) + ':' + String(t%60).padStart(2,'0'); };
+const tramoEn = (m) => { let a = 0; for (const t of TRAMOS){ if (m < a + t.min) return {t, a}; a += t.min; } return {t: TRAMOS[TRAMOS.length-1], a: TOTAL - 5}; };
+const inicioDe = (i) => TRAMOS.slice(0,i).reduce((s,t)=>s+t.min,0);
+const iP = TRAMOS.findIndex(t=>t.p);
+
+function preparar(cv){
+  const d = devicePixelRatio || 1, W = cv.clientWidth, H = +cv.getAttribute('height');
+  if (cv.width !== W*d){ cv.width = W*d; cv.height = H*d; cv.style.height = H + 'px'; }
+  const g = cv.getContext('2d'); g.setTransform(d,0,0,d,0,0); g.clearRect(0,0,W,H);
+  g.font = '9.5px "Martian Mono", ui-monospace, monospace'; g.textBaseline = 'alphabetic';
+  return {g, W, H};
+}
+const punto = (g,x,y,r,c) => { g.fillStyle = c; g.beginPath(); g.arc(x,y,r,0,7); g.fill(); };
+const texto = (g,s,x,y,c,al) => { g.fillStyle = c; g.textAlign = al || 'left'; g.fillText(s, x, y); };
+
+// Intensidad suave en el minuto m (0–5)
+function intensidad(m){
+  let a = 0;
+  for (let i = 0; i < TRAMOS.length; i++){
+    const t = TRAMOS[i], b = a + t.min;
+    if (m <= b || i === TRAMOS.length-1){
+      const sig = TRAMOS[i+1], prev = TRAMOS[i-1];
+      const k = 1.2;
+      if (sig && m > b - k) return t.int + (sig.int - t.int) * ((m - (b - k)) / (2*k));
+      if (prev && m < a + k) return t.int + (prev.int - t.int) * (((a + k) - m) / (2*k));
+      if (i === TRAMOS.length-1) return t.int * Math.max(0.15, 1 - (m - a)/t.min * 0.85); // fundido al estirar
+      if (i === 0) return t.int * Math.min(1, 0.35 + (m - a)/t.min);
+      return t.int;
+    }
+    a = b;
+  }
+  return 0;
+}
+const ruido = (m) => 0.5 + 0.5 * Math.abs(Math.sin(m*2.9) * Math.cos(m*1.3 + 0.7) + 0.35*Math.sin(m*7.1));
+
+// 01 · Onda
+function onda(cv, cab){
+  const {g, W, H} = preparar(cv);
+  const top = 22, bot = H - 26, cy = (top + bot)/2, amp = (bot - top)/2 - 4, x0 = 8, x1 = W - 8, X = (m)=> x0 + (x1 - x0) * m / TOTAL;
+  // cabecera del sampler
+  texto(g, '▶ ' + hora(0), x0, 11, C.tiempo);
+  texto(g, TRAMOS[iP].n + ' ' + TRAMOS[iP].min + ' MIN', W/2, 11, C.gente, 'center');
+  texto(g, 'FIN ' + hora(TOTAL), x1, 11, C.luz3, 'right');
+  // zona principal sombreada y fundido
+  const pa = inicioDe(iP), pb = pa + TRAMOS[iP].min;
+  g.fillStyle = C.fondo2; g.fillRect(X(pa), top, X(pb) - X(pa), bot - top);
+  const ea = inicioDe(TRAMOS.length-1);
+  g.fillStyle = C.fondo2; g.beginPath(); g.moveTo(X(ea), top); g.lineTo(X(TOTAL), top); g.lineTo(X(TOTAL), bot); g.closePath(); g.fill();
+  // onda
+  const paso = 0.12;
+  const dibuja = (desde, hasta, color) => {
+    g.fillStyle = color; g.beginPath();
+    for (let m = desde; m <= hasta + 1e-6; m += paso){ const a = amp * intensidad(m)/5 * ruido(m); g.lineTo(X(m), cy - a); }
+    for (let m = hasta; m >= desde - 1e-6; m -= paso){ const a = amp * intensidad(m)/5 * ruido(m) * 0.92; g.lineTo(X(m), cy + a); }
+    g.closePath(); g.fill();
+  };
+  dibuja(0, pa, C.luz); dibuja(pa, pb, C.gente); dibuja(pb, TOTAL, C.luz);
+  g.fillStyle = C.apagado; g.fillRect(x0, cy, x1 - x0, 1);
+  // marcadores con su capuchón
+  const marca = (m, c) => { const x = Math.round(X(m)); g.fillStyle = c; g.fillRect(x - 0.75, top - 4, 1.5, bot - top + 8); g.fillRect(x - 7, top - 4, 14, 3); g.fillRect(x - 7, bot + 1, 14, 3); };
+  marca(0, C.tiempo); marca(pa, C.gente); marca(pb, C.gente); marca(TOTAL, C.luz3);
+  // nombres
+  TRAMOS.forEach((t,i)=>{ const a = inicioDe(i), x = X(a + t.min/2); if (t.min >= 5) texto(g, t.n, x, H - 6, t.p ? C.gente : C.luz3, 'center'); });
+  // cabezal
+  if (cab != null){ const x = X(cab); g.fillStyle = C.luz; g.fillRect(x - 0.5, top - 2, 1, bot - top + 4); punto(g, x, top - 4, 2.5, C.luz); }
+}
+
+// 02 · Medidor de luces
+function vu(cv, cab){
+  const {g, W, H} = preparar(cv);
+  const filas = 8, x0 = 10, x1 = W - 10, top = 8, bot = H - 26, cols = TOTAL, px = (x1 - x0)/(cols - 1), py = (bot - top)/(filas - 1);
+  for (let c = 0; c < cols; c++){
+    const m = c + 0.5, {t} = tramoEn(m), lit = Math.round(intensidad(m)/5 * filas), hecho = cab != null && m < cab;
+    for (let f = 0; f < filas; f++){
+      const on = f < lit, x = x0 + c*px, y = bot - f*py;
+      let col = on ? (t.p ? C.gente : C.luz) : C.rejilla;
+      if (on && hecho) col = t.p ? '#7A3518' : '#6E6E70';
+      punto(g, x, y, 1.9, col);
+    }
+    if (lit > 0) punto(g, x0 + c*px, bot - Math.min(filas-1, lit)*py - 0, 0, C.luz);
+  }
+  // luz de pico del tramo principal
+  const pa = inicioDe(iP); punto(g, x0 + (pa + 7)*px, bot - (filas-1)*py, 2.2, C.gente);
+  TRAMOS.forEach((t,i)=>{ const a = inicioDe(i); texto(g, t.n, x0 + a*px - 2, H - 6, t.p ? C.gente : C.luz3); });
+  if (cab != null){ const x = x0 + Math.min(cols-1, cab)*px; g.fillStyle = C.luz; g.fillRect(x - 0.5, top - 6, 1, bot - top + 12); }
+}
+
+// 03 · Rueda
+function rueda(cv, cab){
+  const {g, W, H} = preparar(cv);
+  const cx = W/2, cy = H/2 + 6, R = Math.min(W, H)/2 - 22, a0 = Math.PI*0.75, a1 = Math.PI*2.25;
+  for (let i = 0; i < TOTAL; i++){
+    const m = i + 0.5, {t} = tramoEn(m), ang = a0 + (a1 - a0) * i/(TOTAL - 1), r = 1.4 + intensidad(m) * 0.75;
+    const hecho = cab != null && m < cab;
+    const col = hecho ? C.rejilla : (t.p ? C.gente : C.luz);
+    punto(g, cx + R*Math.cos(ang), cy + R*Math.sin(ang), r, col);
+  }
+  // marca azul de inicio
+  punto(g, cx + (R + 12)*Math.cos(a0), cy + (R + 12)*Math.sin(a0), 3, C.tiempo);
+  g.textAlign = 'center'; g.fillStyle = C.luz; g.font = '300 44px Archivo, system-ui, sans-serif';
+  const quedan = cab != null ? Math.max(0, Math.ceil(TOTAL - cab)) : TOTAL;
+  g.fillText(String(quedan), cx, cy + 10);
+  g.font = '9.5px "Martian Mono", ui-monospace, monospace';
+  texto(g, cab != null ? 'MIN QUEDAN' : 'MIN', cx, cy + 28, C.luz3, 'center');
+  const {t} = tramoEn(cab != null ? Math.min(cab, TOTAL - 0.01) : 7);
+  texto(g, t.n, cx, cy + 44, t.p ? C.gente : C.luz3, 'center');
+  texto(g, hora(0), cx - R*0.72, cy + R*0.72 + 18, C.tiempo, 'center');
+  texto(g, hora(TOTAL), cx + R*0.72, cy + R*0.72 + 18, C.luz3, 'center');
+}
+
+// 04 · Cinta
+function cinta(cv, cab, t){
+  const {g, W, H} = preparar(cv);
+  const cy = 52, r = 34, xl = 50, xr = W - 50, p = cab != null ? cab/TOTAL : 0;
+  const carrete = (x, lleno, giro) => {
+    const rr = r * (0.55 + 0.45*lleno);
+    for (let i = 0; i < 16; i++){ const a = giro + i*Math.PI/8; punto(g, x + rr*Math.cos(a), cy + rr*Math.sin(a), 1.6, C.luz); }
+    for (let i = 0; i < 3; i++){ const a = giro + i*2*Math.PI/3; for (let k = 4; k <= 12; k += 4) punto(g, x + k*Math.cos(a), cy + k*Math.sin(a), 1.3, C.luz3); }
+    punto(g, x, cy, 2.4, C.apagado);
+  };
+  const giro = reducido ? 0 : t/900;
+  carrete(xl, 1 - p, giro); carrete(xr, p, giro);
+  // cinta con tramos
+  const y = cy + r + 14, a = xl - 10, b = xr + 10, X = (m)=> a + (b - a)*m/TOTAL;
+  g.fillStyle = C.rejilla; g.fillRect(a, y - 1, b - a, 2);
+  TRAMOS.forEach((tr,i)=>{ const s = inicioDe(i), h = 4 + tr.int*5; g.fillStyle = tr.p ? C.gente : C.luz; g.fillRect(X(s) + 1, y - h, X(s + tr.min) - X(s) - 2, h); const w = X(s + tr.min) - X(s); if (g.measureText(tr.n).width < w + 4) texto(g, tr.n, X(s) + w/2, y + 16, tr.p ? C.gente : C.luz3, 'center'); });
+  if (cab != null){ const x = X(cab); g.fillStyle = C.luz; g.fillRect(x - 0.5, y - 28, 1, 34); }
+  texto(g, hora(0), 8, 12, C.tiempo); texto(g, hora(TOTAL), W - 8, 12, C.luz3, 'right');
+}
+
+// 05 · Línea
+function linea(cv, cab){
+  const {g, W, H} = preparar(cv);
+  const x0 = 8, x1 = W - 8, top = 14, bot = H - 30, X = (m)=> x0 + (x1 - x0)*m/TOTAL, Y = (v)=> bot - (bot - top)*v/5;
+  g.fillStyle = C.rejilla; for (let v = 1; v <= 5; v++) g.fillRect(x0, Math.round(Y(v)), x1 - x0, 1);
+  g.lineWidth = 1.5; g.lineJoin = 'round';
+  TRAMOS.forEach((t,i)=>{
+    const s = inicioDe(i), e = s + t.min, prev = TRAMOS[i-1];
+    g.strokeStyle = t.p ? C.gente : C.luz; g.beginPath();
+    g.moveTo(X(s), Y(prev ? prev.int : 0)); g.lineTo(X(s) + 6, Y(t.int)); g.lineTo(X(e), Y(t.int)); g.stroke();
+    texto(g, t.n, X(s), H - 8, t.p ? C.gente : C.luz3);
+  });
+  g.strokeStyle = C.luz; g.beginPath(); g.moveTo(X(TOTAL), Y(TRAMOS[TRAMOS.length-1].int)); g.lineTo(X(TOTAL), Y(0)); g.stroke();
+  punto(g, X(0), Y(0), 3, C.tiempo);
+  if (cab != null){ const m = Math.min(cab, TOTAL - 0.01), {t} = tramoEn(m); punto(g, X(m), Y(t.int), 3.2, C.luz); }
+}
+
+const DIBUJOS = { onda, vu, rueda, cinta, linea };
+const lienzos = [...document.querySelectorAll('canvas[data-c]')];
+function cuadro(t){
+  const cab = reducido ? null : ((t / 10000) % 1.15) * TOTAL;   // pausa breve al final
+  lienzos.forEach((cv)=> DIBUJOS[cv.dataset.c](cv, cab != null && cab <= TOTAL ? cab : null, t));
+  if (!reducido) requestAnimationFrame(cuadro);
+}
+requestAnimationFrame(cuadro);
+addEventListener('resize', ()=> lienzos.forEach((cv)=> cv.width = 0));
+</script>
+</body>
+</html>
