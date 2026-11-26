@@ -1,7 +1,7 @@
 # workout-engine.md — Motor de entrenamiento de Movi
 
-**Versión:** 1.2
-**Fecha:** Agosto 2026 · **Cambios 1.2 (24 nov 2026):** motor de planificación (perfil, biblioteca validada, reglas, plan semanal, Claude como entrenador) y límites de salud. **Cambios 1.1 (24 nov 2026):** en pareja y en grupo se entrena a la vez, nunca por turnos. Desaparece el rol alterno («uno trabaja, el otro cuenta»).
+**Versión:** 1.3
+**Fecha:** Agosto 2026 · **Cambios 1.3 (26 nov 2026):** composición dinámica de sesiones, parámetros por respuesta, reglas de variedad, figura de luces (rotoscopia de puntos) y voz por frases. **Cambios 1.2 (24 nov 2026):** motor de planificación (perfil, biblioteca validada, reglas, plan semanal, Claude como entrenador) y límites de salud. **Cambios 1.1 (24 nov 2026):** en pareja y en grupo se entrena a la vez, nunca por turnos. Desaparece el rol alterno («uno trabaja, el otro cuenta»).
 **Origen:** Auditoría de las 30 pantallas de Paper + benchmark de mercado
 **Estado:** Propuesta aprobada para diseño; sustituye la arquitectura actual del flujo Categorías → Lista → Filtros → Detalle
 
@@ -259,3 +259,76 @@ type ComoFue = {
 | Avisos, resúmenes del «¿cómo fue?», moderación | Claude Haiku 5.5 |
 
 El modelo no hace segura la app; el motor de reglas, sí.
+
+---
+
+## Composición dinámica (v1.3)
+
+**Principio:** el motor no elige de un catálogo; compone cada sesión con una plantilla y la rellena con movimientos de la biblioteca que cumplen las reglas. Cada respuesta del usuario cambia un parámetro y la sesión se recompone al momento.
+
+```ts
+type Hueco = { patron: 'empuje' | 'tiron' | 'pierna' | 'bisagra' | 'core' | 'cardio' | 'movilidad' | 'cooperativo'; medida: Movimiento['medida'] }
+
+type Plantilla = {
+  id: string
+  formatoSocial: 'solo' | 'pareja' | 'grupo'
+  fases: { tipo: Fase['tipo']; vueltas: number; huecos: Hueco[] }[]
+}
+
+type Parametros = {
+  nivel: 1 | 2 | 3 | 4 | 5
+  minutos: 10 | 15 | 20 | 25 | 30 | 45
+  punto: { equipamiento: string[] }          // PuntoMovi de specs/conexion
+  conQuien: 'solo' | 'pareja' | 'grupo'
+  vieneCon?: 'carrito' | 'perro' | 'ninos'
+  adaptaciones: Adaptacion[]
+  motivacion?: 'reirme' | 'superarme' | 'desconectar'
+  ultimoComoFue?: ComoFue
+  clima?: 'frio' | 'templado' | 'calor'
+}
+```
+
+| Respuesta o señal | Parámetro que mueve |
+|---|---|
+| Nivel | Variante, volumen y descansos |
+| Rueda de tiempo | Número de bloques y vueltas |
+| Punto Movi | Solo movimientos posibles con su equipamiento |
+| Con quién | Pareja: a la vez + reto cooperativo; grupo: estaciones |
+| Viene con | Carrito, perro o niños: movimientos que los usan; nada de suelo con bebé |
+| Semanas postparto y alta | Bloqueos y suelo pélvico |
+| Motivación | Tono de la voz y tipo de reto |
+| «¿Cómo fue?» | Sube o baja variante; cambia lo que molestó |
+| Repetir o saltar | Preferencias |
+| Clima | Calentamiento y descansos |
+
+### Reglas de composición
+
+- **M9 —** No se repite el movimiento principal dos sesiones seguidas ni la misma sesión completa en 14 días.
+- **M10 —** Cada hueco de la plantilla tiene un patrón; solo lo rellenan movimientos de ese patrón.
+- **M11 —** Un cambio de parámetro recompone la sesión en menos de 300 ms y Claude lo explica en una línea.
+- **M12 —** Una sesión que gustó se puede repetir igual o «parecida, pero distinta» (mismos patrones, otros movimientos).
+
+### Cómo se enseña cada movimiento: figura de luces
+
+- Cada movimiento se guarda como **puntos del cuerpo** (33, en 3D, de MediaPipe Pose Landmarker) de una repetición en bucle: 3 s en los dinámicos (2 al bajar, 1 al subir) y 4 s en los isométricos.
+- La app lo dibuja como **figura de luces** sobre la pantalla OLED: frente o lado, espejo, velocidad, la articulación clave en naranja, el error típico en el color de error y dos figuras a la vez en pareja.
+- Origen de los puntos, en este orden: material con licencia que permita extraer la pose (MuscleWiki o Gym Visual, si lo aceptan por escrito) y, si no, grabación propia (lista de rodaje). Ningún vídeo generado con IA.
+- La persona grabada no aparece: solo se guardan los puntos y el vídeo original se borra o se guarda en privado.
+
+```ts
+type Pose = {
+  movimientoId: string
+  variante: 'regresion' | 'estandar' | 'progresion' | 'error_tipico'
+  vista: 'frente' | 'lado'
+  fps: 30
+  duracionMs: 3000 | 4000
+  frames: [number, number, number][][]    // 33 puntos × (x, y, z) por fotograma
+  articulacionClave: number[]             // índices que van en naranja
+}
+```
+
+### Voz
+
+- Una sola voz de Movi (ElevenLabs u otra con licencia comercial confirmada), generada por **frases cortas** que se guardan en la app: ejercicio, repeticiones, claves, ánimos y nombres.
+- Respaldo sin conexión: la voz del dispositivo (Web Speech API).
+- Sonido y vibración de Instrumento marcan el ritmo: clic por repetición, dos notas al cambiar de ejercicio, acorde al terminar.

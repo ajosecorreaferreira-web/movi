@@ -1,5 +1,7 @@
 # Encargo — pintar el sistema Instrumento en Paper
 
+> La fase 2 de este archivo queda sustituida por `ENCARGO-PAPER-v2.md`.
+
 Para el Claude de VS Code, con el plugin de Paper conectado y Paper Desktop abierto en el archivo de Movi.
 
 ## Antes de empezar

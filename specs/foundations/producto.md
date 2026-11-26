@@ -2,7 +2,7 @@
 
 **Versión:** 0.1
 **Fecha:** 2026-11-24
-**Estado:** borrador (pendiente de aprobar)
+**Estado:** aprobada por José (26 nov 2026)
 **Origen:** análisis «Dónde estamos y qué falta» (claude.ai, 24 nov 2026). Objetivo de José: adopción rápida y uso constante y continuado, con patrones de enganche usados para el bien.
 
 ---

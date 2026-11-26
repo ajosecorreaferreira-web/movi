@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Instrumento · Ejercicio en luces</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200..700&amp;family=Martian+Mono:wght@400..600&amp;display=swap">
+<style>
+body{margin:0}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid #2B4FD8;outline-offset:2px}
+.tecla{transition:transform 60ms,box-shadow 60ms}
+.tecla:active{transform:translateY(3px);box-shadow:none!important}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#EEEEEC;color:#111111;font-family:'Archivo',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <header style="display:flex;align-items:center;justify-content:space-between;padding:10px 10px 0">
+    <span style="width:44px"></span>
+    <span style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.08em">FICHA DEL ENTRENO · 1 DE 4</span>
+    <span style="width:44px"></span>
+  </header>
+
+  <div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:6px">
+    <h1 style="margin:0;font-weight:250;font-size:31px;line-height:1.05;letter-spacing:-0.02em">Sentadilla</h1>
+    <p style="margin:0;font-size:14.5px;line-height:1.45;color:#3A3A3A">{{clave}}</p>
+  </div>
+
+  <main style="flex:1;display:flex;flex-direction:column;gap:10px;padding:10px 20px 0">
+    <section aria-label="Demostración" style="background:#0F0E12;color:#F2F2F0;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#9A9A9A">
+        <span style="display:flex;align-items:center;gap:8px"><span aria-hidden="true" style="width:7px;height:7px;background:#FF5B1A;box-shadow:0 0 6px #FF5B1A"></span>{{etiquetaVista}}</span>
+        <span style="color:#F2F2F0">{{contador}}</span>
+      </div>
+      <svg role="img" aria-label="{{ariaFigura}}" viewBox="0 0 240 300" style="display:block;width:100%;height:auto">
+        <sc-for list="{{malla}}" as="m" hint-placeholder-count="40"><circle cx="{{m.x}}" cy="{{m.y}}" r="0.9" fill="#2E2E32"></circle></sc-for>
+        <sc-for list="{{puntos}}" as="d" hint-placeholder-count="120"><circle cx="{{d.x}}" cy="{{d.y}}" r="{{d.r}}" fill="{{d.c}}"></circle></sc-for>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#CFCFCB">
+        <span>{{pie1}}</span><span style="color:{{colorPie2}}">{{pie2}}</span>
+      </div>
+    </section>
+
+    <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:8px">
+      <sc-for list="{{vistas}}" as="k" hint-placeholder-count="2">
+        <button class="tecla" aria-pressed="{{k.on}}" onClick="{{k.accion}}" style="height:44px;border:1px solid {{k.borde}};border-radius:6px;background:{{k.fondo}};color:{{k.texto}};box-shadow:{{k.sombra}};cursor:pointer;font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.06em">{{k.nombre}}</button>
+      </sc-for>
+    </div>
+    <div role="radiogroup" aria-label="Variante" style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:8px">
+      <sc-for list="{{variantes}}" as="k" hint-placeholder-count="3">
+        <button class="tecla" role="radio" aria-checked="{{k.on}}" onClick="{{k.accion}}" style="height:44px;border:1px solid {{k.borde}};border-radius:6px;background:{{k.fondo}};color:{{k.texto}};box-shadow:{{k.sombra}};cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.04em"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:{{k.led}}"></span>{{k.nombre}}</button>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:8px">
+      <sc-for list="{{interruptores}}" as="k" hint-placeholder-count="3">
+        <button class="tecla" aria-pressed="{{k.on}}" onClick="{{k.accion}}" style="height:44px;border:1px solid #CFCFCB;border-radius:6px;background:#F7F7F5;box-shadow:0 3px 0 #CFCFCB;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.04em"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:{{k.led}};box-shadow:{{k.brillo}}"></span>{{k.nombre}}</button>
+      </sc-for>
+    </div>
+  </main>
+
+  <div style="padding:12px 20px 22px">
+    <button class="tecla" onClick="{{principal}}" style="width:100%;height:58px;border:0;border-radius:6px;background:#111111;color:#F7F7F5;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 3px 0 #5A5A5A">
+      <span style="display:flex;align-items:center;gap:10px;font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.1em"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:{{ledPrincipal}};box-shadow:{{brilloPrincipal}}"></span>{{textoPrincipal}}</span>
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="{{iconoPrincipal}}"/></svg>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { vista: 'frente', variante: 'libre', error: false, pareja: false, voz: false, marcha: false, fase: 0.35, reps: 0, rm: false };
+    const malla = [];
+    for (let y = 8; y < 300; y += 12) for (let x = 6; x < 240; x += 12) malla.push({ x, y });
+    this.malla = malla;
+  }
+  componentDidMount() {
+    const rm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (rm) this.setState({ rm: true });
+  }
+  componentWillUnmount() { clearInterval(this.iv); try { window.speechSynthesis.cancel(); } catch (e) {} }
+  tono(fs, d) {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      this.ac = this.ac || new AC();
+      const ac = this.ac;
+      fs.forEach((f, i) => {
+        const t0 = ac.currentTime + i * 0.07, o = ac.createOscillator(), g = ac.createGain();
+        o.type = 'triangle'; o.frequency.setValueAtTime(f, t0);
+        g.gain.setValueAtTime(0.08, t0); g.gain.exponentialRampToValueAtTime(0.001, t0 + d);
+        o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + d + 0.02);
+      });
+    } catch (e) {}
+  }
+  decir(texto) {
+    if (!this.state.voz) return;
+    try {
+      const u = new SpeechSynthesisUtterance(texto);
+      u.lang = 'es-ES'; u.rate = 1.05;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  periodo() { return this.state.variante === 'pausa' ? 3.6 : (this.state.variante === 'silla' ? 2.6 : 2.4); }
+  arrancar() {
+    if (this.state.marcha) { clearInterval(this.iv); return this.setState({ marcha: false }); }
+    this.tono([660, 990], 0.08);
+    this.setState({ marcha: true, reps: 0, fase: 0 });
+    this.decir(this.frase());
+    const paso = 0.05;
+    this.iv = setInterval(() => {
+      let f = this.state.fase + paso / this.periodo();
+      if (f >= 1) {
+        f -= 1;
+        const reps = this.state.reps + 1;
+        this.tono([1800], 0.03);
+        if (reps >= 10) { clearInterval(this.iv); this.tono([523, 659, 784, 1047], 0.25); this.decir('Diez. Muy bien.'); return this.setState({ reps, fase: 0, marcha: false }); }
+        this.decir(String(reps));
+        return this.setState({ reps, fase: f });
+      }
+      this.setState({ fase: f });
+    }, 50);
+  }
+  frase() {
+    const v = this.state.variante;
+    const base = v === 'silla' ? 'Sentadilla a la silla. Diez repeticiones. Roza la silla y sube.' : (v === 'pausa' ? 'Sentadilla con pausa. Diez repeticiones. Dos segundos abajo.' : 'Sentadilla. Diez repeticiones. Baja como si te sentaras.');
+    return base + ' Rodilla en la línea del pie.';
+  }
+  profundidad(f, vv) {
+    const v = vv || this.state.variante;
+    let d = (1 - Math.cos(2 * Math.PI * f)) / 2;
+    if (v === 'pausa') d = Math.min(1, d * 1.6);
+    const max = v === 'silla' ? 0.55 : (v === 'pausa' ? 1 : 0.9);
+    return d * max;
+  }
+  poseFrente(d, err) {
+    const P = (x, y) => ({ x, y });
+    const dy = 50 * d, k = err ? 14 * d : -6 * d;
+    return {
+      cabeza: P(120, 40 + dy), cuello: P(120, 62 + dy),
+      hi: P(98, 72 + dy), hd: P(142, 72 + dy),
+      ci: P(92 + 4 * d, 108 + dy - 30 * d), cd: P(148 - 4 * d, 108 + dy - 30 * d),
+      mi: P(92 + 10 * d, 144 + dy - 62 * d), md: P(148 - 10 * d, 144 + dy - 62 * d),
+      cai: P(108, 150 + 52 * d), cad: P(132, 150 + 52 * d),
+      ri: P(104 + k, 212 + 6 * d), rd: P(136 - k, 212 + 6 * d),
+      ti: P(102, 272), td: P(138, 272)
+    };
+  }
+  poseLado(d) {
+    const P = (x, y) => ({ x, y });
+    const cad = P(120 - 34 * d, 150 + 55 * d), rod = P(121 + 35 * d, 211 + 11 * d);
+    const a = 0.66 * d, b = 1.45 * d;
+    const hom = P(cad.x + 80 * Math.sin(a), cad.y - 80 * Math.cos(a));
+    return {
+      cabeza: P(hom.x + 26 * Math.sin(a), hom.y - 26 * Math.cos(a)), hom,
+      codo: P(hom.x + 34 * Math.sin(b), hom.y + 34 * Math.cos(b)), mano: P(hom.x + 68 * Math.sin(b), hom.y + 68 * Math.cos(b)),
+      cad, rod, tob: P(120, 272), pie: P(144, 274)
+    };
+  }
+  figura(d, ox, s, conError) {
+    const out = [], luz = '#F2F2F0', naranja = '#FF5B1A', rojo = '#B42318';
+    const T = (p) => ({ x: Math.round((120 + (p.x - 120) * s + ox) * 10) / 10, y: Math.round((300 - (300 - p.y) * s) * 10) / 10 });
+    const hueso = (a, b, c) => {
+      const A = T(a), B = T(b), len = Math.hypot(B.x - A.x, B.y - A.y), n = Math.max(2, Math.round(len / 7));
+      for (let i = 1; i < n; i++) out.push({ x: Math.round((A.x + (B.x - A.x) * i / n) * 10) / 10, y: Math.round((A.y + (B.y - A.y) * i / n) * 10) / 10, r: 1.9 * s + 0.2, c: c || luz });
+    };
+    const junta = (p, c, r) => { const q = T(p); out.push({ x: q.x, y: q.y, r: (r || 3.2) * s, c }); };
+    const cabeza = (p) => { for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6, q = T({ x: p.x + 11 * Math.cos(a), y: p.y + 11 * Math.sin(a) }); out.push({ x: Math.round(q.x * 10) / 10, y: Math.round(q.y * 10) / 10, r: 1.9 * s + 0.2, c: luz }); } };
+    if (this.state.vista === 'lado' && !this.state.pareja) {
+      const p = this.poseLado(d);
+      if (this.state.variante === 'silla') { hueso({ x: 66, y: 205 }, { x: 100, y: 205 }, '#5A5A5E'); hueso({ x: 70, y: 205 }, { x: 70, y: 272 }, '#5A5A5E'); hueso({ x: 98, y: 205 }, { x: 98, y: 272 }, '#5A5A5E'); }
+      cabeza(p.cabeza); hueso(p.hom, p.cad); hueso(p.hom, p.codo); hueso(p.codo, p.mano); hueso(p.cad, p.rod); hueso(p.rod, p.tob); hueso(p.tob, p.pie);
+      [p.hom, p.codo, p.mano, p.cad, p.tob].forEach((q) => junta(q, luz));
+      junta(p.rod, naranja, 4.2);
+      hueso({ x: 60, y: 279 }, { x: 190, y: 279 }, '#5A5A5E');
+      return out;
+    }
+    const p = this.poseFrente(d, conError);
+    const cRod = conError ? rojo : naranja;
+    cabeza(p.cabeza); hueso(p.cuello, p.hi); hueso(p.cuello, p.hd); hueso(p.hi, p.ci); hueso(p.ci, p.mi); hueso(p.hd, p.cd); hueso(p.cd, p.md);
+    hueso(p.cuello, { x: 120, y: (p.cai.y + p.cad.y) / 2 }); hueso(p.cai, p.cad);
+    hueso(p.cai, p.ri, conError ? rojo : null); hueso(p.ri, p.ti, conError ? rojo : null); hueso(p.cad, p.rd, conError ? rojo : null); hueso(p.rd, p.td, conError ? rojo : null);
+    [p.hi, p.hd, p.ci, p.cd, p.mi, p.md, p.cai, p.cad, p.ti, p.td].forEach((q) => junta(q, luz));
+    junta(p.ri, cRod, 4.2); junta(p.rd, cRod, 4.2);
+    hueso({ x: 70, y: 279 }, { x: 170, y: 279 }, '#5A5A5E');
+    return out;
+  }
+  renderVals() {
+    const s = this.state;
+    const fase = s.rm && s.marcha ? (s.reps % 2 ? 0.5 : 0) : s.fase;
+    const d = this.profundidad(fase);
+    let puntos;
+    if (s.pareja) {
+      puntos = this.figura(d, -58, 0.78, false).concat(this.figura(this.profundidad(fase, 'silla'), 58, 0.78, false));
+    } else {
+      puntos = this.figura(d, 0, 1, s.error && s.vista === 'frente');
+    }
+    const tecla = (on) => ({ on: on ? 'true' : 'false', fondo: on ? '#111111' : '#F7F7F5', texto: on ? '#F7F7F5' : '#111111', borde: on ? '#111111' : '#CFCFCB', sombra: on ? 'none' : '0 3px 0 #CFCFCB', led: on ? '#FF5B1A' : '#CFCFCB' });
+    const vistas = [['frente', 'DE FRENTE'], ['lado', 'DE LADO']].map(([id, nombre]) => Object.assign({ nombre, accion: () => { this.tono([1800], 0.03); this.setState({ vista: id }); } }, tecla(s.vista === id)));
+    const variantes = [['silla', 'A LA SILLA'], ['libre', 'LIBRE'], ['pausa', 'CON PAUSA']].map(([id, nombre]) => Object.assign({ nombre, accion: () => { this.tono([1800], 0.03); this.setState({ variante: id }); } }, tecla(s.variante === id)));
+    const inter = (nombre, on, accion) => ({ nombre, on: on ? 'true' : 'false', led: on ? '#FF5B1A' : '#CFCFCB', brillo: on ? '0 0 6px #FF5B1A' : 'none', accion });
+    const interruptores = [
+      inter('ERROR TÍPICO', s.error, () => { this.tono([1800], 0.03); this.setState({ error: !s.error, vista: 'frente', pareja: false }); }),
+      inter('EN PAREJA', s.pareja, () => { this.tono([1800], 0.03); this.setState({ pareja: !s.pareja, vista: 'frente', error: false }); }),
+      inter('VOZ', s.voz, () => { this.tono([1800], 0.03); this.setState({ voz: !s.voz }); })
+    ];
+    const nombres = { silla: 'A LA SILLA', libre: 'LIBRE', pausa: 'CON PAUSA' };
+    let pie1 = 'TÚ · ' + nombres[s.variante], pie2 = s.vista === 'lado' ? 'RODILLA EN LA LÍNEA DEL PIE' : 'RODILLAS HACIA FUERA', colorPie2 = '#FF5B1A';
+    if (s.pareja) { pie1 = 'TÚ · ' + nombres[s.variante] + '   ANA · A LA SILLA'; pie2 = 'A LA VEZ'; }
+    if (s.error && !s.pareja) { pie2 = 'ASÍ NO · RODILLA HACIA DENTRO'; colorPie2 = '#F2F2F0'; }
+    const clave = s.variante === 'silla' ? 'Baja hasta rozar la silla y sube empujando el suelo.' : (s.variante === 'pausa' ? 'Baja, aguanta dos segundos abajo y sube con fuerza.' : 'Baja como si te sentaras, con el pecho alto y las rodillas en la línea del pie.');
+    return {
+      clave, malla: this.malla, puntos,
+      etiquetaVista: s.pareja ? 'EN PAREJA · DE FRENTE' : (s.vista === 'lado' ? 'DE LADO' : 'DE FRENTE'),
+      contador: String(s.reps).padStart(2, '0') + ' / 10',
+      ariaFigura: 'Figura de luces haciendo una sentadilla, ' + (s.vista === 'lado' ? 'vista de lado' : 'vista de frente'),
+      pie1, pie2, colorPie2, vistas, variantes, interruptores,
+      principal: () => this.arrancar(),
+      textoPrincipal: s.marcha ? 'PAUSA' : (s.reps >= 10 ? 'OTRA SERIE' : 'EMPEZAR'),
+      iconoPrincipal: s.marcha ? 'M7 4h3v16H7zM14 4h3v16h-3z' : 'M7 4l13 8-13 8z',
+      ledPrincipal: s.marcha ? '#FF5B1A' : '#5A5A5A', brilloPrincipal: s.marcha ? '0 0 6px #FF5B1A' : 'none'
+    };
+  }
+}
+</script>
+</body>
+</html>

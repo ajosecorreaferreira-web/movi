@@ -1,15 +1,37 @@
 # conexion.md — La primera vez y la siguiente
 
-**Versión:** 0.1
-**Fecha:** 2026-11-24
-**Estado:** borrador (decisiones tomadas por José en Cowork; pendiente de aprobar como spec)
-**Origen:** análisis «Dónde estamos y qué falta» y «Confianza, densidad y motor de entrenamiento» (claude.ai, 24 nov 2026). Riesgos detectados: densidad, seguridad al quedar con desconocidos y que la gente repita.
+**Versión:** 0.2
+**Fecha:** 2026-11-26
+**Cambios 0.2:** feedback de José.
+- Se puede ver gente sin registrarse, y solo hay 3 pasos obligatorios.
+- Puntos Movi con tipos.
+- Bono municipal con pase de tarjeta perforada.
+- Ficha del entreno antes de quedar.
+- «Tu tipo de compañero» en lugar de la numerología.
+- Chat ligado a la quedada, al estilo Wallapop.
+- Valoraciones sin estrellas: privadas, sellos positivos y aviso aparte.
+
+**Estado:** borrador (pendiente de aprobar)
+**Origen:** análisis «Dónde estamos y qué falta», «Confianza, densidad y motor de entrenamiento» y «Ajustes a la spec de conexión» (claude.ai, 24–26 nov 2026).
 
 ---
 
 ## Principio
 
-Movi convierte a un desconocido en alguien con quien entrenas: te conoce jugando, te deja oír a la otra persona antes de quedar, hace que la primera vez sea segura sin obligarte a ir en grupo, y solo propone repetir cuando las dos personas quieren.
+Movi convierte a un desconocido en alguien con quien entrenas. Ves quién hace deporte cerca sin registrarte, te registras solo para quedar, y la primera vez es en un sitio seguro con el entreno a la vista. Para repetir, las dos personas tienen que querer, y lo negativo nunca se hace público.
+
+---
+
+## La primera interacción
+
+Es la pantalla que decide si Movi funciona. **Objetivo: que en menos de 2 minutos alguien se apunte a algo que le gusta, cerca y para hoy, mañana o esta semana.** El onboarding llega después, cuando ya quiere algo, y se siente como tocar un instrumento: rápido, con sonido y con gracia.
+
+1. **Abres la app y ves planes, no formularios.** «Cerca de ti» con tres planes ordenados por cercanía en el tiempo: hoy, mañana, esta semana. Cada plan muestra la hora, el sitio a cuántos minutos, quién va (iniciales y nivel) y lo que se hace, con un vídeo corto en bucle.
+2. **Una sola pregunta opcional para afinar: «¿Cuándo te viene bien?».** Arriba, los 7 días que vienen como teclas (HOY, VIE, SÁB…); debajo, las horas de 7 a 22 como un secuenciador de 16 pasos en azul, el color del tiempo. Se marca el rango tocando la hora de inicio y la de fin, o con tres atajos: mañana (7–13), tarde (14–19) y noche (20–22). Los planes que encajan suben y se cuentan al momento («VIE, SÁB · 7–10 H · 2 PLANES»), cada toque con su clic.
+3. **Tocas un plan:** ves a la gente (su saludo, si lo tiene), la ficha del entreno y el punto exacto.
+4. **«Me apunto»** abre el registro, como instrumento: zona confirmada, nivel con su tecla y, solo para quedar en pareja, el selfie con el anillo de cuenta atrás («Para que Ana te reconozca»).
+5. **Celebración corta:** el anillo se enciende y suena el acorde: «Estás dentro. Ana te espera mañana a las 8:00».
+6. **Ahora sí, si quiere:** grabar su saludo, la ficha de compañero o «tu tipo de compañero». Todo opcional y todo con su sonido.
 
 ---
 
@@ -17,111 +39,194 @@ Movi convierte a un desconocido en alguien con quien entrenas: te conoce jugando
 
 | Se elimina | Por qué |
 |---|---|
-| Obligar a que la primera vez sea en grupo | Era una barrera alta y exigía mucha gente desde el principio. Lo que protege es el sitio y la verificación, no el número de personas. |
-| Matching por numerología o zodiaco | Se queda como juego visible, nunca como criterio. |
-| Ofrecer primero una clase de pago a quien está solo | El primer contacto es gratis (auditoría, F15). |
-| El chat libre entre desconocidos antes de la primera vez | Lo sustituyen el saludo en audio, el mensaje de propuesta y mensajes predefinidos. Menos acoso, menos moderación. |
+| Obligar a que la primera vez sea en grupo | Era una barrera alta. Lo que protege es el sitio y la verificación. |
+| Un onboarding con 8 preguntas antes de ver a nadie | Barrera de entrada. Las preguntas llegan de una en una, después de cada sesión. |
+| Numerología como juego principal | No tiene base científica. La sustituye «tu tipo de compañero» (cronotipo y rasgos); la numerología queda como guiño etiquetado. |
+| Mensajes entre desconocidos antes de aceptar una quedada | El chat se abre cuando las dos personas aceptan. |
+| Estrellas y medias públicas | Se inflan y castigan una mala tarde. Las sustituyen sellos positivos y señales de lo que has hecho. |
+| Ofrecer primero una clase de pago a quien está solo | Lo gratis va primero (auditoría, F15). |
 
 ---
 
 ## Modelo de datos
 
 ```ts
-// Conocerte jugando: 8 preguntas, una por pantalla, respuesta con una tecla
-type FichaCompanero = {
-  horario: 'temprano' | 'media_manana' | 'tarde' | 'noche'
+// Registro: solo esto es obligatorio, y solo al pulsar «me apunto»
+type Registro = {
+  zona: { lat: number; lng: number } | { barrio: string }
   nivel: 'activo' | 'en_marcha' | 'en_forma' | 'potencia' | 'elite'
-  vieneCon: 'solo' | 'carrito' | 'perro' | 'ninos'
-  charla: 'charla' | 'un_poco' | 'silencio'
-  puntualidad: 'puntual' | 'mas_o_menos' | 'llego_cuando_llego'
-  despues: 'cafe' | 'depende' | 'a_lo_mio'
-  motivacion: 'reirme' | 'superarme' | 'desconectar'
-  numeroEntreno?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9   // juego; sale de día y mes, nunca del año
-  franjaEdad: '18_29' | '30_39' | '40_49' | '50_64' | '65_mas'
+  verificacion: 'foto_verificada' | 'sin_verificar'   // obligatoria solo para quedar en pareja
+  telefono: string                       // nunca visible para otras personas
+}
+
+// La ficha se completa poco a poco: una pregunta después de cada sesión
+type FichaCompanero = {
+  disponibilidad?: { dias: ('lun' | 'mar' | 'mie' | 'jue' | 'vie' | 'sab' | 'dom')[]; desde: number; hasta: number }  // horas 7–22
+  vieneCon?: 'solo' | 'carrito' | 'perro' | 'ninos'
+  charla?: 'charla' | 'un_poco' | 'silencio'
+  puntualidad?: 'puntual' | 'mas_o_menos' | 'llego_cuando_llego'
+  despues?: 'cafe' | 'depende' | 'a_lo_mio'
+  motivacion?: 'reirme' | 'superarme' | 'desconectar'
   conQuien: 'solo_mujeres' | 'solo_hombres' | 'me_da_igual'
-  verificacion: 'foto_verificada' | 'sin_verificar'
+  franjaEdad?: '18_29' | '30_39' | '40_49' | '50_64' | '65_mas'
+  tipo?: TipoCompanero
+  mesNacimiento?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12   // dato curioso; nunca día ni año
   saludo?: Grabacion
 }
 
-// Saludo del perfil y mensaje al proponer quedada (componente C · Grabadora)
+// «Tu tipo de compañero»: cronotipo y rasgos inspirados en el TIPI (10 ítems, Gosling)
+type TipoCompanero = {
+  cronotipo: 'alondra' | 'buho' | 'intermedio'
+  energia: 'tira_del_grupo' | 'constante' | 'a_su_ritmo'
+  sociabilidad: 'charlatana' | 'equilibrada' | 'tranquila'
+  arquetipo: string                      // «la alondra charlatana»
+}
+
 type Grabacion = {
   uso: 'saludo' | 'mensaje'
-  duracionMs: number                          // máximo 20000
-  recorte: { inicioMs: number; finMs: number } // pasos de 500 ms
-  alternativaTexto?: string                   // para quien no puede o no quiere usar la voz
+  duracionMs: number                     // máximo 20000
+  recorte: { inicioMs: number; finMs: number }
+  alternativaTexto?: string
   estado: 'activa' | 'denunciada' | 'retirada'
+}
+
+// Puntos Movi
+type PuntoMovi = {
+  nombre: string
+  tipo: 'gimnasio_aire_libre' | 'calistenia' | 'biosaludable' | 'camino'
+      | 'zona_perros' | 'pista_libre' | 'plaza' | 'instalacion_municipal' | 'local_asociado'
+  puntoExacto: string                    // «junto al cartel de las máquinas»
+  foto: string
+  etiquetas: ('maquinas' | 'mayores' | 'perros' | 'carrito' | 'ruta' | 'ninos')[]
+  equipamiento: string[]                 // lo usa el motor de entrenamiento
+}
+
+// Ayuntamiento: bono de bienvenida en compañía
+type BonoBienvenida = {
+  instalacion: string                    // polideportivo municipal
+  sesiones: 5
+  usadas: 0 | 1 | 2 | 3 | 4 | 5          // la tarjeta perforada
+  titulares: [string, string]            // las dos personas
+  acceso: 'qr_tornos' | 'qr_personal'
 }
 
 // La primera vez
 type PrimeraVez = {
-  formato: 'pareja' | 'grupo_pequeno' | 'clase_local'  // 'pareja' por defecto
-  lugar: { tipo: 'punto_movi' | 'local_asociado'; id: string }
-  franja: 'diurna'                            // solo de día
+  formato: 'pareja' | 'grupo_pequeno' | 'clase_local' | 'instalacion_municipal'
+  lugar: PuntoMovi
+  franja: 'diurna'
+  fichaEntrenoId: string                 // la ficha que las dos ven antes
   avisoInicio: boolean
   avisoFin: boolean
-  compartidaCon?: 'contacto_de_confianza'
-  videollamadaPrevia: boolean                 // opcional, en directo, no se graba
+  ubicacionEnDirecto?: boolean           // 1 hora, el día de la quedada
+  videollamadaPrevia: boolean
 }
 
-// Después de entrenar: privada siempre
+// Chat: solo a partir de una quedada aceptada
+type Chat = {
+  abiertoDesde: 'quedada_aceptada'
+  mensajes: (
+    | { tipo: 'texto'; texto: string }
+    | { tipo: 'rapido'; clave: 'llego_5' | 'estoy_aqui' | 'mover_jueves' | 'hoy_no_puedo' }
+    | { tipo: 'audio'; grabacion: Grabacion }
+    | { tipo: 'tarjeta_quedada'; dia: string; hora: string; puntoId: string; estado: 'propuesta' | 'aceptada' | 'otra_hora' }
+  )[]
+  estado: 'activo' | 'archivado'         // se archiva si no hay sí mutuo
+}
+
+// Valoraciones: tres capas separadas
 type Valoracion = {
-  respuesta: 'repetiria' | 'otra_persona' | 'no_era_lo_mio'
-  compatibilidad: 1 | 2 | 3 | 4 | 5           // privada, alimenta el emparejamiento
+  respuesta: 'repetiria' | 'otra_persona' | 'no_era_lo_mio'   // privada
+  compatibilidad?: 1 | 2 | 3 | 4 | 5                          // privada, solo emparejamiento
+  sellos?: ('puntual' | 'buena_conversacion' | 'me_motivo' | 'paciencia' | 'buen_humor' | 'me_enseno')[]
 }
 
-// Locales asociados: «clase en compañía»
-type LocalAsociado = {
-  tipo: 'hyrox_crossfit' | 'entreno_grupo' | 'box_mujeres'
-      | 'entrenamiento_personal' | 'pilates_barre_yoga' | 'baile'
-  precioPrimeraVez: 'prueba_para_dos'
+type Reputacion = {                      // lo único público
+  verificada: boolean
+  sesionesHechas: number
+  personasQueRepiten: number
+  sellos: { sello: string; veces: number }[]
 }
+
+type Aviso = { categoria: 'no_aparecio' | 'comportamiento' | 'seguridad' | 'otro'; texto?: string }   // solo lo ve el equipo
 ```
-
-**Emparejamiento:** horario, distancia, nivel, etapa de vida (`vieneCon`), `charla`, `puntualidad`, `despues` y `conQuien`. Mezcla personas que hablan mucho con personas calladas. Cada grupo nuevo lleva un anfitrión. Las valoraciones privadas ajustan el siguiente emparejamiento.
 
 ---
 
 ## Reglas duras
 
-1. **R1 — La primera vez solo se propone con las dos personas con foto verificada, de día y en un punto Movi o un local asociado.**
-2. **R2 — Una pareja mixta la primera vez solo se propone si las dos personas lo han marcado** (`conQuien: 'me_da_igual'` en ambas).
-3. **R3 — El formato de la primera vez lo elige la persona:** pareja (por defecto), grupo pequeño de 3 o 4 con anfitrión, o clase en un local.
-4. **R4 — Antes de la primera vez, la app reproduce el saludo de la otra persona** («Esta es Ana»), si lo tiene.
-5. **R5 — La videollamada previa es opcional, en directo y nunca se graba.**
-6. **R6 — El teléfono no se comparte hasta que las dos personas lo acepten;** compartir datos de contacto antes muestra un aviso.
-7. **R7 — Bloquear y denunciar están a un toque** desde cualquier pantalla en la que aparezca otra persona.
-8. **R8 — Repetir requiere un sí de las dos personas.** Un «no» nunca se comunica a la otra persona.
-9. **R9 — Después de tres «no era lo mío» seguidos, Movi propone otro formato** (grupo, clase u otra franja), nunca «has fallado».
-10. **R10 — La numerología no afecta al emparejamiento** ni se usa para excluir; se pide día y mes, nunca el año.
-11. **R11 — Ningún porcentaje de compatibilidad salvo el calculado de señales reales.**
-12. **R12 — El saludo dura como máximo 20 s**, se puede escuchar, recortar, borrar y regrabar, se puede denunciar, y tiene alternativa en texto.
-13. **R13 — A quien está solo, primero se le ofrece lo gratis** (punto Movi); la clase de pago va después y siempre con el precio de prueba para dos por delante.
-14. **R14 — La clase en compañía es para dos:** Movi empareja antes de reservar; no vende clases sueltas.
+1. **R1 —** La primera vez es siempre de día y en un punto Movi, un local asociado o una instalación municipal. Quedar en pareja exige que las dos personas estén verificadas; en grupo con anfitrión, en una clase o en una instalación municipal, la verificación es opcional.
+2. **R2 —** Una pareja mixta, la primera vez, solo si las dos lo han marcado.
+3. **R3 —** El formato de la primera vez lo elige la persona: pareja (por defecto), grupo pequeño, clase o instalación municipal.
+4. **R4 —** Antes de la primera vez suena el saludo de la otra persona, si lo tiene.
+5. **R5 —** La videollamada previa es opcional, en directo y no se graba.
+6. **R6 —** El teléfono y el correo no se comparten. El chat avisa si alguien intenta escribirlos.
+7. **R7 —** Bloquear y avisar de un problema están a un toque en cualquier pantalla con otra persona.
+8. **R8 —** Repetir requiere un sí de las dos personas. Un «no» nunca se comunica.
+9. **R9 —** Tras tres «no era lo mío» seguidos, se propone otro formato.
+10. **R10 —** La numerología, si aparece, lleva la etiqueta «sin base científica» y nunca entra en el emparejamiento.
+11. **R11 —** Ningún porcentaje de compatibilidad salvo el calculado de señales reales.
+12. **R12 —** El saludo dura como máximo 20 s, se puede escuchar, recortar, borrar y regrabar, se puede denunciar, y tiene alternativa en texto.
+13. **R13 —** A quien está solo, primero se le ofrece lo gratis: puntos Movi e instalaciones municipales.
+14. **R14 —** La clase en compañía es para dos: Movi empareja antes de reservar.
+15. **R15 —** Se puede ver quién entrena cerca sin registrarse: iniciales, nivel, hora y sitio aproximado. Nunca el sitio exacto ni la cara.
+16. **R16 —** Antes de quedar hay 2 pasos obligatorios, zona y nivel, y un tercero, el selfie de verificación, solo para quedar en pareja. El selfie se pide en ese momento y no se publica: solo lo ve la persona con la que quedas, para reconocerte.
+17. **R17 —** Después de cada sesión se hace una sola pregunta de la ficha, como mucho.
+18. **R18 —** El chat solo se abre cuando las dos personas aceptan una quedada, y se archiva si no hay un sí mutuo.
+19. **R19 —** La ficha del entreno se ve antes de quedar, con vídeo corto por ejercicio y la variante de cada persona.
+20. **R20 —** Nada negativo es público: ni medias, ni estrellas, ni comentarios. Los sellos son solo positivos y se publican cuando las dos personas han valorado, o a las 48 h.
+21. **R21 —** Cada punto Movi tiene su punto exacto de encuentro, una foto y etiquetas, y el entreno usa su equipamiento.
+22. **R22 —** El bono municipal es para dos personas que entran juntas: 5 sesiones en franjas de poca demanda, con la tarjeta perforada como pase.
+23. **R23 —** La primera pantalla al abrir la app muestra planes concretos (hoy, mañana, esta semana), nunca un formulario ni un tutorial.
+24. **R24 —** Si no hay planes cerca esta semana, se ofrece crear uno en un punto Movi o unirse a una sesión municipal gratuita, nunca una pantalla vacía.
+25. **R25 —** Cada paso del registro y de la ficha se responde con una tecla o una rueda, con su sonido y su respuesta inmediata; ningún campo de texto salvo el teléfono.
 
 ---
 
 ## Criterios de aceptación
 
-- [ ] **C1 —** El onboarding incluye las 8 preguntas de `FichaCompanero`, una por pantalla, y termina en la ficha de compañero y la grabadora del saludo (que se puede saltar).
-- [ ] **C2 —** La propuesta de primera vez muestra el saludo de la otra persona, el formato, el punto Movi, la hora y las opciones de aviso y compartir.
-- [ ] **C3 —** No existe ningún camino que proponga una primera vez de noche, sin verificar o fuera de un punto Movi o un local asociado.
-- [ ] **C4 —** La pantalla de después de entrenar tiene las tres respuestas y nunca revela la respuesta de la otra persona.
-- [ ] **C5 —** El programa de 3 semanas solo se propone con un «repetiría» mutuo.
-- [ ] **C6 —** «Cerca» muestra primero las opciones gratis y, después, la clase en compañía.
+- [ ] **C1 —** Se puede llegar a «Cerca» y ver sesiones sin crear cuenta.
+- [ ] **C2 —** «Me apunto» lleva a un registro de menos de 60 segundos: zona, nivel y, si es en pareja, selfie. En planes de grupo el selfie se puede saltar («Ahora no»).
+- [ ] **C3 —** Después de cada sesión hay como mucho una pregunta de la ficha; la ficha completa también se puede hacer desde «Yo».
+- [ ] **C4 —** La propuesta de primera vez muestra el saludo, el formato, el punto Movi con su foto y su punto exacto, la hora y la ficha del entreno.
+- [ ] **C5 —** No existe ningún camino que proponga una primera vez de noche, sin verificar o fuera de un lugar seguro.
+- [ ] **C6 —** El chat tiene tarjeta de quedada, respuestas rápidas y audio opcional, y no existe antes de aceptar.
+- [ ] **C7 —** Después de entrenar: tres respuestas privadas, la compatibilidad opcional y los sellos. Nunca se revela nada de la otra persona.
+- [ ] **C8 —** El perfil público solo muestra verificación, sesiones, personas que repiten y sellos.
+- [ ] **C9 —** La tarjeta perforada del bono muestra a las dos personas, las 5 sesiones y el QR.
+- [ ] **C10 —** Desde que se abre la app hasta apuntarse a un plan hay menos de 2 minutos y como mucho 4 pantallas con decisiones.
+- [ ] **C11 —** Se mide el tiempo hasta la primera inscripción y el porcentaje de quienes se apuntan a algo en su primera visita.
 
 ---
 
 ## Fuera de alcance
 
-- **Chat libre antes de quedar.** Solo saludo, mensaje de propuesta y mensajes predefinidos («llego 5 min tarde», «hoy no puedo, ¿movemos al jueves?»).
-- **Verificación de identidad con documento.** Con la foto verificada basta para el piloto; se revisa con datos.
-- **Numerología con fecha completa o carta astral.** Solo el número de entreno, como juego.
-- **Pagos dentro de la app.** En el piloto, la clase en compañía se reserva y se paga en el local.
+- **Verificación con documento de identidad.** Para el piloto basta con la foto verificada.
+- **Integración con los tornos municipales.** En el piloto, el personal comprueba el QR en pantalla. La integración con Deporsite depende del convenio.
+- **Pagos dentro de la app.**
+- **Grabar vídeos con IA para explicar ejercicios.** La técnica necesita vídeo real.
 
 ---
 
 ## Trazabilidad
 
-- Diseño: `AppM · Onboarding` (añadir Conocerte y Saludo), `AppM · Primera vez`, `AppM · Después de entrenar`, `AppM · Mensaje a Ana`. Referencia: `design/instrumento/referencia/grabadora.dc.html` (prop `modo`: `saludo` | `mensaje`).
-- Specs relacionadas: `specs/foundations/instrumento.md` (C · Grabadora, v0.6), `specs/foundations/producto.md`, `specs/program/spec.md` (rama `feat/programa`: alinear con R8 y R9).
-- Referencias externas: Timeleft (grupos por test de personalidad, valoración privada), Bumble y Tinder (verificación con foto, videollamada sin dar el teléfono, bloqueo sin notificar).
+- **Diseño:**
+  - `AppM · Cerca` (sin registro)
+  - `AppM · Registro` (3 pasos)
+  - `AppM · Primera vez`
+  - `AppM · Ficha del entreno`
+  - `AppM · Chat de quedada`
+  - `AppM · Después de entrenar`
+  - `AppM · Tarjeta perforada`
+  - `AppM · Mensaje a Ana`
+  - Referencias: `design/instrumento/referencia/grabadora.dc.html`, `design/instrumento/referencia/primera-interaccion.dc.html` y `design/instrumento/referencia/ejercicio-en-luces.dc.html`
+- **Specs relacionadas:**
+  - `specs/foundations/instrumento.md` (C · Grabadora)
+  - `specs/foundations/producto.md`
+  - `specs/workout-engine.md` (equipamiento del punto)
+  - `specs/program/spec.md` (rama `feat/programa`)
+- **Fuentes:**
+  - Ayuntamiento de Las Rozas: Carta de Servicios de Deportes, Normativa del Bonodeporte, notas de prensa de las zonas de calistenia (2023) y del gimnasio al aire libre (2025).
+  - Comunidad de Madrid: parques biosaludables.
+  - Apps: MuscleWiki API, Hyperhuman, Nike Training Club, consejos de seguridad de Wallapop, Uber (valoraciones e insignias).
+  - Investigación: Fradkin, Grewal y Holtz (Airbnb); TIPI de Gosling; metaanálisis del efecto de la edad relativa (Sports Medicine, 2018).

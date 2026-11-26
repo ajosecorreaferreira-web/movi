@@ -1,8 +1,9 @@
 # instrumento.md — El sistema visual de Movi
 
-**Versión:** 0.6
-**Fecha:** 2026-11-24
+**Versión:** 0.7
+**Fecha:** 2026-11-26
 **Estado:** aprobada (dirección elegida por José)
+**Cambios 0.7:** componentes de conexión y entreno (Selector de cuándo, Tarjeta de plan, Punto Movi, Figura de luces, Tarjeta de ejercicio, Tarjeta perforada, Sello, Reputación y Chat) y reglas R16 a R18.
 **Cambios 0.6:** componente `C · Grabadora` (saludo y mensaje en audio) y regla R15.
 **Cambios 0.5:** el entreno en pareja es a la vez, nunca por turnos (R14). Fuera «uno trabaja, el otro cuenta» y el sonido «cambio de rol». Títulos con mayúscula inicial, no en minúsculas.
 **Origen:** exploración de tres direcciones (Instrumento · Escritorio · Glyph). Elegida: **A · Instrumento**, inspirada en los productos físicos de Teenage Engineering, **con el anillo de luces de C · Glyph**, inspirado en Nothing.
@@ -117,6 +118,15 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 | Mapa | `C · Mapa` | Módulo de aluminio claro, radio 10. Zonas verdes como matriz de puntos cuadrados de 3 px cada 9 px en `--color-linea`; calles, líneas de 1 px en `--color-linea`; lugares rotulados en mono 10 `--color-tinta-3`. Tú: anillo de 2 px en `--color-tiempo`. Sesiones: luces de 8 px en tinta; la de ahora, 10 px naranja con brillo | con sesiones · sin sesiones (solo tú) |
 | Pestañas | `C · Pestañas` | Fila de etiquetas mono 10,5, mínimo 44 × 44 cada una; la activa en tinta con LED naranja de 5 px encima, el resto en `--color-tinta-3` | una activa |
 | Grabadora | `C · Grabadora` | Anillo de 40 luces que gira como un carrete mientras graba; cuenta atrás en el centro (máximo 0:20); pantalla OLED con la onda y LED REC; teclas Escuchar · Recortar · Borrar · Regrabar; tecla principal Grabar → Parar → Guardar saludo / Enviar a Ana | listo · grabando · grabado · reproduciendo · recortando · guardado |
+| Selector de cuándo | `C · Selector de cuándo` | Etiqueta «¿CUÁNDO TE VIENE BIEN?» con el resumen en vivo («VIE, SÁB · 7–10 H · 2 PLANES»); 7 teclas de día (nombre en mono + número); 16 pasos de hora, de 7 a 22, en pista, con el rango en `--color-tiempo` y brillo en los extremos; 3 atajos: Mañana 7–13 · Tarde 14–19 · Noche 20–22 | vacío · días elegidos · rango de horas · atajo (mañana, tarde o noche) |
+| Tarjeta de plan | `C · Tarjeta de plan` | Módulo de aluminio claro con sombra de tecla; a la izquierda, el bucle del entreno sobre pantalla; cuándo con cuadro de tiempo y minutos andando; título; sitio; iniciales de quien va en naranja + quién y nivel | encaja · no encaja (atenuada) |
+| Punto Movi | `C · Punto Movi` | Foto del sitio, nombre y tipo con cuadro de lugar, punto exacto de encuentro («Junto al cartel de las máquinas») y etiquetas en mono (máquinas, mayores, carrito…) | con foto, punto exacto y etiquetas |
+| Figura de luces | `C · Figura de luces` | Sobre pantalla OLED: malla de puntos en `--color-luz-apagada-pantalla`; el cuerpo en luces de `--color-pantalla-texto`; la articulación clave en `--color-gente`; el suelo en `--color-pantalla-apagado`; cabecera con vista y contador; pie con la variante y la consigna | frente · lado · error típico · en pareja · movimiento reducido (dos fotogramas fijos) |
+| Tarjeta de ejercicio | `C · Tarjeta de ejercicio` | Cerrada: miniatura en bucle sobre pantalla + nombre + dosis en mono. Abierta: `C · Figura de luces` con teclas De frente · De lado, la variante de cada persona y cámara lenta | reposo (bucle) · abierta · cámara lenta |
+| Tarjeta perforada | `C · Tarjeta perforada` | Bono municipal para dos: instalación, las dos personas, 5 perforaciones (usadas en tinta, libres en línea) y la cara del QR para el acceso | 0, 3 y 5 sesiones usadas · cara del QR |
+| Sello | `C · Sello` | Cuadrado de función + nombre del sello en mono + recuento («PUNTUAL ×12»). Solo sellos positivos | un sello con su recuento |
+| Reputación | `C · Reputación` | Lo único público del perfil: verificada, sesiones hechas, personas que repiten y sellos. Nunca medias, estrellas ni comentarios | verificada · sesiones · personas que repiten · sellos |
+| Chat | `CM · Chat` | Chat ligado a una quedada aceptada: burbujas de texto y de audio, respuestas rápidas en teclas, tarjeta de quedada (día, hora y punto Movi) y aviso si alguien intenta compartir el teléfono | burbuja de texto · burbuja de audio · respuesta rápida · tarjeta de quedada (propuesta, aceptada, otra hora) · aviso al compartir el teléfono |
 | Navegación | `CM · Navegación` | 4 destinos (Cerca · Entrenar · Mi gente · Yo), etiqueta mono siempre visible, LED naranja en el activo | 4 activos |
 
 ---
@@ -138,6 +148,9 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 13. **R13 — El contrato SDD sigue vigente:** tokens siempre, 44 × 44 mínimo, etiquetas visibles, nada de emoji, ninguna barra de estado dibujada.
 14. **R14 — En pareja y en grupo se entrena a la vez.** Nunca por turnos ni con una persona contando o mirando. La pantalla muestra el mismo ejercicio y el mismo anillo para todos, y la variante de cada persona con su nombre («Tú · con banco», «Ana · sin banco»), nunca «más fácil». La tecla principal es «Hecho». El cierre es un bloque cooperativo.
 15. **R15 — Grabadora.** Máximo 20 s y parada automática en 0:00. El estado de grabación se indica con LED y texto («GRABANDO»), nunca solo con color. Con `prefers-reduced-motion` el anillo no gira. El recorte va en pasos de 0,5 s. Siempre hay alternativa en texto.
+16. **R16 — Figura de luces.** El cuerpo, en luces de `--color-pantalla-texto`; la articulación clave, en `--color-gente`; el error típico, en `--color-error` y siempre con el texto «Así no». Siempre sobre pantalla OLED. Con `prefers-reduced-motion`, dos fotogramas fijos (arriba y abajo) en lugar del bucle.
+17. **R17 — El tiempo, en azul.** El selector de horas y cualquier rango de tiempo usan `--color-tiempo`; los días son teclas.
+18. **R18 — Nada negativo en público.** Sellos y reputación solo en positivo; los avisos de problemas van por un canal privado.
 
 ### Sonido y vibración
 
@@ -156,7 +169,7 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 
 ## Criterios de aceptación
 
-- [ ] **C1 —** Paper tiene una página **DS · Instrumento** con un frame `F · Tokens`, uno `F · Tipografía` y un frame por componente de la tabla (Rueda, Anillo, Pantalla, Tecla, Interruptor, Nivel, Secuenciador, Perfil, Etiqueta, Persona, Campo, Mapa, Pestañas, Grabadora y Navegación: 15 componentes), con todos sus estados.
+- [ ] **C1 —** Paper tiene una página **DS · Instrumento** con un frame `F · Tokens`, uno `F · Tipografía` y un frame por componente de la tabla (Rueda, Anillo, Pantalla, Tecla, Interruptor, Nivel, Secuenciador, Perfil, Etiqueta, Persona, Campo, Mapa, Pestañas, Grabadora, Selector de cuándo, Tarjeta de plan, Punto Movi, Figura de luces, Tarjeta de ejercicio, Tarjeta perforada, Sello, Reputación, Chat y Navegación: 24 componentes), con todos sus estados.
 - [ ] **C2 —** Los valores de Paper coinciden exactamente con los tokens de esta spec. Ningún color, radio o tamaño inventado.
 - [ ] **C3 —** Cada flujo tiene su propia página en Paper, con frames `AppM · <flujo> · <pantalla>` de 390 × 844 ordenados en el orden del flujo y los estados debajo.
 - [ ] **C4 —** Ninguna pantalla tiene más de una tecla negra ni más de una pantalla OLED.
@@ -179,11 +192,12 @@ Los títulos y el texto se escriben como en español: mayúscula inicial, el res
 ## Trazabilidad
 
 - Exploración y referencia visual: lienzo «Movi · Tres direcciones» en claude.ai, página **Sistema elegido**. Copia de las tres pantallas de referencia en `design/instrumento/referencia/`. **Donde las referencias choquen con esta spec, gana la spec.**
+- Cambios de la 0.7 (2026-11-26): nueve componentes de la fase 1b de `ENCARGO-PAPER-v2.md` y reglas R16 (figura de luces), R17 (tiempo en azul) y R18 (nada negativo en público). Referencias nuevas: `primera-interaccion.dc.html` y `ejercicio-en-luces.dc.html`.
 - Cambios de la 0.6 (2026-11-24): nuevo `C · Grabadora` (prop `modo`: `saludo` o `mensaje`), R15 y tres filas de sonido para grabar, parar y guardar o enviar. Referencia en `design/instrumento/referencia/grabadora.dc.html`.
 - Cambios de la 0.5 (2026-11-24): en pareja y en grupo se entrena a la vez (R14, C4b); el sonido «Cambio de rol» pasa a «Empieza el reto juntos»; C1 incluye Campo, Mapa y Pestañas. Referencia `ejecucion-acompanado.dc.html` rehecha a la vez; títulos de las referencias con mayúscula inicial.
 - Cambios de la 0.4 (2026-11-24): `C · Mapa` en el mismo lenguaje que el resto (matriz de puntos, nada de cartografía en color) y `C · Pestañas`, ambos salidos del flujo Cerca. `MapStatic.tsx` deja de ser excepción de color cuando se migre.
 - Cambios de la 0.3 (2026-11-24): mayúscula inicial en títulos, nombres propios con mayúscula, nuevo `C · Campo` y estado «elegido» de `C · Nivel`, ambos salidos del flujo de Onboarding.
 - Cambios de la 0.2 (2026-11-24), tras comparar las referencias con los tokens: se añaden `--color-sobre-tiempo` y `--sombra-capuchon`, la nota de radios y el peso 300 para la cifra de 20 px. Al pintarlo en Paper, los valores de las referencias que no están en la escala se llevan al token más cercano: 26 → 28, 48 → 56, 9,5 → 10, 11,5 → 11, el texto Archivo de 12,5–14 → 14,5, `#B8B8B4` → `--color-linea`, `#D8D8D4` → `--color-pantalla-texto-2`, y los radios 8 y 12 → 10.
-- Specs relacionadas: `specs/workout-engine.md` (v1.2), `specs/conexion/spec.md` (borrador), `specs/foundations/producto.md` (borrador), `specs/program/spec.md` (en la rama `feat/programa`, pendiente de aprobar), `specs/decisions/specs-location.md`.
+- Specs relacionadas: `specs/workout-engine.md` (v1.3), `specs/conexion/spec.md` (v0.2, borrador), `specs/foundations/producto.md` (aprobada), `specs/program/spec.md` (en la rama `feat/programa`, pendiente de aprobar), `specs/decisions/specs-location.md`.
 - **Pendiente:** cuando se retome `specs/program/spec.md`, buscar en ella «alterno», «rol», «cuenta» y «trabajas» y alinearla con R14.
 - Referencias: Teenage Engineering (OP-1 field, EP-133 K.O. II, TP-7), Nothing (Glyph Matrix).
